@@ -1,0 +1,20 @@
+create schema db_pt_ss;
+
+use db_pt_ss;
+
+drop table user;
+
+create table user(
+    user_id integer primary key,
+    username varchar(20),
+    email_id varchar(50),
+    password varchar(20),
+    name varchar(20),
+    date_of_birth date,
+    user_role varchar(20)
+);
+
+insert into user values(1, 'abc','abc@xyz.com', '123', 'abc', '2000-01-31', 'MANAGER');
+insert into user values(2, 'koh','koh@koh.com', 'koh', 'koh', '1998-01-18', 'ADMIN');
+
+commit;

@@ -1,7 +1,6 @@
 package app.user.dto;
 
-
-import java.time.LocalDate;
+import app.user.enums.UserRole;
 
 public class UserDTO {
 

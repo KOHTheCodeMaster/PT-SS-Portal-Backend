@@ -1,4 +1,4 @@
-package app.user.dto;
+package app.user.enums;
 
 import org.apache.catalina.Manager;
 

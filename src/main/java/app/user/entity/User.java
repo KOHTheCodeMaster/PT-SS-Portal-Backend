@@ -1,9 +1,8 @@
 package app.user.entity;
 
-import app.user.dto.UserRole;
+import app.user.enums.UserRole;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity

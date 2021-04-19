@@ -1,18 +1,25 @@
-create schema db_pt_ss;
+# create schema db_pt_ss;
 
 use db_pt_ss;
+
+
+# --------------------------------
+#   User Table
+# --------------------------------
+
 
 drop table user;
 
 create table user(
-    user_id integer primary key,
+    user_id integer AUTO_INCREMENT,
     name varchar(50),
     user_role varchar(20),
     email_id varchar(50),
     password integer (20),
     phone_number varchar(11),
     address varchar(100),
-    pic_id integer
+    pic_id integer,
+    PRIMARY KEY (user_id)
 );
 
 insert into user values(1, 'Rudy S', 'CEO', 'rudys@sermanisteel.co.id', '123', '62811234567', 'Jl. Karunrung, Makassar', 1);
@@ -30,3 +37,269 @@ insert into user values(10, 'Rastan', 'SellingStaff', 'rastan@sermanisteel.co.id
 # insert into user values(2, 'koh','koh@koh.com', 'koh', 'koh', '1998-01-18', 'ADMIN');
 
 commit;
+
+
+# --------------------------------
+#   SALES_STAFF Table
+# --------------------------------
+
+drop table sales_staff;
+
+create table sales_staff(
+    sales_id integer AUTO_INCREMENT,
+    buyer_name varchar(50),
+    buyer_phone_number varchar(11),
+    buyer_address varchar(100),
+    item_type varchar(20),
+    colour varchar(20),
+    item_size varchar(20),
+    sales_date date,
+    amount_of_item integer,
+    payment varchar(10),
+    sales_name varchar(50),
+    PRIMARY KEY (sales_id)
+);
+
+# Sales_Id, Buyer Name, Buyer Phone number, Buyer Address, Item Type, Colour, Item Size, Date, Amount of Item, Payment, Sales Name
+# insert into sales_staff values(1, 'Sudding', '82265778935', 'Jl.  Kakatua no. 22, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), '568', ''CASH'', 'Fitri');
+
+insert into sales_staff values(1, 'Sudding', '82265778935', 'Jl.  Kakatua no. 22, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 526, 'CASH', 'Fitri');
+insert into sales_staff values(2, 'Syamsul', '89945662357', 'Jl. Urip Sumoharjo no.16, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 671, 'CASH', 'Nita');
+insert into sales_staff values(3, 'TB Bangun Jaya', '83649587622', 'Jl Nuri no.17, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 784, 'DAYS_30', 'Irwan');
+insert into sales_staff values(4, 'TB Bangun Abadi', '81234568576', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 157, 'DAYS_30', 'Irwan');
+insert into sales_staff values(5, 'TB Kertajaya', '82256663184', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 702, 'DAYS_30', 'Boy');
+insert into sales_staff values(6, 'Baja Mas', '451483192', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 281, 'DAYS_90', 'Rastan');
+insert into sales_staff values(7, 'Baja Mas', '451483193', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 701, 'DAYS_90', 'Rastan');
+insert into sales_staff values(8, 'Baja Mas', '451483194', 'Jl. Dewi Sartika No. 29, Palu', 'Spandeck', 'Merah Merapi', '1829 x 0,3', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 168, 'DAYS_90', 'Rastan');
+insert into sales_staff values(9, 'Baja Mas', '451483195', 'Jl. Dewi Sartika No. 29, Palu', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 191, 'DAYS_90', 'Rastan');
+insert into sales_staff values(10, 'TB Kerung-kerung', '80378722021', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 583, 'DAYS_30', 'Nurul');
+insert into sales_staff values(11, 'TB Pasar Sentral', '89505789493', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 739, 'DAYS_30', 'Arya');
+insert into sales_staff values(12, 'TB Veteran Jaya', '88632856965', 'Jl. Veteran Utara no. 186, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 293, 'DAYS_30', 'Dani');
+insert into sales_staff values(13, 'TB Ancol Permai', '87759924436', 'Jl. Lamadukeleng no. 12, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 331, 'DAYS_30', 'Dudung');
+insert into sales_staff values(14, 'Artha Makmur', '4115440454', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 300, 'DAYS_30', 'Fitri');
+insert into sales_staff values(15, 'UD Tanete', '911310466', 'Jl. Sultan Hasanuddin, Ambon', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 525, 'DAYS_90', 'Fitri');
+insert into sales_staff values(16, 'UD Tanete', '911310467', 'Jl. Sultan Hasanuddin, Ambon', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 214, 'DAYS_90', 'Fitri');
+insert into sales_staff values(17, 'UD Tanete', '911310468', 'Jl. Sultan Hasanuddin, Ambon', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 324, 'DAYS_90', 'Fitri');
+insert into sales_staff values(18, 'UD Tanete', '911310469', 'Jl. Sultan Hasanuddin, Ambon', 'Spandeck', 'Hijau Bromo', '1829 x 0,25', STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 735, 'DAYS_90', 'Fitri');
+insert into sales_staff values(19, 'CV Sermani Sengkang', '85293434434', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 713, 'DAYS_360', 'Nurul');
+insert into sales_staff values(20, 'CV Sermani Sengkang', '85293434435', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 212, 'DAYS_360', 'Nurul');
+insert into sales_staff values(21, 'CV Sermani Sengkang', '85293434436', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 791, 'DAYS_360', 'Nurul');
+insert into sales_staff values(22, 'CV Sermani Sengkang', '85293434437', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Spandeck', 'Merah Merapi', '1829 x 0,25', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 292, 'DAYS_360', 'Nurul');
+insert into sales_staff values(23, 'CV Sermani Sengkang', '85293434438', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Coil', 'Silver', '1829 x 0,2', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 241, 'DAYS_360', 'Nurul');
+insert into sales_staff values(24, 'Toko Intan', '811403286', 'Jl. Brigjend Katamso No. 3, Bau-Bau', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 317, 'DAYS_90', 'Dudung');
+insert into sales_staff values(25, 'Toko Intan', '811403287', 'Jl. Brigjend Katamso No. 3, Bau-Bau', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 277, 'DAYS_90', 'Dudung');
+insert into sales_staff values(26, 'Toko Intan', '811403288', 'Jl. Brigjend Katamso No. 3, Bau-Bau', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 181, 'DAYS_90', 'Dudung');
+insert into sales_staff values(27, 'Toko Intan', '811403289', 'Jl. Brigjend Katamso No. 3, Bau-Bau', 'Spandeck', 'Silver', '1829 x 0,3', STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 382, 'DAYS_90', 'Dudung');
+insert into sales_staff values(28, 'Indah Sari Timor', '42721377', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 470, 'DAYS_90', 'Dani');
+insert into sales_staff values(29, 'Indah Sari Timor', '42721378', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Galvalum ', 'Silver', '1829 x 0,3', STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 538, 'DAYS_90', 'Dani');
+insert into sales_staff values(30, 'Indah Sari Timor', '42721379', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 517, 'DAYS_90', 'Dani');
+insert into sales_staff values(31, 'TB Kertajaya', '82256663184', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 782, 'DAYS_30', 'Boy');
+insert into sales_staff values(32, 'Baja Mas', '451483192', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 218, 'DAYS_30', 'Boy');
+insert into sales_staff values(33, 'Baja Mas', '451483193', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 510, 'DAYS_30', 'Boy');
+insert into sales_staff values(34, 'Artha Makmur', '4115440454', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 247, 'DAYS_360', 'Nita');
+insert into sales_staff values(35, 'Artha Makmur', '4115440455', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1830 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 271, 'DAYS_360', 'Nita');
+insert into sales_staff values(36, 'Artha Makmur', '4115440456', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1831 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 760, 'DAYS_360', 'Nita');
+insert into sales_staff values(37, 'Artha Makmur', '4115440457', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1832 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 423, 'DAYS_360', 'Nita');
+insert into sales_staff values(38, 'Artha Makmur', '4115440458', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1833 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 620, 'DAYS_360', 'Nita');
+insert into sales_staff values(39, 'Artha Makmur', '4115440459', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1834 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 809, 'DAYS_360', 'Nita');
+insert into sales_staff values(40, 'Artha Makmur', '4115440460', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1835 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 454, 'DAYS_360', 'Nita');
+insert into sales_staff values(41, 'TB Kerung-kerung', '80378722021', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 731, 'DAYS_90', 'Rastan');
+insert into sales_staff values(42, 'TB Kerung-kerung', '80378722022', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1525 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 229, 'DAYS_90', 'Rastan');
+insert into sales_staff values(43, 'TB Kerung-kerung', '80378722023', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1526 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 356, 'DAYS_90', 'Rastan');
+insert into sales_staff values(44, 'Andre', '82265778935', 'Jl.  Kakatua no. 22, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 394, 'CASH', 'Arya');
+insert into sales_staff values(45, 'Ario', '89945662357', 'Jl. Urip Sumoharjo no.16, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 196, 'CASH', 'Arya');
+insert into sales_staff values(46, 'TB Bangun Jaya', '83649587622', 'Jl Nuri no.17, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 802, 'DAYS_30', 'Arya');
+insert into sales_staff values(47, 'TB Bangun Abadi', '81234568576', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 524, 'DAYS_30', 'Arya');
+insert into sales_staff values(48, 'Padi Mas', '4113613388', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 250, 'DAYS_180', 'Irwan');
+insert into sales_staff values(49, 'Padi Mas', '4113613389', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 809, 'DAYS_180', 'Irwan');
+insert into sales_staff values(50, 'Padi Mas', '4113613390', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 768, 'DAYS_180', 'Irwan');
+insert into sales_staff values(51, 'Padi Mas', '4113613391', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 173, 'DAYS_180', 'Irwan');
+insert into sales_staff values(52, 'Makmur Sentosa', '411315272', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 268, 'DAYS_90', 'Fitri');
+insert into sales_staff values(53, 'Makmur Sentosa', '411315273', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 268, 'DAYS_90', 'Fitri');
+insert into sales_staff values(54, 'Makmur Sentosa', '411315274', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 574, 'DAYS_90', 'Fitri');
+insert into sales_staff values(55, 'Platinum', '8219857171', 'Jl. Taar Baru, Tual', 'Spandeck', 'Merah Merapi', '1829 x 0,3', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 625, 'DAYS_360', 'Rastan');
+insert into sales_staff values(56, 'Platinum', '8219857172', 'Jl. Taar Baru, Tual', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 597, 'DAYS_360', 'Rastan');
+insert into sales_staff values(57, 'Platinum', '8219857173', 'Jl. Taar Baru, Tual', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 710, 'DAYS_360', 'Rastan');
+insert into sales_staff values(58, 'Platinum', '8219857174', 'Jl. Taar Baru, Tual', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 450, 'DAYS_360', 'Rastan');
+insert into sales_staff values(59, 'Platinum', '8219857175', 'Jl. Taar Baru, Tual', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 598, 'DAYS_360', 'Rastan');
+insert into sales_staff values(60, 'Platinum', '8219857176', 'Jl. Taar Baru, Tual', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 348, 'DAYS_360', 'Rastan');
+insert into sales_staff values(61, 'Megah Indah Sari', '411496388', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 666, 'DAYS_90', 'Dani');
+insert into sales_staff values(62, 'Megah Indah Sari', '411496389', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 744, 'DAYS_90', 'Dani');
+insert into sales_staff values(63, 'Megah Indah Sari', '411496390', 'Jl. Antang Raya no. 49A-51, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 294, 'DAYS_90', 'Dani');
+insert into sales_staff values(64, 'Indah Sari Timor', '41921488', 'Jl. Pahlawan No. 2, Jeneponto', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 621, 'DAYS_180', 'Irwan');
+insert into sales_staff values(65, 'Indah Sari Timor', '41921489', 'Jl. Pahlawan No. 2, Jeneponto', 'Spandeck', 'Hijau Bromo', '1829 x 0,25', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 755, 'DAYS_180', 'Irwan');
+insert into sales_staff values(66, 'Indah Sari Timor', '41921490', 'Jl. Pahlawan No. 2, Jeneponto', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 314, 'DAYS_180', 'Irwan');
+insert into sales_staff values(67, 'Indah Sari Timor', '41921491', 'Jl. Pahlawan No. 2, Jeneponto', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 789, 'DAYS_180', 'Irwan');
+insert into sales_staff values(68, 'TB Kertajaya', '82256663184', 'Jl. Racing Center no. 23, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 197, 'DAYS_30', 'Dudung');
+insert into sales_staff values(69, 'Baja Mas', '451483192', 'Jl. Dewi Sartika No. 29, Palu', 'Spandeck', 'Merah Merapi', '1829 x 0,25', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 290, 'DAYS_30', 'Dudung');
+insert into sales_staff values(70, 'Baja Mas', '451483193', 'Jl. Dewi Sartika No. 29, Palu', 'Coil', 'Silver', '1829 x 0,2', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 844, 'DAYS_30', 'Dudung');
+insert into sales_staff values(71, 'CV Sermani Sengkang', '85293434436', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 532, 'DAYS_90', 'Nita');
+insert into sales_staff values(72, 'CV Sermani Sengkang', '85293434437', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 409, 'DAYS_90', 'Nita');
+insert into sales_staff values(73, 'CV Sermani Sengkang', '85293434438', 'Jl. Andi Malingkaan No. 88, Sengkang', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 272, 'DAYS_90', 'Nita');
+insert into sales_staff values(74, 'Bosowa', '4113666777', 'Menara Bosowa Lt 19, No. 5, Jl. Sudirman, Makassar', 'Spandeck', 'Silver', '1829 x 0,3', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 789, 'DAYS_30', 'Fitri');
+insert into sales_staff values(75, 'Bosowa', '4113666778', 'Menara Bosowa Lt 19, No. 5, Jl. Sudirman, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 426, 'DAYS_30', 'Fitri');
+insert into sales_staff values(76, 'Bosowa', '4113666779', 'Menara Bosowa Lt 19, No. 5, Jl. Sudirman, Makassar', 'Galvalum ', 'Silver', '1829 x 0,3', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 266, 'DAYS_30', 'Fitri');
+insert into sales_staff values(77, 'Sari', '83364256424', 'Jl. Gunung Bawakaraeng No.45, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 411, 'CASH', 'Fitri');
+insert into sales_staff values(78, 'Yusuf', '85266453594', 'Jl. Pattimura No.11, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 390, 'CASH', 'Fitri');
+insert into sales_staff values(79, 'Cahaya Jakarta', '85341900084', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 495, 'DAYS_360', 'Nurul');
+insert into sales_staff values(80, 'Cahaya Jakarta', '85341900085', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 525, 'DAYS_360', 'Nurul');
+insert into sales_staff values(81, 'Cahaya Jakarta', '85341900086', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 617, 'DAYS_360', 'Nurul');
+insert into sales_staff values(82, 'Cahaya Jakarta', '85341900087', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1830 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 673, 'DAYS_360', 'Nurul');
+insert into sales_staff values(83, 'Cahaya Jakarta', '85341900088', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1831 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 810, 'DAYS_360', 'Nurul');
+insert into sales_staff values(84, 'Cahaya Jakarta', '85341900089', 'Jl. Poros Maros, Maros', 'Seng Kaki', 'Silver', '1832 x 0,2', STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 426, 'DAYS_360', 'Nurul');
+insert into sales_staff values(85, 'TB Purnama', '85366543255', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '1833 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 689, 'DAYS_360', 'Arya');
+insert into sales_staff values(86, 'TB Purnama', '85366543256', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '1834 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 600, 'DAYS_360', 'Arya');
+insert into sales_staff values(87, 'TB Purnama', '85366543257', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '1835 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 659, 'DAYS_360', 'Arya');
+insert into sales_staff values(88, 'TB Purnama', '85366543258', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 471, 'DAYS_360', 'Arya');
+insert into sales_staff values(89, 'TB Purnama', '85366543259', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '1525 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 691, 'DAYS_180', 'Arya');
+insert into sales_staff values(90, 'TB Alif Bangunan ', '85322222806', 'Jl. Battua Raya, Makassar', 'Seng Kaki', 'Silver', '1526 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 700, 'DAYS_180', 'Irwan');
+insert into sales_staff values(91, 'TB Alif Bangunan ', '85322222807', 'Jl. Battua Raya, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 459, 'DAYS_180', 'Irwan');
+insert into sales_staff values(92, 'TB Alif Bangunan ', '85322222808', 'Jl. Battua Raya, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 164, 'DAYS_180', 'Irwan');
+insert into sales_staff values(93, 'TB Alif Bangunan ', '85322222809', 'Jl. Battua Raya, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 652, 'DAYS_180', 'Irwan');
+insert into sales_staff values(94, 'TB Sinar Panaikang Jaya', '81241006069', 'Jl. Poros Malino, Malino', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 712, 'DAYS_90', 'Rastan');
+insert into sales_staff values(95, 'TB Sinar Panaikang Jaya', '81241006070', 'Jl. Poros Malino, Malino', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 733, 'DAYS_90', 'Rastan');
+insert into sales_staff values(96, 'TB Sinar Panaikang Jaya', '81241006071', 'Jl. Poros Malino, Malino', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('13/2/2021', '%d/%m/%Y'), 711, 'DAYS_90', 'Rastan');
+insert into sales_staff values(97, 'Indah Sari Timor', '42721377', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 150, 'DAYS_180', 'Dudung');
+insert into sales_staff values(98, 'Indah Sari Timor', '42721378', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 802, 'DAYS_180', 'Dudung');
+insert into sales_staff values(99, 'Indah Sari Timor', '42721379', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 417, 'DAYS_180', 'Dudung');
+insert into sales_staff values(100, 'Indah Sari Timor', '42721380', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 347, 'DAYS_180', 'Dudung');
+insert into sales_staff values(101, 'Indah Sari Timor', '42721381', 'Jl. Sultan Hasanuddin No. 21, Barru', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 551, 'DAYS_180', 'Dudung');
+insert into sales_staff values(102, 'Artha Makmur', '4115440454', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,3', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 718, 'DAYS_180', 'Dani');
+insert into sales_staff values(103, 'Artha Makmur', '4115440455', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 535, 'DAYS_180', 'Dani');
+insert into sales_staff values(104, 'Artha Makmur', '4115440456', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 162, 'DAYS_180', 'Dani');
+insert into sales_staff values(105, 'Artha Makmur', '4115440457', 'Jl. Boulevard No. 18-19, Panakkukang, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 707, 'DAYS_180', 'Dani');
+insert into sales_staff values(106, 'Padi Mas', '4113613388', 'Jl. Yos Sudarso no. 217, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 742, 'DAYS_180', 'Nurul');
+insert into sales_staff values(107, 'Padi Mas', '4113613389', 'Jl. Yos Sudarso no. 217, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 282, 'DAYS_180', 'Nurul');
+insert into sales_staff values(108, 'Padi Mas', '4113613390', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 321, 'DAYS_180', 'Nurul');
+insert into sales_staff values(109, 'Padi Mas', '4113613391', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('15/2/2021', '%d/%m/%Y'), 675, 'DAYS_180', 'Nurul');
+insert into sales_staff values(110, 'Sinar Mas', '4113617031', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 386, 'DAYS_360', 'Nita');
+insert into sales_staff values(111, 'Sinar Mas', '4113617032', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 327, 'DAYS_360', 'Nita');
+insert into sales_staff values(112, 'Sinar Mas', '4113617033', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Spandeck', 'Hijau Bromo', '1829 x 0,25', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 268, 'DAYS_360', 'Nita');
+insert into sales_staff values(113, 'Sinar Mas', '4113617034', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 766, 'DAYS_360', 'Nita');
+insert into sales_staff values(114, 'Sinar Mas', '4113617035', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 567, 'DAYS_360', 'Nita');
+insert into sales_staff values(115, 'Sentral Bangunan', '411452854', 'Jl. Veteran Selatan No.21, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 649, 'DAYS_180', 'Boy');
+insert into sales_staff values(116, 'Sentral Bangunan', '411452855', 'Jl. Veteran Selatan No.21, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,25', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 750, 'DAYS_180', 'Boy');
+insert into sales_staff values(117, 'Sentral Bangunan', '411452856', 'Jl. Veteran Selatan No.21, Makassar', 'Coil', 'Silver', '1829 x 0,2', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 491, 'DAYS_180', 'Boy');
+insert into sales_staff values(118, 'Sentral Bangunan', '411452857', 'Jl. Veteran Selatan No.21, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 188, 'DAYS_180', 'Boy');
+insert into sales_staff values(119, 'TB Baru', '4113639707', 'Jl. Sungai Limboto No.81 A, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 168, 'DAYS_180', 'Irwan');
+insert into sales_staff values(120, 'TB Baru', '4113639708', 'Jl. Sungai Limboto No.81 A, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 393, 'DAYS_180', 'Irwan');
+insert into sales_staff values(121, 'TB Baru', '4113639709', 'Jl. Sungai Limboto No.81 A, Makassar', 'Spandeck', 'Silver', '1829 x 0,3', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 486, 'DAYS_180', 'Irwan');
+insert into sales_staff values(122, 'TB Baru', '4113639710', 'Jl. Sungai Limboto No.81 A, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('16/2/2021', '%d/%m/%Y'), 740, 'DAYS_180', 'Irwan');
+insert into sales_staff values(123, 'TB Mitra Jaya', '8224563351', 'Jl. Veteran Utara No.172, Makassar', 'Galvalum ', 'Silver', '1829 x 0,3', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 188, 'DAYS_90', 'Rastan');
+insert into sales_staff values(124, 'TB Mitra Jaya', '8224563352', 'Jl. Veteran Utara No.172, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 773, 'DAYS_90', 'Rastan');
+insert into sales_staff values(125, 'TB Mitra Jaya', '8224563353', 'Jl. Veteran Utara No.172, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 485, 'DAYS_90', 'Rastan');
+insert into sales_staff values(126, 'Alief Bangunan', '411444357', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 433, 'DAYS_360', 'Dani');
+insert into sales_staff values(127, 'Alief Bangunan', '411444358', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 767, 'DAYS_360', 'Dani');
+insert into sales_staff values(128, 'Alief Bangunan', '411444359', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 216, 'DAYS_360', 'Dani');
+insert into sales_staff values(129, 'Alief Bangunan', '411444360', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1830 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 601, 'DAYS_360', 'Dani');
+insert into sales_staff values(130, 'Alief Bangunan', '411444361', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1831 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 496, 'DAYS_360', 'Dani');
+insert into sales_staff values(131, 'Duta Bangunan', '411851817', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1832 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 244, 'DAYS_90', 'Dudung');
+insert into sales_staff values(132, 'Duta Bangunan', '411851818', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1833 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 269, 'DAYS_90', 'Dudung');
+insert into sales_staff values(133, 'Duta Bangunan', '411851819', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1834 x 0,2', STR_TO_DATE('17/2/2021', '%d/%m/%Y'), 794, 'DAYS_90', 'Dudung');
+insert into sales_staff values(134, 'Megah Indah Sari', '411496388', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1835 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 652, 'DAYS_360', 'Fitri');
+insert into sales_staff values(135, 'Megah Indah Sari', '411496389', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 495, 'DAYS_360', 'Fitri');
+insert into sales_staff values(136, 'Megah Indah Sari', '411496390', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1525 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 537, 'DAYS_360', 'Fitri');
+insert into sales_staff values(137, 'Megah Indah Sari', '411496391', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1526 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 620, 'DAYS_360', 'Fitri');
+insert into sales_staff values(138, 'Megah Indah Sari', '411496392', 'Jl. Antang Raya no. 49A-51, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 410, 'DAYS_360', 'Fitri');
+insert into sales_staff values(139, 'TB Alif', '85322222806', 'Jl. Batua Raya No.11, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 316, 'DAYS_360', 'Nita');
+insert into sales_staff values(140, 'TB Alif', '85322222807', 'Jl. Batua Raya No.11, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 523, 'DAYS_360', 'Nita');
+insert into sales_staff values(141, 'TB Alif', '85322222808', 'Jl. Batua Raya No.11, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 828, 'DAYS_360', 'Nita');
+insert into sales_staff values(142, 'TB Alif', '85322222809', 'Jl. Batua Raya No.11, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 738, 'DAYS_360', 'Nita');
+insert into sales_staff values(143, 'TB Alif', '85322222810', 'Jl. Batua Raya No.11, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 175, 'DAYS_360', 'Nita');
+insert into sales_staff values(144, 'Metro Bangunan', '411434182', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 552, 'DAYS_90', 'Nurul');
+insert into sales_staff values(145, 'Metro Bangunan', '411434183', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 647, 'DAYS_90', 'Nurul');
+insert into sales_staff values(146, 'Metro Bangunan', '411434184', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 297, 'DAYS_90', 'Nurul');
+insert into sales_staff values(147, 'Metro Bangunan', '411434185', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('18/2/2021', '%d/%m/%Y'), 288, 'DAYS_90', 'Nurul');
+insert into sales_staff values(148, 'Sinar Bangunan', '411850232', 'Jl. Andi Djemma No.30/66, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 595, 'DAYS_360', 'Irwan');
+insert into sales_staff values(149, 'Sinar Bangunan', '411850233', 'Jl. Andi Djemma No.30/66, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,3', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 781, 'DAYS_360', 'Irwan');
+insert into sales_staff values(150, 'Sinar Bangunan', '411850234', 'Jl. Andi Djemma No.30/66, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 543, 'DAYS_360', 'Irwan');
+insert into sales_staff values(151, 'Sinar Bangunan', '411850235', 'Jl. Andi Djemma No.30/66, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 648, 'DAYS_360', 'Irwan');
+insert into sales_staff values(152, 'Sinar Bangunan', '411850236', 'Jl. Andi Djemma No.30/66, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 586, 'DAYS_360', 'Irwan');
+insert into sales_staff values(153, 'Sentral Bangunan', '411452854', 'Jl. Veteran Selatan No.21, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 403, 'DAYS_90', 'Rastan');
+insert into sales_staff values(154, 'Sentral Bangunan', '411452855', 'Jl. Veteran Selatan No.21, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 743, 'DAYS_90', 'Rastan');
+insert into sales_staff values(155, 'Sentral Bangunan', '411452856', 'Jl. Veteran Selatan No.21, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 738, 'DAYS_90', 'Rastan');
+insert into sales_staff values(156, 'Sentral Bangunan', '411452857', 'Jl. Veteran Selatan No.21, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('19/2/2021', '%d/%m/%Y'), 184, 'DAYS_90', 'Rastan');
+insert into sales_staff values(157, 'TB Purnama', '85366543255', 'Jl. Kobra no.1, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 832, 'DAYS_180', 'Dani');
+insert into sales_staff values(158, 'TB Purnama', '85366543256', 'Jl. Kobra no.1, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 801, 'DAYS_180', 'Dani');
+insert into sales_staff values(159, 'TB Purnama', '85366543257', 'Jl. Kobra no.1, Makassar', 'Spandeck', 'Hijau Bromo', '1829 x 0,25', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 804, 'DAYS_180', 'Dani');
+insert into sales_staff values(160, 'TB Purnama', '85366543258', 'Jl. Kobra no.1, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 802, 'DAYS_180', 'Dani');
+insert into sales_staff values(161, 'TB Bangun Jaya', '83649587622', 'Jl Nuri no.17, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 822, 'DAYS_360', 'Fitri');
+insert into sales_staff values(162, 'TB Bangun Jaya', '83649587623', 'Jl Nuri no.17, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 423, 'DAYS_360', 'Fitri');
+insert into sales_staff values(163, 'TB Bangun Jaya', '83649587624', 'Jl Nuri no.17, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,25', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 561, 'DAYS_360', 'Fitri');
+insert into sales_staff values(164, 'TB Bangun Jaya', '83649587625', 'Jl Nuri no.17, Makassar', 'Coil', 'Silver', '1829 x 0,2', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 484, 'DAYS_360', 'Fitri');
+insert into sales_staff values(165, 'TB Bangun Jaya', '83649587626', 'Jl Nuri no.17, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('20/2/2021', '%d/%m/%Y'), 569, 'DAYS_360', 'Fitri');
+insert into sales_staff values(166, 'TB Kertajaya', '82256663184', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 190, 'DAYS_180', 'Dudung');
+insert into sales_staff values(167, 'TB Kertajaya', '82256663185', 'Jl. Racing Center no. 23, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 505, 'DAYS_180', 'Dudung');
+insert into sales_staff values(168, 'TB Kertajaya', '82256663186', 'Jl. Racing Center no. 23, Makassar', 'Spandeck', 'Silver', '1829 x 0,3', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 618, 'DAYS_180', 'Dudung');
+insert into sales_staff values(169, 'TB Kertajaya', '82256663187', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 397, 'DAYS_180', 'Dudung');
+insert into sales_staff values(170, 'TB Kertajaya', '82256663188', 'Jl. Racing Center no. 23, Makassar', 'Galvalum ', 'Silver', '1829 x 0,3', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 375, 'DAYS_180', 'Dudung');
+insert into sales_staff values(171, 'Makmur Sentosa', '411315272', 'Jl. Nusantara no.234, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 531, 'DAYS_90', 'Fitri');
+insert into sales_staff values(172, 'Makmur Sentosa', '411315273', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 410, 'DAYS_90', 'Fitri');
+insert into sales_staff values(173, 'Makmur Sentosa', '411315274', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 781, 'DAYS_90', 'Fitri');
+insert into sales_staff values(174, 'Makmur Sentosa', '411315275', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 160, 'DAYS_90', 'Fitri');
+insert into sales_staff values(175, 'TB Pasar Sentral', '89505789493', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 589, 'DAYS_180', 'Nita');
+insert into sales_staff values(176, 'TB Pasar Sentral', '89505789494', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1830 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 225, 'DAYS_180', 'Nita');
+insert into sales_staff values(177, 'TB Pasar Sentral', '89505789495', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1831 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 388, 'DAYS_180', 'Nita');
+insert into sales_staff values(178, 'TB Pasar Sentral', '89505789496', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1832 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 269, 'DAYS_180', 'Nita');
+insert into sales_staff values(179, 'TB Pasar Sentral', '89505789497', 'Jl. Sulawesi no. 22, Makassar', 'Seng Kaki', 'Silver', '1833 x 0,2', STR_TO_DATE('22/2/2021', '%d/%m/%Y'), 341, 'DAYS_180', 'Nita');
+insert into sales_staff values(180, 'TB Ancol Permai', '87759924436', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1834 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 383, 'DAYS_360', 'Nurul');
+insert into sales_staff values(181, 'TB Ancol Permai', '87759924437', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1835 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 507, 'DAYS_360', 'Nurul');
+insert into sales_staff values(182, 'TB Ancol Permai', '87759924438', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 792, 'DAYS_360', 'Nurul');
+insert into sales_staff values(183, 'TB Ancol Permai', '87759924439', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1525 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 292, 'DAYS_360', 'Nurul');
+insert into sales_staff values(184, 'TB Ancol Permai', '87759924440', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1526 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 619, 'DAYS_360', 'Nurul');
+insert into sales_staff values(185, 'TB Ancol Permai', '87759924441', 'Jl. Lamadukeleng no. 12, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 789, 'DAYS_360', 'Nurul');
+insert into sales_staff values(186, 'TB Bangun Abadi', '81234568576', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 241, 'DAYS_360', 'Rastan');
+insert into sales_staff values(187, 'TB Bangun Abadi', '81234568577', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 457, 'DAYS_360', 'Rastan');
+insert into sales_staff values(188, 'TB Bangun Abadi', '81234568578', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 737, 'DAYS_360', 'Rastan');
+insert into sales_staff values(189, 'TB Bangun Abadi', '81234568579', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 837, 'DAYS_360', 'Rastan');
+insert into sales_staff values(190, 'TB Bangun Abadi', '81234568580', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 760, 'DAYS_360', 'Rastan');
+insert into sales_staff values(191, 'TB Bangun Abadi', '81234568581', 'Jl. Sunu no. 27, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('23/2/2021', '%d/%m/%Y'), 179, 'DAYS_360', 'Rastan');
+insert into sales_staff values(192, 'TB Kertajaya', '82256663184', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 195, 'DAYS_180', 'Nurul');
+insert into sales_staff values(193, 'TB Kertajaya', '82256663185', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 362, 'DAYS_180', 'Nurul');
+insert into sales_staff values(194, 'TB Kertajaya', '82256663186', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 708, 'DAYS_180', 'Nurul');
+insert into sales_staff values(195, 'TB Kertajaya', '82256663187', 'Jl. Racing Center no. 23, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 726, 'DAYS_180', 'Nurul');
+insert into sales_staff values(196, 'TB Kertajaya', '82256663188', 'Jl. Racing Center no. 23, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,3', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 324, 'DAYS_180', 'Nurul');
+insert into sales_staff values(197, 'TB Kerung-kerung', '80378722021', 'Jl. Kerung - kerung no. 81, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 729, 'DAYS_90', 'Dani');
+insert into sales_staff values(198, 'TB Kerung-kerung', '80378722022', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 517, 'DAYS_90', 'Dani');
+insert into sales_staff values(199, 'TB Kerung-kerung', '80378722023', 'Jl. Kerung - kerung no. 81, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 544, 'DAYS_90', 'Dani');
+insert into sales_staff values(200, 'TB Kerung-kerung', '80378722024', 'Jl. Kerung - kerung no. 81, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 788, 'DAYS_90', 'Dani');
+insert into sales_staff values(201, 'TB Veteran Jaya', '88632856965', 'Jl. Veteran Utara no. 186, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 568, 'DAYS_180', 'Nita');
+insert into sales_staff values(202, 'TB Veteran Jaya', '88632856966', 'Jl. Veteran Utara no. 186, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 566, 'DAYS_180', 'Nita');
+insert into sales_staff values(203, 'TB Veteran Jaya', '88632856967', 'Jl. Veteran Utara no. 186, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 804, 'DAYS_180', 'Nita');
+insert into sales_staff values(204, 'TB Veteran Jaya', '88632856968', 'Jl. Veteran Utara no. 186, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 250, 'DAYS_180', 'Nita');
+insert into sales_staff values(205, 'TB Veteran Jaya', '88632856969', 'Jl. Veteran Utara no. 186, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('24/2/2021', '%d/%m/%Y'), 700, 'DAYS_180', 'Nita');
+insert into sales_staff values(206, 'Tonasa', '4113621823', ' Jl. Chairil Anwar No.1, Makassar', 'Spandeck', 'Hijau Bromo', '1829 x 0,25', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 190, 'DAYS_30', 'Boy');
+insert into sales_staff values(207, 'Tonasa', '4113621824', ' Jl. Chairil Anwar No.1, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 445, 'DAYS_30', 'Boy');
+insert into sales_staff values(208, 'Tonasa', '4113621825', ' Jl. Chairil Anwar No.1, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 328, 'DAYS_30', 'Boy');
+insert into sales_staff values(209, 'Tonasa', '4113621826', ' Jl. Chairil Anwar No.1, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 313, 'DAYS_30', 'Boy');
+insert into sales_staff values(210, 'Kalla Group', '411870111', 'Jl. DR. Ratulangi No.8, Makassar', 'Spandeck', 'Merah Merapi', '1829 x 0,25', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 656, 'DAYS_30', 'Boy');
+insert into sales_staff values(211, 'Kalla Group', '411870112', 'Jl. DR. Ratulangi No.8, Makassar', 'Coil', 'Silver', '1829 x 0,2', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 500, 'DAYS_30', 'Boy');
+insert into sales_staff values(212, 'Kalla Group', '411870113', 'Jl. DR. Ratulangi No.8, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 628, 'DAYS_30', 'Boy');
+insert into sales_staff values(213, 'Kalla Group', '411870114', 'Jl. DR. Ratulangi No.8, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 476, 'DAYS_30', 'Boy');
+insert into sales_staff values(214, 'Metro Bangunan', '411434185', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 486, 'DAYS_180', 'Irwan');
+insert into sales_staff values(215, 'Metro Bangunan', '411434186', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Spandeck', 'Silver', '1829 x 0,3', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 377, 'DAYS_180', 'Irwan');
+insert into sales_staff values(216, 'Metro Bangunan', '411434187', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 289, 'DAYS_180', 'Irwan');
+insert into sales_staff values(217, 'Metro Bangunan', '411434188', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Galvalum ', 'Silver', '1829 x 0,3', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 244, 'DAYS_180', 'Irwan');
+insert into sales_staff values(218, 'Metro Bangunan', '411434189', 'Jalan Pengayoman Ruko Mirah Blok A No 4, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('25/2/2021', '%d/%m/%Y'), 712, 'DAYS_180', 'Irwan');
+insert into sales_staff values(219, 'Padi Mas', '4113613389', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 297, 'DAYS_90', 'Fitri');
+insert into sales_staff values(220, 'Padi Mas', '4113613390', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 830, 'DAYS_90', 'Fitri');
+insert into sales_staff values(221, 'Padi Mas', '4113613391', 'Jl. Yos Sudarso no. 217, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 306, 'DAYS_90', 'Fitri');
+insert into sales_staff values(222, 'Sinar Mas', '4113617031', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 333, 'DAYS_180', 'Nurul');
+insert into sales_staff values(223, 'Sinar Mas', '4113617032', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Kaki', 'Silver', '1830 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 513, 'DAYS_180', 'Nurul');
+insert into sales_staff values(224, 'Sinar Mas', '4113617033', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Kaki', 'Silver', '1831 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 411, 'DAYS_180', 'Nurul');
+insert into sales_staff values(225, 'Sinar Mas', '4113617034', 'Jl. Dr. Wahidin Sudiro Husodo No.165, Makassar', 'Seng Kaki', 'Silver', '1832 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 388, 'DAYS_180', 'Nurul');
+insert into sales_staff values(226, 'Alief Bangunan', '411444359', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1833 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 321, 'DAYS_90', 'Rastan');
+insert into sales_staff values(227, 'Alief Bangunan', '411444360', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1834 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 823, 'DAYS_90', 'Rastan');
+insert into sales_staff values(228, 'Alief Bangunan', '411444361', 'Jl. Toddopuli Raya Timur No.169 A, Makassar', 'Seng Kaki', 'Silver', '1835 x 0,2', STR_TO_DATE('26/2/2021', '%d/%m/%Y'), 750, 'DAYS_90', 'Rastan');
+insert into sales_staff values(229, 'Duta Bangunan', '411851817', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('27/2/2091', '%d/%m/%Y'), 724, 'DAYS_90', 'Rastan');
+insert into sales_staff values(230, 'Duta Bangunan', '411851818', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1525 x 0,2', STR_TO_DATE('27/2/2092', '%d/%m/%Y'), 659, 'DAYS_90', 'Rastan');
+insert into sales_staff values(231, 'Duta Bangunan', '411851819', 'Jl. Veteran Selatan No.18, Makassar', 'Seng Kaki', 'Silver', '1526 x 0,2', STR_TO_DATE('27/2/2093', '%d/%m/%Y'), 837, 'DAYS_90', 'Rastan');
+insert into sales_staff values(232, 'Baja Mas', '451483191', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('27/2/2094', '%d/%m/%Y'), 670, 'DAYS_180', 'Irwan');
+insert into sales_staff values(233, 'Baja Mas', '451483192', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '2134 x 0,2', STR_TO_DATE('27/2/2095', '%d/%m/%Y'), 249, 'DAYS_180', 'Irwan');
+insert into sales_staff values(234, 'Baja Mas', '451483193', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('27/2/2096', '%d/%m/%Y'), 502, 'DAYS_180', 'Irwan');
+insert into sales_staff values(235, 'Baja Mas', '451483194', 'Jl. Dewi Sartika No. 29, Palu', 'Seng Kaki', 'Silver', '1524 x 0,2', STR_TO_DATE('27/2/2097', '%d/%m/%Y'), 766, 'DAYS_180', 'Irwan');
+insert into sales_staff values(236, 'Makmur Sentosa', '411315272', 'Jl. Nusantara no.234, Makassar', 'Spandeck', 'Biru Bromo', '1829 x 0,25', STR_TO_DATE('27/2/2098', '%d/%m/%Y'), 771, 'DAYS_180', 'Fitri');
+insert into sales_staff values(237, 'Makmur Sentosa', '411315273', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('27/2/2099', '%d/%m/%Y'), 309, 'DAYS_180', 'Fitri');
+insert into sales_staff values(238, 'Makmur Sentosa', '411315274', 'Jl. Nusantara no.234, Makassar', 'Seng Kaki', 'Silver', '1829 x 0,2', STR_TO_DATE('27/2/2100', '%d/%m/%Y'), 787, 'DAYS_180', 'Fitri');
+insert into sales_staff values(239, 'Makmur Sentosa', '411315275', 'Jl. Nusantara no.234, Makassar', 'Galvalum', 'Silver', '1829 x 0,3', STR_TO_DATE('27/2/2101', '%d/%m/%Y'), 439, 'DAYS_180', 'Fitri');
+insert into sales_staff values(240, 'Makmur Sentosa', '411315276', 'Jl. Nusantara no.234, Makassar', 'Seng Lebar', 'Silver', '1829 x 0,25', STR_TO_DATE('27/2/2102', '%d/%m/%Y'), 682, 'DAYS_180', 'Fitri');

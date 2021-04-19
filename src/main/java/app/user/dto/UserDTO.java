@@ -6,22 +6,25 @@ import java.time.LocalDate;
 public class UserDTO {
 
     private Integer userId;
-    private String username;
+    private String name;
+    private UserRole userRole;
     private String emailId;
     private String password;
-    private String name;
-    private LocalDate dateOfBirth;
-    private UserRole userRole;
+    private String phoneNumber;
+    private String address;
+    private Integer picId;
 
     @Override
     public String toString() {
         return "UserDTO{" +
                 "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", emailId='" + emailId + '\'' +
                 ", name='" + name + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
                 ", userRole=" + userRole +
+                ", emailId='" + emailId + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", picId=" + picId +
                 '}';
     }
 
@@ -33,12 +36,20 @@ public class UserDTO {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public String getEmailId() {
@@ -57,27 +68,27 @@ public class UserDTO {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
+    public Integer getPicId() {
+        return picId;
     }
 
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
+    public void setPicId(Integer picId) {
+        this.picId = picId;
     }
 }

@@ -44,11 +44,11 @@ public class App implements CommandLineRunner {
 
         switch (temp) {
             case 1:
-                userDTO.setEmailId("abc@xyz.com");
+                userDTO.setEmailId("rudys@sermanisteel.co.id");
                 userDTO.setPassword("123");
                 break;
             case 2:
-                userDTO.setEmailId("abc@xyz.com");
+                userDTO.setEmailId("rudys@sermanisteel.co.id");
                 userDTO.setPassword("gibberish");
                 break;
             case 3:

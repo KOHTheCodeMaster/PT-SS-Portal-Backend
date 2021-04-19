@@ -33,28 +33,15 @@ public class UserService {
 
         User user = new User();
 //        user.setUserId(userDTO.getUserId());  //  Auto Generated
-        user.setEmailId(userDTO.getEmailId());
         user.setName(userDTO.getName());
-        user.setDateOfBirth(userDTO.getDateOfBirth());
         user.setUserRole(userDTO.getUserRole());
+        user.setEmailId(userDTO.getEmailId());
+        user.setPassword(userDTO.getPassword());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setAddress(userDTO.getAddress());
+        user.setPicId(userDTO.getPicId());
         userRepository.save(user);
 
-    }
-
-    public UserDTO getUserById(Integer userId) throws UserException {
-
-        User user = userRepository.findById(userId).orElseThrow(
-                () -> new UserException("User.USER_NOT_FOUND")
-        );
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(user.getUserId());
-        userDTO.setEmailId(user.getEmailId());
-        userDTO.setName(user.getName());
-        userDTO.setDateOfBirth(user.getDateOfBirth());
-        userDTO.setUserRole(user.getUserRole());
-
-        return userDTO;
     }
 
     public boolean loginUser(UserDTO userDTO) throws UserException {
@@ -66,29 +53,6 @@ public class UserService {
         logger.info(user.toString());
 
         return user.getPassword().equals(userDTO.getPassword());
-    }
-
-    public List<UserDTO> getAllUsers() throws UserException {
-
-        Iterable<User> allUsers = userRepository.findAll();
-        List<UserDTO> userDTOList = new ArrayList<>();
-
-        for (User user : allUsers) {
-
-            UserDTO userDTO = new UserDTO();
-            userDTO.setUserId(user.getUserId());
-            userDTO.setEmailId(user.getEmailId());
-            userDTO.setName(user.getName());
-            userDTO.setDateOfBirth(user.getDateOfBirth());
-            userDTO.setUserRole(user.getUserRole());
-
-            userDTOList.add(userDTO);
-        }
-
-        if (userDTOList.isEmpty())
-            throw new UserException("User.USERS_NOT_FOUND");
-
-        return userDTOList;
     }
 
     public void updateUserEmailId(Integer userId, String emailId) throws UserException {

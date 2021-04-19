@@ -1,5 +1,7 @@
 package app.user.dto;
 
+import org.apache.catalina.Manager;
+
 public enum UserRole {
-    ADMIN, MANAGER, PRODUCTION, SALES
+    CEO, Manager, ProductionStaff, SellingStaff
 }

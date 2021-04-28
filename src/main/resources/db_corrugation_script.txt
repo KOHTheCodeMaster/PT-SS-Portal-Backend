@@ -1,0 +1,125 @@
+# create schema db_pt_ss;
+use db_pt_ss;
+
+# --------------------------------
+#   Corrugation Table
+# --------------------------------
+
+# corrugationId, corrugationDate, itemType, colour, corrugationType, amount);
+
+drop table corrugation;
+
+create table corrugation(
+    corrugation_id integer AUTO_INCREMENT,
+    corrugation_date date,
+    item_type varchar(20),
+    colour varchar(20),
+    corrugation_type varchar(20),
+    amount integer,
+    PRIMARY KEY (corrugation_id)
+);
+
+# insert into corrugation values(1, "STR_TO_DATE('12/31/2021', '%d/%m/%Y')", "Seng Kaki", "Silver", "Gelombang Kecil", 1807);
+
+insert into corrugation values(1, STR_TO_DATE('01/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1807);
+insert into corrugation values(2, STR_TO_DATE('01/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1864);
+insert into corrugation values(3, STR_TO_DATE('01/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1254);
+insert into corrugation values(4, STR_TO_DATE('02/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1363);
+insert into corrugation values(5, STR_TO_DATE('02/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1231);
+insert into corrugation values(6, STR_TO_DATE('02/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1499);
+insert into corrugation values(7, STR_TO_DATE('03/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1261);
+insert into corrugation values(8, STR_TO_DATE('03/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 987);
+insert into corrugation values(9, STR_TO_DATE('03/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1961);
+insert into corrugation values(10, STR_TO_DATE('04/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1322);
+insert into corrugation values(11, STR_TO_DATE('04/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 1650);
+insert into corrugation values(12, STR_TO_DATE('04/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 988);
+insert into corrugation values(13, STR_TO_DATE('05/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1967);
+insert into corrugation values(14, STR_TO_DATE('05/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1721);
+insert into corrugation values(15, STR_TO_DATE('05/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1903);
+insert into corrugation values(16, STR_TO_DATE('06/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 1768);
+insert into corrugation values(17, STR_TO_DATE('06/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1785);
+insert into corrugation values(18, STR_TO_DATE('06/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1812);
+insert into corrugation values(19, STR_TO_DATE('07/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 893);
+insert into corrugation values(20, STR_TO_DATE('07/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1600);
+insert into corrugation values(21, STR_TO_DATE('07/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1932);
+insert into corrugation values(22, STR_TO_DATE('08/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1859);
+insert into corrugation values(23, STR_TO_DATE('08/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1101);
+insert into corrugation values(24, STR_TO_DATE('08/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 1896);
+insert into corrugation values(25, STR_TO_DATE('09/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1325);
+insert into corrugation values(26, STR_TO_DATE('09/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1783);
+insert into corrugation values(27, STR_TO_DATE('09/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 898);
+insert into corrugation values(28, STR_TO_DATE('10/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1757);
+insert into corrugation values(29, STR_TO_DATE('10/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1290);
+insert into corrugation values(30, STR_TO_DATE('10/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 886);
+insert into corrugation values(31, STR_TO_DATE('11/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 899);
+insert into corrugation values(32, STR_TO_DATE('11/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 870);
+insert into corrugation values(33, STR_TO_DATE('11/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1517);
+insert into corrugation values(34, STR_TO_DATE('12/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1944);
+insert into corrugation values(35, STR_TO_DATE('12/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 844);
+insert into corrugation values(36, STR_TO_DATE('12/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 860);
+insert into corrugation values(37, STR_TO_DATE('13/02/2021', '%d/%m/%Y'), "Spandeck", "silver", "Spandeck", 1854);
+insert into corrugation values(38, STR_TO_DATE('13/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1988);
+insert into corrugation values(39, STR_TO_DATE('13/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1489);
+insert into corrugation values(40, STR_TO_DATE('14/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1987);
+insert into corrugation values(41, STR_TO_DATE('14/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1256);
+insert into corrugation values(42, STR_TO_DATE('14/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 1042);
+insert into corrugation values(43, STR_TO_DATE('15/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 803);
+insert into corrugation values(44, STR_TO_DATE('15/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1463);
+insert into corrugation values(45, STR_TO_DATE('15/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1082);
+insert into corrugation values(46, STR_TO_DATE('16/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1193);
+insert into corrugation values(47, STR_TO_DATE('16/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1293);
+insert into corrugation values(48, STR_TO_DATE('16/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 967);
+insert into corrugation values(49, STR_TO_DATE('17/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1980);
+insert into corrugation values(50, STR_TO_DATE('17/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 855);
+insert into corrugation values(51, STR_TO_DATE('17/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1174);
+insert into corrugation values(52, STR_TO_DATE('18/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1188);
+insert into corrugation values(53, STR_TO_DATE('18/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1295);
+insert into corrugation values(54, STR_TO_DATE('18/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1862);
+insert into corrugation values(55, STR_TO_DATE('19/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1842);
+insert into corrugation values(56, STR_TO_DATE('19/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 1663);
+insert into corrugation values(57, STR_TO_DATE('19/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1371);
+insert into corrugation values(58, STR_TO_DATE('19/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1943);
+insert into corrugation values(59, STR_TO_DATE('20/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1117);
+insert into corrugation values(60, STR_TO_DATE('20/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1998);
+insert into corrugation values(61, STR_TO_DATE('20/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1037);
+insert into corrugation values(62, STR_TO_DATE('20/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1431);
+insert into corrugation values(63, STR_TO_DATE('21/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1364);
+insert into corrugation values(64, STR_TO_DATE('21/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1214);
+insert into corrugation values(65, STR_TO_DATE('21/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1813);
+insert into corrugation values(66, STR_TO_DATE('21/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1718);
+insert into corrugation values(67, STR_TO_DATE('21/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1973);
+insert into corrugation values(68, STR_TO_DATE('22/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1787);
+insert into corrugation values(69, STR_TO_DATE('22/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1078);
+insert into corrugation values(70, STR_TO_DATE('22/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1767);
+insert into corrugation values(71, STR_TO_DATE('22/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1825);
+insert into corrugation values(72, STR_TO_DATE('23/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 1180);
+insert into corrugation values(73, STR_TO_DATE('23/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1501);
+insert into corrugation values(74, STR_TO_DATE('23/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1141);
+insert into corrugation values(75, STR_TO_DATE('23/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1843);
+insert into corrugation values(76, STR_TO_DATE('23/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1560);
+insert into corrugation values(77, STR_TO_DATE('24/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1709);
+insert into corrugation values(78, STR_TO_DATE('24/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1087);
+insert into corrugation values(79, STR_TO_DATE('24/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1962);
+insert into corrugation values(80, STR_TO_DATE('24/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1382);
+insert into corrugation values(81, STR_TO_DATE('24/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 1734);
+insert into corrugation values(82, STR_TO_DATE('25/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 1563);
+insert into corrugation values(83, STR_TO_DATE('25/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1938);
+insert into corrugation values(84, STR_TO_DATE('25/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 790);
+insert into corrugation values(85, STR_TO_DATE('25/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 859);
+insert into corrugation values(86, STR_TO_DATE('25/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 1238);
+insert into corrugation values(87, STR_TO_DATE('26/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Hollow", 1661);
+insert into corrugation values(88, STR_TO_DATE('26/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 1707);
+insert into corrugation values(89, STR_TO_DATE('26/02/2021', '%d/%m/%Y'), "Spandeck", "Hijau Borneo", "Spandeck", 980);
+insert into corrugation values(90, STR_TO_DATE('26/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Kecil", 1523);
+insert into corrugation values(91, STR_TO_DATE('27/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1844);
+insert into corrugation values(92, STR_TO_DATE('27/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1216);
+insert into corrugation values(93, STR_TO_DATE('27/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Kanal C", 1663);
+insert into corrugation values(94, STR_TO_DATE('27/02/2021', '%d/%m/%Y'), "Spandeck", "Silver", "Spandeck", 1340);
+insert into corrugation values(95, STR_TO_DATE('27/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Kecil", 1632);
+insert into corrugation values(96, STR_TO_DATE('28/02/2021', '%d/%m/%Y'), "Spandeck", "Merah Merapi", "Spandeck", 943);
+insert into corrugation values(97, STR_TO_DATE('28/02/2021', '%d/%m/%Y'), "Seng Lebar", "Silver", "Gelombang Besar", 880);
+insert into corrugation values(98, STR_TO_DATE('28/02/2021', '%d/%m/%Y'), "Galvalum ", "Silver", "Reng", 1435);
+insert into corrugation values(99, STR_TO_DATE('28/02/2021', '%d/%m/%Y'), "Spandeck", "Biru Bromo", "Spandeck", 1507);
+insert into corrugation values(100, STR_TO_DATE('28/02/2021', '%d/%m/%Y'), "Seng Kaki", "Silver", "Gelombang Besar", 1105);
+
+commit;

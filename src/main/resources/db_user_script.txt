@@ -1,0 +1,38 @@
+# create schema db_pt_ss;
+use db_pt_ss;
+
+
+# --------------------------------
+#   User Table
+# --------------------------------
+
+
+drop table user;
+
+create table user(
+    user_id integer AUTO_INCREMENT,
+    name varchar(50),
+    user_role varchar(20),
+    email_id varchar(50),
+    password integer (20),
+    phone_number varchar(11),
+    address varchar(100),
+    pic_id integer,
+    PRIMARY KEY (user_id)
+);
+
+insert into user values(1, 'Rudy S', 'CEO', 'rudys@sermanisteel.co.id', '123', '62811234567', 'Jl. Karunrung, Makassar', 1);
+insert into user values(2, 'Hedi S', 'Manager', 'hedis@sermanisteel.co.id', '123', '62811400059', 'Jl. Botolempangan, Makassar', 2);
+insert into user values(3, 'Edy S', 'Manager', 'edys@sermanisteel.co.id', '123', '62844536544', 'Jl. Kasuari, Makassar', 3);
+insert into user values(4, 'Syam', 'ProductionStaff', 'syam@sermanisteel.co.id', '123', '62855623445', 'Jl. Cendrawasih, Makassar', 4);
+insert into user values(5, 'Hasbi', 'ProductionStaff', 'hasbi@sermanisteel.co.id', '123', '62824453975', 'Jl. Panakukang, Makassar', 5);
+insert into user values(6, 'Suding', 'ProductionStaff', 'suding@sermanisteel.co.id', '123', '62812216064', 'Jl. Sungai Saddang, Makassar', 6);
+insert into user values(7, 'Dani', 'ProductionStaff', 'dani@sermanisteel.co.id', '123', '62822401152', 'Jl. Urip Sumoharjo, Makassar', 7);
+insert into user values(8, 'Irwan', 'SellingStaff', 'irwan@sermanisteel.co.id', '123', '62845523649', 'Jl. Kijang, Makassar', 8);
+insert into user values(9, 'Fitri', 'SellingStaff', 'fitri@sermanisteel.co.id', '123', '62866541286', 'Jl. Kajaolalido, Makassar', 9);
+insert into user values(10, 'Rastan', 'SellingStaff', 'rastan@sermanisteel.co.id', '123', '62894456235', 'Jl. Sunu, Makassar', 10);
+
+# insert into user values(1, 'abc','abc@xyz.com', '123', 'abc', '2000-01-31', 'MANAGER');
+# insert into user values(2, 'koh','koh@koh.com', 'koh', 'koh', '1998-01-18', 'ADMIN');
+
+commit;

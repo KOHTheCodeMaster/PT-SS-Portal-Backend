@@ -1,10 +1,7 @@
 package app.user.service;
 
 import app.user.dto.SalesStaffDTO;
-import app.user.dto.UserDTO;
 import app.user.entity.SalesStaff;
-import app.user.entity.User;
-import app.user.exceptions.SalesStaffException;
 import app.user.exceptions.SalesStaffException;
 import app.user.repository.SalesStaffRepository;
 import org.slf4j.Logger;
@@ -66,16 +63,19 @@ public class SalesStaffService {
 
     public void deleteSalesById(Integer salesId) throws SalesStaffException {
 
-/*
-        SalesStaff salesStaff = salesStaffRepository.findById(salesId).orElseThrow(
+        //  Throw SalesStaffException for invalid salesId
+        if (salesId == null || salesId < 1)
+            throw new SalesStaffException("SalesStaff.INVALID_SALES_ID : " + salesId);
+
+        salesStaffRepository.findById(salesId).orElseThrow(
                 () -> new SalesStaffException("SalesStaff.SALES_NOT_FOUND with id: " + salesId)
         );
 
-        //  Delete salesStaff from DB
+        //  Delete salesStaff from DB using salesStaff entity
 //        salesStaffRepository.delete(salesStaff);
-*/
-        //  Delete salesStaff from DB
+
+        //  Delete salesStaff from DB using salesId
         salesStaffRepository.deleteById(salesId);
-        
+
     }
 }

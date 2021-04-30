@@ -31,7 +31,7 @@ public class SalesController {
         demoSalesStaffFetchBySalesId(999);      //  Invalid Entry
 
         logger.info("demo - Insert new entry in Sales Staff");
-        demoInsertIntoSalesStaff();             //  Insert New Sales Entry
+        demoAddSalesStaff();             //  Insert New Sales Entry
 
         logger.info("demo - Delete from Sales Staff for salesId = 241");
         demoDeleteFromSalesStaff(241);    //  Delete Entry with salesId 241
@@ -53,14 +53,14 @@ public class SalesController {
 
     }
 
-    private void demoInsertIntoSalesStaff() {
+    private void demoAddSalesStaff() {
 
         SalesStaffDTO salesStaffDTO;
         try {
 
             logger.info("Inserting New Entry");
             salesStaffDTO = salesStaffService.fetchSalesStaffById(10);
-            logger.info(salesStaffService.insertIntoSalesStaff(salesStaffDTO) + " Inserted!");
+            logger.info(salesStaffService.addSalesStaff(salesStaffDTO) + " Inserted!");
             logger.info("Insertion Complete.");
 
         } catch (SalesStaffException e) {

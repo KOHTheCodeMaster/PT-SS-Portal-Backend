@@ -23,7 +23,7 @@ public class ProductionStaffService {
         this.productionStaffRepository = ProductionStaffRepository;
     }
 
-    public int insertIntoProductionStaff(ProductionStaffDTO productionStaffDTO) {
+    public int addProductionStaff(ProductionStaffDTO productionStaffDTO) {
 
         //  Throw ProductionStaffException if productionStaff with same productionId already exists in DB
 //        if (productionStaffRepository.findById(productionStaffDTO.getProductionId()).isPresent())

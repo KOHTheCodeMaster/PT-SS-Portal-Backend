@@ -32,7 +32,7 @@ public class ProductionController {
         demoProductionStaffFetchByProductionId(999);      //  Invalid Entry
 
         logger.info("Demo - Insert new entry in Production Staff");
-        demoInsertIntoProductionStaff();             //  Insert New Production Staff Entry
+        demoAddProductionStaff();             //  Insert New Production Staff Entry
 
         logger.info("demo - Delete from Production Staff for productionId = 191");
         demoDeleteFromProductionStaff(191);    //  Delete Entry with productionId 191
@@ -53,14 +53,14 @@ public class ProductionController {
 
     }
 
-    private void demoInsertIntoProductionStaff() {
+    private void demoAddProductionStaff() {
 
         ProductionStaffDTO productionStaffDTO;
         try {
 
             logger.info("Inserting New Entry");
             productionStaffDTO = productionStaffService.fetchProductionStaffById(10);
-            logger.info(productionStaffService.insertIntoProductionStaff(productionStaffDTO) + " Inserted!");
+            logger.info(productionStaffService.addProductionStaff(productionStaffDTO) + " Inserted!");
             logger.info("Insertion Complete.");
 
         } catch (ProductionStaffException e) {

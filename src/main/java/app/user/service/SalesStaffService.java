@@ -23,7 +23,7 @@ public class SalesStaffService {
         this.salesStaffRepository = SalesStaffRepository;
     }
 
-    public int insertIntoSalesStaff(SalesStaffDTO salesStaffDTO) throws SalesStaffException {
+    public int addSalesStaff(SalesStaffDTO salesStaffDTO) throws SalesStaffException {
 
         //  Throw SalesStaffException if salesStaff with same salesId already exists in DB
 //        if (salesStaffRepository.findById(salesStaffDTO.getSalesId()).isPresent())

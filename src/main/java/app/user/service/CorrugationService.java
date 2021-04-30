@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 
 @Service(value = "corrugationService")
 @Transactional
@@ -23,11 +24,13 @@ public class CorrugationService {
         this.corrugationRepository = CorrugationRepository;
     }
 
-    public int insertIntoCorrugation(CorrugationDTO corrugationDTO) {
-
-        //  Throw CorrugationException if corrugation with same corrugationId already exists in DB
-//        if (CorrugationRepository.findById(corrugationDTO.getCorrugationId()).isPresent())
-//            throw new CorrugationException("corrugation.ENTRY_ALREADY_EXISTS with Id: " + corrugationDTO.getCorrugationId());
+    /**
+     * Insert new corrugation record in Corrugation table for the given corrugationDTO
+     *
+     * @param corrugationDTO corrugationDTO which needs to be inserted into Corrugation Table
+     * @return corrugationId of the newly added corrugation record on successful insertion, -1 on Failure.
+     */
+    public int addCorrugation(CorrugationDTO corrugationDTO) {
 
         // corrugationId, corrugationDate, itemType, colour, corrugationType, amount);
         Corrugation corrugation = new Corrugation();
@@ -49,24 +52,53 @@ public class CorrugationService {
         return -1;
     }
 
+    /**
+     * Validate corrugationId, retrieve corrugation from DB for the given corrugationId & return its corrugationDTO.
+     *
+     * @param corrugationId id corresponding to the corrugation record of the Corrugation table in DB
+     * @return corrugationDTO for the given corrugationId
+     * @throws CorrugationException If corrugationId is null OR < 1 OR is not found in DB
+     */
     public CorrugationDTO fetchCorrugationById(final int corrugationId) throws CorrugationException {
 
+        validateCorrugationId(corrugationId);
+
         Corrugation corrugation = corrugationRepository.findById(corrugationId).orElseThrow(
-                () -> new CorrugationException("corrugation.CORRUGATION_NOT_FOUND with id: " + corrugationId)
-        );
-
-        return corrugation.convertToDTO();
-    }
-
-    public void deleteCorrugationById(Integer corrugationId) throws CorrugationException {
-
-        //  Throw CorrugationException for invalid corrugationId
-        if (corrugationId == null || corrugationId < 1)
-            throw new CorrugationException("Corrugation.INVALID_CORRUGATION_ID : " + corrugationId);
-
-        corrugationRepository.findById(corrugationId).orElseThrow(
                 () -> new CorrugationException("Corrugation.CORRUGATION_NOT_FOUND with id: " + corrugationId)
         );
+        return corrugation.convertToDTO();
+
+    }
+
+    /**
+     * Retrieve all the corrugations records from the Corrugation Table and return it as an ArrayList<CorrugationDTO>
+     *
+     * @return corrugationDTO ArrayList of all the corrugation records from Corrugation Table
+     */
+    public ArrayList<CorrugationDTO> getAllCorrugationsList() {
+
+        ArrayList<CorrugationDTO> corrugationDTOList = new ArrayList<>();
+
+        //  Retrieve all the corrugations records from the Corrugation Table as Iterable<Corrugation>
+        Iterable<Corrugation> iterable = corrugationRepository.findAll();
+
+        //  Iterate each corrugation entity, convert into its DTO & Add it to the corrugationDTOList
+        iterable.forEach(corrugation -> corrugationDTOList.add(corrugation.convertToDTO()));
+
+        return corrugationDTOList;
+
+    }
+
+    /**
+     * Delete corrugation record from DB for the given corrugationId
+     *
+     * @param corrugationId id corresponding to the corrugation which needs to be deleted
+     * @throws CorrugationException If corrugationId is null OR < 1 OR is not found in DB
+     */
+    public void deleteCorrugationById(Integer corrugationId) throws CorrugationException {
+
+        //  Validate & Check if corrugationId exists in DB
+        fetchCorrugationById(corrugationId);
 
         //  Delete Corrugation from DB using Corrugation entity
 //        CorrugationRepository.delete(Corrugation);
@@ -76,4 +108,19 @@ public class CorrugationService {
 
     }
 
+
+    /**
+     * corrugationId is INVALID for null OR < 1, Otherwise Valid
+     *
+     * @param corrugationId id which needs to be validated
+     * @throws CorrugationException If corrugationId is null OR < 1
+     */
+    private void validateCorrugationId(Integer corrugationId) throws CorrugationException {
+
+        //  Throw CorrugationException for invalid corrugationId
+        if (corrugationId == null || corrugationId < 1)
+            throw new CorrugationException("Corrugation.INVALID_CORRUGATION_ID : " + corrugationId);
+
+
+    }
 }

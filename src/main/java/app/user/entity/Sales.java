@@ -1,6 +1,6 @@
 package app.user.entity;
 
-import app.user.dto.SalesStaffDTO;
+import app.user.dto.SalesDTO;
 import app.user.enums.Payment;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class SalesStaff {
+public class Sales {
 
     // Sales_Id, Buyer Name, Buyer Phone number, Buyer Address, Item Types, Colour, Item Size, Date, Amount of Item, Payment, Sales Name
 
@@ -28,32 +28,32 @@ public class SalesStaff {
     private String salesName;
 
     /**
-     * Convert from given SalesStaff entity instance to SalesStaffDTO instance
+     * Convert from given Sales entity instance to SalesDTO instance
      *
-     * @return SalesStaffDTO instance corresponding to the given SalesStaff
+     * @return SalesDTO instance corresponding to the given Sales
      */
-    public SalesStaffDTO convertToDTO() {
+    public SalesDTO convertToDTO() {
 
-        SalesStaffDTO salesStaffDTO = new SalesStaffDTO();
+        SalesDTO salesDTO = new SalesDTO();
 
-        salesStaffDTO.setSalesId(this.getSalesId());
-        salesStaffDTO.setBuyerName(this.getBuyerName());
-        salesStaffDTO.setBuyerPhoneNumber(this.getBuyerPhoneNumber());
-        salesStaffDTO.setBuyerAddress(this.getBuyerAddress());
-        salesStaffDTO.setItemSize(this.getItemType());
-        salesStaffDTO.setColour(this.getColour());
-        salesStaffDTO.setItemSize(this.getItemSize());
-        salesStaffDTO.setSalesDate(this.getSalesDate());
-        salesStaffDTO.setAmountOfItem(this.getAmountOfItem());
-        salesStaffDTO.setPayment(this.getPayment());
-        salesStaffDTO.setSalesName(this.getSalesName());
+        salesDTO.setSalesId(this.getSalesId());
+        salesDTO.setBuyerName(this.getBuyerName());
+        salesDTO.setBuyerPhoneNumber(this.getBuyerPhoneNumber());
+        salesDTO.setBuyerAddress(this.getBuyerAddress());
+        salesDTO.setItemType(this.getItemType());
+        salesDTO.setColour(this.getColour());
+        salesDTO.setItemSize(this.getItemSize());
+        salesDTO.setSalesDate(this.getSalesDate());
+        salesDTO.setAmountOfItem(this.getAmountOfItem());
+        salesDTO.setPayment(this.getPayment());
+        salesDTO.setSalesName(this.getSalesName());
 
-        return salesStaffDTO;
+        return salesDTO;
     }
 
     @Override
     public String toString() {
-        return "SalesStaffDTO{" +
+        return "SalesDTO{" +
                 "salesId=" + salesId +
                 ", buyerName='" + buyerName + '\'' +
                 ", buyerPhoneNumber='" + buyerPhoneNumber + '\'' +
@@ -97,8 +97,8 @@ public class SalesStaff {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof SalesStaff)) return false;
-        SalesStaff other = (SalesStaff) obj;
+        if (!(obj instanceof Sales)) return false;
+        Sales other = (Sales) obj;
         return Objects.equals(this.salesId, other.salesId);
     }
 

@@ -1,90 +1,159 @@
 package app.user.controller;
 
-import app.user.dto.ProductionStaffDTO;
-import app.user.exceptions.ProductionStaffException;
-import app.user.service.ProductionStaffService;
+import app.user.dto.ProductionDTO;
+import app.user.exceptions.ProductionException;
+import app.user.service.ProductionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 public class ProductionController {
 
-    Logger logger;
-    ProductionStaffService productionStaffService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductionController.class);
+    private final ProductionService productionService;
 
     @Autowired
-    public ProductionController(ProductionStaffService productionStaffService) {
-        this.productionStaffService = productionStaffService;
-        this.logger = LoggerFactory.getLogger(this.getClass());
+    public ProductionController(ProductionService productionService) {
+        this.productionService = productionService;
 
-//        demoProductionStaffService();
+//        demoProductionService();
     }
 
-    private void demoProductionStaffService() {
+    /**
+     * Retrieve ArrayList of ProductionDTO for all the production records from Production Table
+     *
+     * @return productionDTO ArrayList of all the production records from Production Table
+     */
+    @GetMapping(value = "/production/")
+    public ResponseEntity<ArrayList<ProductionDTO>> getAllProductions() {
 
-        logger.info("Demo Production Staff");
-
-        logger.info("Demo - Find by productionId - VALID");
-        demoProductionStaffFetchByProductionId(10);        //  Valid Entry
-        logger.info("Demo - Find by productionId - INVALID");
-        demoProductionStaffFetchByProductionId(999);      //  Invalid Entry
-
-        logger.info("Demo - Insert new entry in Production Staff");
-        demoAddProductionStaff();             //  Insert New Production Staff Entry
-
-        logger.info("demo - Delete from Production Staff for productionId = 191");
-        demoDeleteFromProductionStaff(191);    //  Delete Entry with productionId 191
-        logger.info("demo - Delete from Production Staff for productionId = 192");
-        demoDeleteFromProductionStaff(192);    //  Delete Entry with productionId 192
+        LOGGER.info("Requesting All Productions.");
+        return new ResponseEntity<>(productionService.getAllProductions(), HttpStatus.OK);
 
     }
 
-    private void demoDeleteFromProductionStaff(int productionId) {
+    /**
+     * Retrieve ProductionDTO by providing productionId in the url
+     *
+     * @param productionId id corresponding to the production record of the Production Table
+     * @return ProductionDTO for the given productionId
+     * @throws ProductionException If productionId is null OR < 1 OR is not found in DB
+     */
+    @GetMapping(value = "/production/{productionId}")
+    public ResponseEntity<ProductionDTO> getProductionById(@PathVariable Integer productionId) throws ProductionException {
+
+        LOGGER.info("Requesting production for id: {}", productionId);
+        return new ResponseEntity<>(productionService.getProductionById(productionId), HttpStatus.OK);
+
+    }
+
+    /**
+     * Add new production record in DB by providing productionDTO as Json format in POST request body.
+     * productionId is ignored since it is Auto-incremented by the DB.
+     *
+     * @param productionDTO productionDTO in the body of POST request as Json format
+     * @return productionId of the newly added production record in Production Table
+     */
+    @PostMapping(value = "/production")
+    public ResponseEntity<String> addProduction(@RequestBody ProductionDTO productionDTO) {
+
+        int productionId = productionService.addProduction(productionDTO);
+
+        String msg = "Production added successfully with id: " + productionId;
+        LOGGER.info(msg);
+
+        return new ResponseEntity<>(msg, HttpStatus.CREATED);
+    }
+
+    /**
+     * Delete the record from Production Table for the given productionId
+     *
+     * @param productionId id corresponding to the production record of the Production Table
+     * @return status msg. along with productionId on successful deletion otherwise Exception msg. on failure.
+     * @throws ProductionException If productionId is null OR < 1 OR is not found in DB
+     */
+    @DeleteMapping(value = "/production/{productionId}")
+    public ResponseEntity<String> deleteProduction(@PathVariable int productionId) throws ProductionException {
+
+        productionService.deleteProductionById(productionId);
+
+        String msg = "Production deleted successfully with production id : " + productionId;
+        LOGGER.info(msg);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+
+    /**
+     * Demo ProductionService methods
+     */
+    private void demoProductionService() {
+
+        LOGGER.info("Demo Production ");
+
+        LOGGER.info("Demo - Find by productionId - VALID");
+        demoProductionFetchByProductionId(10);        //  Valid Entry
+        LOGGER.info("Demo - Find by productionId - INVALID");
+        demoProductionFetchByProductionId(999);      //  Invalid Entry
+
+        LOGGER.info("Demo - Insert new entry in Production ");
+        demoAddProduction();             //  Insert New Production  Entry
+
+        LOGGER.info("demo - Delete from Production For productionId = 191");
+        demoDeleteFromProduction(191);    //  Delete Entry with productionId 191
+        LOGGER.info("demo - Delete from Production For productionId = 192");
+        demoDeleteFromProduction(192);    //  Delete Entry with productionId 192
+
+    }
+
+    private void demoDeleteFromProduction(int productionId) {
 
         try {
-            productionStaffService.deleteProductionStaffById(productionId);
-            logger.info("Production Staff for id: " + productionId + " deleted successfully.");
-        } catch (ProductionStaffException e) {
-            logger.error("Failed to delete Production due to Exception: " + e.getMessage());
+            productionService.deleteProductionById(productionId);
+            LOGGER.info("Production For id: " + productionId + " deleted successfully.");
+        } catch (ProductionException e) {
+            LOGGER.error("Failed to delete Production due to Exception: " + e.getMessage());
 //            e.printStackTrace();
         }
 
     }
 
-    private void demoAddProductionStaff() {
+    private void demoAddProduction() {
 
-        ProductionStaffDTO productionStaffDTO;
+        ProductionDTO productionDTO;
         try {
 
-            logger.info("Inserting New Entry");
-            productionStaffDTO = productionStaffService.fetchProductionStaffById(10);
-            logger.info(productionStaffService.addProductionStaff(productionStaffDTO) + " Inserted!");
-            logger.info("Insertion Complete.");
+            LOGGER.info("Inserting New Entry");
+            productionDTO = productionService.getProductionById(10);
+            LOGGER.info(productionService.addProduction(productionDTO) + " Inserted!");
+            LOGGER.info("Insertion Complete.");
 
-        } catch (ProductionStaffException e) {
-            logger.error("Production Staff Failed Insertion due to - Exception: " + e.getMessage());
+        } catch (ProductionException e) {
+            LOGGER.error("Production Failed Insertion due to - Exception: " + e.getMessage());
 //            e.printStackTrace();
         }
 
     }
 
-
-    private void demoProductionStaffFetchByProductionId(int productionId) {
+    private void demoProductionFetchByProductionId(int productionId) {
 
         try {
 
-            ProductionStaffDTO productionStaffDTO = productionStaffService.fetchProductionStaffById(productionId);
-            logger.info("Existing Id: " + productionStaffDTO.getProductionId());
+            ProductionDTO productionDTO = productionService.getProductionById(productionId);
+            LOGGER.info("Existing Id: " + productionDTO.getProductionId());
 
-        } catch (ProductionStaffException e) {
-            logger.info("Production Staff Failed with Exception - " + e.getMessage());
+        } catch (ProductionException e) {
+            LOGGER.info("Production Failed with Exception - " + e.getMessage());
 //            e.printStackTrace();
         }
 
     }
-
 
 
 }

@@ -1,84 +1,157 @@
 package app.user.controller;
 
-import app.user.dto.SalesStaffDTO;
-import app.user.exceptions.SalesStaffException;
-import app.user.service.SalesStaffService;
+import app.user.dto.SalesDTO;
+import app.user.exceptions.SalesException;
+import app.user.service.SalesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @RestController
 public class SalesController {
 
-    private static final Logger logger = LoggerFactory.getLogger(SalesController.class);
-    SalesStaffService salesStaffService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(SalesController.class);
+    private final SalesService salesService;
 
     @Autowired
-    public SalesController(SalesStaffService SalesStaffService) {
-        this.salesStaffService = SalesStaffService;
+    public SalesController(SalesService SalesService) {
+        this.salesService = SalesService;
 
-//        demoSalesStaffService();
+//        demoSalesService();
     }
 
-    private void demoSalesStaffService() {
 
-        logger.info("Demo Sales Staff");
+    /**
+     * Retrieve ArrayList of SalesDTO for all the sales records from Sales Table
+     *
+     * @return salesDTO ArrayList of all the sales records from Sales Table
+     */
+    @GetMapping(value = "/sales/")
+    public ResponseEntity<ArrayList<SalesDTO>> getAllSales() {
 
-        logger.info("demo - Find by salesId - VALID");
-        demoSalesStaffFetchBySalesId(2);        //  Valid Entry
-        logger.info("demo - Find by salesId - INVALID");
-        demoSalesStaffFetchBySalesId(999);      //  Invalid Entry
-
-        logger.info("demo - Insert new entry in Sales Staff");
-        demoAddSalesStaff();             //  Insert New Sales Entry
-
-        logger.info("demo - Delete from Sales Staff for salesId = 241");
-        demoDeleteFromSalesStaff(241);    //  Delete Entry with salesId 241
-        logger.info("demo - Delete from Sales Staff for salesId = 242");
-        demoDeleteFromSalesStaff(242);    //  Delete Entry with salesId 242
+        LOGGER.info("Requesting All Sales.");
+        return new ResponseEntity<>(salesService.getAllSales(), HttpStatus.OK);
 
     }
 
-    private void demoDeleteFromSalesStaff(int salesId) {
+    /**
+     * Retrieve SalesDTO by providing salesId in the url
+     *
+     * @param salesId id corresponding to the sales record of the Sales Table
+     * @return SalesDTO for the given salesId
+     * @throws SalesException If salesId is null OR < 1 OR is not found in DB
+     */
+    @GetMapping(value = "/sales/{salesId}")
+    public ResponseEntity<SalesDTO> getSalesById(@PathVariable Integer salesId) throws SalesException {
+
+        LOGGER.info("Requesting sales for id: {}", salesId);
+        return new ResponseEntity<>(salesService.getSalesById(salesId), HttpStatus.OK);
+
+    }
+
+    /**
+     * Add new sales record in DB by providing salesDTO as Json format in POST request body.
+     * salesId is ignored since it is Auto-incremented by the DB.
+     *
+     * @param salesDTO salesDTO in the body of POST request as Json format
+     * @return salesId of the newly added sales record in Sales Table
+     */
+    @PostMapping(value = "/sales")
+    public ResponseEntity<String> addSales(@RequestBody SalesDTO salesDTO) {
+
+        int salesId = salesService.addSales(salesDTO);
+
+        String msg = "Sales added successfully with id: " + salesId;
+        LOGGER.info(msg);
+
+        return new ResponseEntity<>(msg, HttpStatus.CREATED);
+    }
+
+    /**
+     * Delete the record from Sales Table for the given salesId
+     *
+     * @param salesId id corresponding to the sales record of the Sales Table
+     * @return status msg. along with salesId on successful deletion otherwise Exception msg. on failure.
+     * @throws SalesException If salesId is null OR < 1 OR is not found in DB
+     */
+    @DeleteMapping(value = "/sales/{salesId}")
+    public ResponseEntity<String> deleteSales(@PathVariable int salesId) throws SalesException {
+
+        salesService.deleteSalesById(salesId);
+
+        String msg = "Sales deleted successfully with sales id : " + salesId;
+        LOGGER.info(msg);
+
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+
+    /**
+     * Demo SalesService methods
+     */
+    private void demoSalesService() {
+
+        LOGGER.info("Demo Sales ");
+
+        LOGGER.info("demo - Find by salesId - VALID");
+        demoSalesFetchBySalesId(2);        //  Valid Entry
+        LOGGER.info("demo - Find by salesId - INVALID");
+        demoSalesFetchBySalesId(999);      //  Invalid Entry
+
+        LOGGER.info("demo - Insert new entry in Sales ");
+        demoAddSales();             //  Insert New Sales Entry
+
+        LOGGER.info("demo - Delete from Sales for salesId = 241");
+        demoDeleteFromSales(241);    //  Delete Entry with salesId 241
+        LOGGER.info("demo - Delete from Sales for salesId = 242");
+        demoDeleteFromSales(242);    //  Delete Entry with salesId 242
+
+    }
+
+    private void demoDeleteFromSales(int salesId) {
 
         try {
-            salesStaffService.deleteSalesById(salesId);
-            logger.info("Production Staff for id: " + salesId + " deleted successfully.");
+            salesService.deleteSalesById(salesId);
+            LOGGER.info("Sales for id: " + salesId + " deleted successfully.");
 
-        } catch (SalesStaffException e) {
-            logger.error("Failed to delete Sales due to Exception: " + e.getMessage());
+        } catch (SalesException e) {
+            LOGGER.error("Failed to delete Sales due to Exception: " + e.getMessage());
 //            e.printStackTrace();
         }
 
     }
 
-    private void demoAddSalesStaff() {
+    private void demoAddSales() {
 
-        SalesStaffDTO salesStaffDTO;
+        SalesDTO salesDTO;
         try {
 
-            logger.info("Inserting New Entry");
-            salesStaffDTO = salesStaffService.fetchSalesStaffById(10);
-            logger.info(salesStaffService.addSalesStaff(salesStaffDTO) + " Inserted!");
-            logger.info("Insertion Complete.");
+            LOGGER.info("Inserting New Entry");
+            salesDTO = salesService.getSalesById(10);
+            LOGGER.info(salesService.addSales(salesDTO) + " Inserted!");
+            LOGGER.info("Insertion Complete.");
 
-        } catch (SalesStaffException e) {
-            logger.error("Sales Staff Failed Insertion due to - Exception: " + e.getMessage());
+        } catch (SalesException e) {
+            LOGGER.error("Sales Failed Insertion due to - Exception: " + e.getMessage());
 //            e.printStackTrace();
         }
 
     }
 
-    private void demoSalesStaffFetchBySalesId(int salesId) {
+    private void demoSalesFetchBySalesId(int salesId) {
 
         try {
 
-            SalesStaffDTO salesStaffDTO = salesStaffService.fetchSalesStaffById(salesId);
-            logger.info("Existing Id: " + salesStaffDTO.getSalesId());
+            SalesDTO salesDTO = salesService.getSalesById(salesId);
+            LOGGER.info("Existing Id: " + salesDTO.getSalesId());
 
-        } catch (SalesStaffException e) {
-            logger.info("Sales Staff Failed with Exception - " + e.getMessage());
+        } catch (SalesException e) {
+            LOGGER.info("Sales Failed with Exception - " + e.getMessage());
 //            e.printStackTrace();
         }
 

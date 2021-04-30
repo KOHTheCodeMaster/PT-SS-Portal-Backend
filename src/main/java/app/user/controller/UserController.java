@@ -14,28 +14,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
-        this.logger = LoggerFactory.getLogger(this.getClass());
-
 //        demoLoginUser();
-
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public boolean demoAttemptLoginUser(@RequestBody UserDTO userDTO) throws UserException {
-        logger.info("Login request for User {} with password {}", userDTO.getEmailId(), userDTO.getPassword());
+        LOGGER.info("Login request for User {} with password {}", userDTO.getEmailId(), userDTO.getPassword());
         return userService.loginUser(userDTO);
     }
 
 
     private void demoLoginUser() {
 
-        logger.info("Demo - Login User");
+        LOGGER.info("Demo - Login User");
 
         demoAttemptLoginUser(1);    //  Login Successful
         demoAttemptLoginUser(2);    //  Invalid Password
@@ -68,10 +65,10 @@ public class UserController {
         try {
 
             boolean b = userService.loginUser(userDTO);
-            logger.info("Login " + (b ? "Successful" : "Failure - Invalid Password"));
+            LOGGER.info("Login " + (b ? "Successful" : "Failure - Invalid Password"));
 
         } catch (UserException e) {
-            logger.error("Login Failed with Exception - " + e.getMessage());
+            LOGGER.error("Login Failed with Exception - " + e.getMessage());
 //            e.printStackTrace();
         }
 

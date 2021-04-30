@@ -23,6 +23,32 @@ public class AllExceptionHandler {
 
     }
 
+    @ExceptionHandler(ProductionException.class)
+    public ResponseEntity<ExceptionResponse> productionNotFound(ProductionException e) {
+
+        ExceptionResponse response = new ExceptionResponse();
+        response.setError("NOT_FOUND");
+        response.setMessage(e.getMessage());
+        response.setStatus(404);
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(SalesException.class)
+    public ResponseEntity<ExceptionResponse> salesNotFound(SalesException e) {
+
+        ExceptionResponse response = new ExceptionResponse();
+        response.setError("NOT_FOUND");
+        response.setMessage(e.getMessage());
+        response.setStatus(404);
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+    }
+
     @ExceptionHandler(NumberFormatException.class)
     public ResponseEntity<ExceptionResponse> invalidNumberFormatException(NumberFormatException e) {
 

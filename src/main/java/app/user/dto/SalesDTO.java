@@ -4,7 +4,7 @@ import app.user.enums.Payment;
 
 import java.time.LocalDate;
 
-public class SalesStaffDTO {
+public class SalesDTO {
 
     // Sales_Id, Buyer Name, Buyer Phone number, Buyer Address, Item Types, Colour, Item Size, Date, Amount of Item, Payment, Sales Name
     private Integer salesId;
@@ -21,7 +21,7 @@ public class SalesStaffDTO {
 
     @Override
     public String toString() {
-        return "SalesStaffDTO{" +
+        return "SalesDTO{" +
                 "salesId=" + salesId +
                 ", buyerName='" + buyerName + '\'' +
                 ", buyerPhoneNumber='" + buyerPhoneNumber + '\'' +

@@ -1,6 +1,6 @@
 package app.user.entity;
 
-import app.user.dto.ProductionStaffDTO;
+import app.user.dto.ProductionDTO;
 import app.user.enums.Shift;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-public class ProductionStaff {
+public class Production {
 
     //  productionId, supervisorName, nameOfReporter, Shift, Date, cardNumber, coilNumber, weight
     //  size, startTime, endTime, totalTime, prodAmount1stClass, prodAmount2ndClass, notes
@@ -27,41 +27,41 @@ public class ProductionStaff {
     private BigDecimal startTime;
     private BigDecimal endTime;
     private BigDecimal totalTime;
-    private Integer prodAmount1stClass;
-    private Integer prodAmount2ndClass;
+    private Integer productionAmount1stClass;
+    private Integer productionAmount2ndClass;
     private String notes;
 
     /**
-     * Convert from given ProductionStaff entity instance to ProductionStaffDTO instance
+     * Convert from given Production entity instance to ProductionDTO instance
      *
-     * @return ProductionStaffDTO instance corresponding to the given ProductionStaff
+     * @return ProductionDTO instance corresponding to the given Production
      */
-    public ProductionStaffDTO convertToDTO() {
+    public ProductionDTO convertToDTO() {
 
-        ProductionStaffDTO productionStaffDTO = new ProductionStaffDTO();
+        ProductionDTO productionDTO = new ProductionDTO();
 
-        productionStaffDTO.setProductionId(productionId);
-        productionStaffDTO.setSupervisorName(supervisorName);
-        productionStaffDTO.setNameOfReporter(nameOfReporter);
-        productionStaffDTO.setShift(shift);
-        productionStaffDTO.setProductionDate(productionDate);
-        productionStaffDTO.setCardNumber(cardNumber);
-        productionStaffDTO.setCoilNumber(coilNumber);
-        productionStaffDTO.setWeight(weight);
-        productionStaffDTO.setSize(size);
-        productionStaffDTO.setStartTime(startTime);
-        productionStaffDTO.setEndTime(endTime);
-        productionStaffDTO.setTotalTime(totalTime);
-        productionStaffDTO.setProdAmount1stClass(prodAmount1stClass);
-        productionStaffDTO.setProdAmount2ndClass(prodAmount2ndClass);
-        productionStaffDTO.setNotes(notes);
+        productionDTO.setProductionId(productionId);
+        productionDTO.setSupervisorName(supervisorName);
+        productionDTO.setNameOfReporter(nameOfReporter);
+        productionDTO.setShift(shift);
+        productionDTO.setProductionDate(productionDate);
+        productionDTO.setCardNumber(cardNumber);
+        productionDTO.setCoilNumber(coilNumber);
+        productionDTO.setWeight(weight);
+        productionDTO.setSize(size);
+        productionDTO.setStartTime(startTime);
+        productionDTO.setEndTime(endTime);
+        productionDTO.setTotalTime(totalTime);
+        productionDTO.setProductionAmount1stClass(productionAmount1stClass);
+        productionDTO.setProductionAmount2ndClass(productionAmount2ndClass);
+        productionDTO.setNotes(notes);
 
-        return productionStaffDTO;
+        return productionDTO;
     }
 
     @Override
     public String toString() {
-        return "ProductionStaffDTO{" +
+        return "ProductionDTO{" +
                 "productionId=" + productionId +
                 ", supervisorName='" + supervisorName + '\'' +
                 ", nameOfReporter='" + nameOfReporter + '\'' +
@@ -74,8 +74,8 @@ public class ProductionStaff {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", totalTime=" + totalTime +
-                ", prodAmount1stClass=" + prodAmount1stClass +
-                ", prodAmount2ndClass=" + prodAmount2ndClass +
+                ", prodAmount1stClass=" + productionAmount1stClass +
+                ", prodAmount2ndClass=" + productionAmount2ndClass +
                 ", notes='" + notes + '\'' +
                 '}';
     }
@@ -176,20 +176,20 @@ public class ProductionStaff {
         this.totalTime = totalTime;
     }
 
-    public Integer getProdAmount1stClass() {
-        return prodAmount1stClass;
+    public Integer getProductionAmount1stClass() {
+        return productionAmount1stClass;
     }
 
-    public void setProdAmount1stClass(Integer prodAmount1stClass) {
-        this.prodAmount1stClass = prodAmount1stClass;
+    public void setProductionAmount1stClass(Integer productionAmount1stClass) {
+        this.productionAmount1stClass = productionAmount1stClass;
     }
 
-    public Integer getProdAmount2ndClass() {
-        return prodAmount2ndClass;
+    public Integer getProductionAmount2ndClass() {
+        return productionAmount2ndClass;
     }
 
-    public void setProdAmount2ndClass(Integer prodAmount2ndClass) {
-        this.prodAmount2ndClass = prodAmount2ndClass;
+    public void setProductionAmount2ndClass(Integer productionAmount2ndClass) {
+        this.productionAmount2ndClass = productionAmount2ndClass;
     }
 
     public String getNotes() {

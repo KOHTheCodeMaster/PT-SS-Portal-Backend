@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CorrugationService {
 
     private final CorrugationRepository corrugationRepository;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CorrugationService.class);
 
     @Autowired
     public CorrugationService(CorrugationRepository CorrugationRepository) {
@@ -47,7 +47,7 @@ public class CorrugationService {
             Corrugation tempCorrugationEntity = corrugationRepository.save(corrugation);
             return tempCorrugationEntity.getCorrugationId();
         } catch (Exception e) {
-            logger.error("Failed to Save Entry due to Exception: " + e.getMessage());
+            LOGGER.error("Failed to Save Entry due to Exception: " + e.getMessage());
         }
         return -1;
     }
@@ -107,7 +107,6 @@ public class CorrugationService {
         corrugationRepository.deleteById(corrugationId);
 
     }
-
 
     /**
      * corrugationId is INVALID for null OR < 1, Otherwise Valid

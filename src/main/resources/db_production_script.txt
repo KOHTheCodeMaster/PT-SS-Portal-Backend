@@ -1,0 +1,224 @@
+# create schema db_pt_ss;
+use db_pt_ss;
+
+# --------------------------------
+#   PRODUCTION Table
+# --------------------------------
+
+drop table production;
+
+#  productionId, supervisorName, nameOfReporter, Shift, Date, cardNumber, coilNumber, weight
+#  size, startTime, endTime, totalTime, prodAmount1stClass, prodAmount2ndClass, notes
+
+create table production(
+    production_id integer AUTO_INCREMENT,
+    supervisor_name varchar(50),
+    name_of_reporter varchar(50),
+    shift char(1),
+    production_date date,
+    card_number integer,
+    coil_number varchar(6),
+    weight integer,
+    size varchar(20),
+    start_time varchar(15),
+    end_time varchar(15),
+    total_time varchar(15),
+    production_amount1st_class integer,
+    production_amount2nd_class integer,
+    notes varchar(100),
+    PRIMARY KEY (production_id)
+);
+
+# production_id, "Supervisor Name", "Name of Reporter", "Shift", Date, Card Number, "Coil Number", Weight, "Size", "Started Time", "End Time", "Total Time", 1st Class Production Amount, 2nd Class Production  Amount, "Notes"
+# insert into production values(1, "Daeng Suding", "Dita", "A", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2331, "2-791", 5039, "2134 x 0,2 x 762", "0.333333333", "0.451388889", "0.118055556", 2532, 2507, null);
+
+insert into production values(1, "Daeng Suding", "Dita", "A", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2331, "2-791", 5039, "2134 x 0,2 x 762", "0.333333333", "0.451388889", "0.118055556", 2532, 2507, null);
+insert into production values(2, "Daeng Suding", "Dita", "A", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2332, "2-792", 5101, "1829 x 0,2 x 762", "0.451388889", "0.565972222", "0.114583333", 2110, 2991, null);
+insert into production values(3, "Daeng Suding", "Dita", "A", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2333, "2-793", 5085, "3048 x 0,2 x 762", "0.565972222", "0.666666667", "0.100694444", 3284, 1801, null);
+insert into production values(4, "Hasbi", "Kris", "B", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2334, "2-794", 5124, "2134 x 0,2 x 762", "0.666666667", "0.767361111", "0.100694444", 4804, 320, null);
+insert into production values(5, "Hasbi", "Kris", "B", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2335, "2-795", 5140, "2134 x 0,2 x 762", "0.767361111", "0.868055556", "0.100694444", 4509, 631, null);
+insert into production values(6, "Hasbi", "Kris", "B", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2336, "2-796", 5023, "3048 x 0,2 x 762", "0.868055556", "1.0", "0.131944444", 3460, 1563, null);
+insert into production values(7, "Syam", "Tanto", "C", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2337, "2-797", 5050, "1829 x 0,2 x 762", "0.0", "0.086805556", "0.086805556", 3624, 1426, null);
+insert into production values(8, "Syam", "Tanto", "C", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2338, "2-798", 5120, "1829 x 0,2 x 762", "0.086805556", "0.177083333", "0.090277778", 2979, 2141, null);
+insert into production values(9, "Syam", "Tanto", "C", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2339, "2-799", 5078, "1829 x 0,2 x 762", "0.177083333", "0.270833333", "0.09375", 4119, 959, null);
+insert into production values(10, "Syam", "Tanto", "C", STR_TO_DATE('01/02/2021', '%d/%m/%Y'), 2340, "2-800", 5111, "2134 x 0,2 x 762", "0.270833333", "0.333333333", "0.0625", 3804, 1307, null);
+insert into production values(11, "Daeng Suding", "Andi", "A", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2341, "2-801", 5038, "3048 x 0,2 x 762", "0.333333333", "0.427083333", "0.09375", 2855, 2183, "mesin mengalami kerusakan yang menyebabkan terhambat di jam 10:15");
+insert into production values(12, "Daeng Suding", "Andi", "A", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2342, "2-802", 5046, "3048 x 0,2 x 762", "0.576388889", "0.666666667", "0.090277778", 3306, 1740, null);
+insert into production values(13, "Hasbi", "Kris", "B", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2343, "2-803", 5095, "2134 x 0,2 x 762", "0.666666667", "0.774305556", "0.107638889", 3870, 1225, null);
+insert into production values(14, "Hasbi", "Kris", "B", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2344, "2-804", 5140, "1829 x 0,2 x 762", "0.774305556", "0.878472222", "0.104166667", 3289, 1851, null);
+insert into production values(15, "Hasbi", "Kris", "B", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2345, "2-805", 5073, "2134 x 0,2 x 762", "0.878472222", "1.0", "0.121527778", 3198, 1875, null);
+insert into production values(16, "Syam", "Tanto", "C", STR_TO_DATE('02/02/2021', '%d/%m/%Y'), 2346, "2-806", 5051, "1829 x 0,2 x 762", "0.0", "0.152777778", "0.152777778", 3137, 1914, "mesin mengalangi kerusakan sehingga perlu untuk memperbaiki dan menyambung kembali lembaran");
+insert into production values(17, "Daeng Suding", "Kris", "A", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2347, "2-807", 5050, "3048 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 2887, 2163, null);
+insert into production values(18, "Daeng Suding", "Kris", "A", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2348, "2-808", 5108, "2134 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 3331, 1777, null);
+insert into production values(19, "Daeng Suding", "Kris", "A", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2349, "2-809", 5047, "2134 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 3582, 1465, null);
+insert into production values(20, "Hasbi", "Tanto", "B", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2350, "2-810", 5023, "3048 x 0,2 x 762", "0.666666667", "0.763888889", "0.097222222", 4374, 649, null);
+insert into production values(21, "Hasbi", "Tanto", "B", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2351, "2-811", 5122, "1829 x 0,2 x 762", "0.763888889", "0.871527778", "0.107638889", 3125, 1997, null);
+insert into production values(22, "Hasbi", "Tanto", "B", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2352, "2-812", 5125, "1829 x 0,2 x 762", "0.871527778", "1.0", "0.128472222", 1806, 3319, null);
+insert into production values(23, "Syam", "Yeri", "C", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2353, "2-813", 5083, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 3333, 1750, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(24, "Syam", "Yeri", "C", STR_TO_DATE('03/02/2021', '%d/%m/%Y'), 2354, "2-814", 5117, "2134 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 4365, 752, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(25, "Daeng Suding", "Dita", "A", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2355, "2-815", 5065, "3048 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 2179, 2886, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(26, "Daeng Suding", "Dita", "A", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2356, "2-816", 5086, "3048 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 3904, 1182, null);
+insert into production values(27, "Hasbi", "Kris", "B", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2357, "2-817", 5131, "2134 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 4415, 716, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(28, "Hasbi", "Kris", "B", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2358, "2-818", 5106, "1829 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 2251, 2855, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(29, "Syam", "Tanto", "C", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2359, "2-819", 5145, "2134 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 3152, 1993, null);
+insert into production values(30, "Syam", "Tanto", "C", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2360, "2-820", 5066, "1829 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 2279, 2787, null);
+insert into production values(31, "Syam", "Tanto", "C", STR_TO_DATE('04/02/2021', '%d/%m/%Y'), 2361, "2-821", 5051, "3048 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 4559, 492, null);
+insert into production values(32, "Daeng Suding", "Dita", "A", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2362, "2-822", 5059, "2134 x 0,2 x 762", "0.333333333", "0.444444444", "0.111111111", 2191, 2868, null);
+insert into production values(33, "Daeng Suding", "Dita", "A", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2363, "2-823", 5143, "2134 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 4225, 918, null);
+insert into production values(34, "Daeng Suding", "Dita", "A", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2364, "2-824", 5118, "3048 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 4575, 543, null);
+insert into production values(35, "Hasbi", "Kris", "B", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2365, "2-825", 5046, "1829 x 0,2 x 762", "0.666666667", "0.763888889", "0.097222222", 2301, 2745, null);
+insert into production values(36, "Hasbi", "Kris", "B", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2366, "2-826", 5074, "1829 x 0,2 x 762", "0.763888889", "0.871527778", "0.107638889", 4248, 826, null);
+insert into production values(37, "Hasbi", "Kris", "B", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2367, "2-827", 5070, "1829 x 0,2 x 762", "0.871527778", "1.0", "0.128472222", 1885, 3185, null);
+insert into production values(38, "Syam", "Tanto", "C", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2368, "2-828", 5039, "2134 x 0,2 x 762", "0.0", "0.107638889", "0.107638889", 3328, 1711, null);
+insert into production values(39, "Syam", "Tanto", "C", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2369, "2-829", 5047, "3048 x 0,2 x 762", "0.107638889", "0.222222222", "0.114583333", 2211, 2836, null);
+insert into production values(40, "Syam", "Tanto", "C", STR_TO_DATE('05/02/2021', '%d/%m/%Y'), 2370, "2-830", 5087, "3048 x 0,2 x 762", "0.222222222", "0.333333333", "0.111111111", 4197, 890, null);
+insert into production values(41, "Daeng Suding", "Dita", "A", STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 2371, "2-831", 5122, "2134 x 0,2 x 762", "0.333333333", "0.479166667", "0.145833333", 3007, 2115, "mesin macet, lembaran terputus");
+insert into production values(42, "Hasbi", "Kris", "B", STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 2372, "2-832", 5108, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 1975, 3133, null);
+insert into production values(43, "Hasbi", "Kris", "B", STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 2373, "2-833", 5109, "2134 x 0,2 x 762", "0.833333333", "0.965277778", "0.131944444", 4602, 507, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(44, "Syam", "Tanto", "C", STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 2374, "2-834", 5115, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 3649, 1466, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(45, "Syam", "Tanto", "C", STR_TO_DATE('06/02/2021', '%d/%m/%Y'), 2375, "2-835", 5076, "3048 x 0,2 x 762", "0.166666667", "0.305555556", "0.138888889", 4276, 800, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(46, "Daeng Suding", "Dita", "A", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2376, "2-836", 5079, "2134 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 4045, 1034, null);
+insert into production values(47, "Daeng Suding", "Dita", "A", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2377, "2-837", 5071, "2134 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 4041, 1030, null);
+insert into production values(48, "Daeng Suding", "Dita", "A", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2378, "2-838", 5030, "3048 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 2151, 2879, null);
+insert into production values(49, "Hasbi", "Kris", "B", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2379, "2-839", 5043, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 3034, 2009, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(50, "Hasbi", "Kris", "B", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2380, "2-840", 5105, "1829 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4518, 587, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(51, "Syam", "Tanto", "C", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2381, "2-841", 5034, "1829 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 2600, 2434, null);
+insert into production values(52, "Syam", "Tanto", "C", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2382, "2-842", 5127, "2134 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 3823, 1304, null);
+insert into production values(53, "Syam", "Tanto", "C", STR_TO_DATE('07/02/2021', '%d/%m/%Y'), 2383, "2-843", 5027, "3048 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 4632, 395, null);
+insert into production values(54, "Daeng Suding", "Dita", "A", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2384, "2-844", 5078, "3048 x 0,2 x 762", "0.333333333", "0.427083333", "0.09375", 4812, 266, null);
+insert into production values(55, "Daeng Suding", "Dita", "A", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2385, "2-845", 5114, "2134 x 0,2 x 762", "0.576388889", "0.666666667", "0.090277778", 4053, 1061, null);
+insert into production values(56, "Hasbi", "Kris", "B", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2386, "2-846", 5053, "1829 x 0,2 x 762", "0.666666667", "0.774305556", "0.107638889", 3034, 2019, null);
+insert into production values(57, "Hasbi", "Kris", "B", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2387, "2-847", 5142, "2134 x 0,2 x 762", "0.774305556", "0.878472222", "0.104166667", 3230, 1912, null);
+insert into production values(58, "Hasbi", "Kris", "B", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2388, "2-848", 5130, "1829 x 0,2 x 762", "0.878472222", "1.0", "0.121527778", 4798, 332, null);
+insert into production values(59, "Syam", "Tanto", "C", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2389, "2-849", 5075, "3048 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 3856, 1219, null);
+insert into production values(60, "Syam", "Tanto", "C", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2390, "2-850", 5090, "2134 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 4809, 281, null);
+insert into production values(61, "Syam", "Tanto", "C", STR_TO_DATE('08/02/2021', '%d/%m/%Y'), 2391, "2-851", 5053, "2134 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 2627, 2426, null);
+insert into production values(62, "Daeng Suding", "Dita", "A", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2392, "2-852", 5060, "3048 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 4756, 304, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(63, "Daeng Suding", "Dita", "A", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2393, "2-853", 5129, "1829 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 2434, 2695, null);
+insert into production values(64, "Hasbi", "Kris", "B", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2394, "2-854", 5113, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 3744, 1369, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(65, "Hasbi", "Kris", "B", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2395, "2-855", 5040, "1829 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4380, 660, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(66, "Syam", "Tanto", "C", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2396, "2-856", 5083, "2134 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 3748, 1335, null);
+insert into production values(67, "Syam", "Tanto", "C", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2397, "2-857", 5038, "3048 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 2191, 2847, null);
+insert into production values(68, "Syam", "Tanto", "C", STR_TO_DATE('09/02/2021', '%d/%m/%Y'), 2398, "2-858", 5130, "3048 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 2632, 2498, null);
+insert into production values(69, "Daeng Suding", "Dita", "A", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2399, "2-859", 5031, "2134 x 0,2 x 762", "0.333333333", "0.451388889", "0.118055556", 2422, 2609, null);
+insert into production values(70, "Daeng Suding", "Dita", "A", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2400, "2-860", 5144, "1829 x 0,2 x 762", "0.451388889", "0.565972222", "0.114583333", 3136, 2008, null);
+insert into production values(71, "Daeng Suding", "Dita", "A", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2401, "2-861", 5098, "2134 x 0,2 x 762", "0.565972222", "0.666666667", "0.100694444", 4188, 910, null);
+insert into production values(72, "Hasbi", "Kris", "B", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2402, "2-862", 5085, "1829 x 0,2 x 762", "0.666666667", "0.767361111", "0.100694444", 4466, 619, null);
+insert into production values(73, "Hasbi", "Kris", "B", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2403, "2-863", 5064, "3048 x 0,2 x 762", "0.767361111", "0.868055556", "0.100694444", 3109, 1955, null);
+insert into production values(74, "Hasbi", "Kris", "B", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2404, "2-864", 5031, "2134 x 0,2 x 762", "0.868055556", "1.0", "0.131944444", 3443, 1588, null);
+insert into production values(75, "Syam", "Tanto", "C", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2405, "2-865", 5059, "2134 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 2492, 2567, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(76, "Syam", "Tanto", "C", STR_TO_DATE('10/02/2021', '%d/%m/%Y'), 2406, "2-866", 5029, "3048 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 3022, 2007, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(77, "Daeng Suding", "Dita", "A", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2407, "2-867", 5078, "1829 x 0,2 x 762", "0.315972222", "0.479166667", "0.163194444", 2472, 2606, "mesin macet, lembaran terputus");
+insert into production values(78, "Hasbi", "Kris", "B", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2408, "2-868", 5135, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 4899, 236, null);
+insert into production values(79, "Hasbi", "Kris", "B", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2409, "2-869", 5138, "1829 x 0,2 x 762", "0.833333333", "0.965277778", "0.131944444", 2613, 2525, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(80, "Syam", "Tanto", "C", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2410, "2-870", 5120, "2134 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 3638, 1482, null);
+insert into production values(81, "Syam", "Tanto", "C", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2411, "2-871", 5089, "3048 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 1829, 3260, null);
+insert into production values(82, "Syam", "Tanto", "C", STR_TO_DATE('11/02/2021', '%d/%m/%Y'), 2412, "2-872", 5058, "3048 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 4050, 1008, null);
+insert into production values(83, "Daeng Suding", "Dita", "A", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2413, "2-873", 5121, "2134 x 0,2 x 762", "0.333333333", "0.451388889", "0.118055556", 4129, 992, null);
+insert into production values(84, "Daeng Suding", "Dita", "A", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2414, "2-874", 5031, "1829 x 0,2 x 762", "0.451388889", "0.565972222", "0.114583333", 2000, 3031, null);
+insert into production values(85, "Daeng Suding", "Dita", "A", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2415, "2-875", 5097, "2134 x 0,2 x 762", "0.565972222", "0.666666667", "0.100694444", 4452, 645, null);
+insert into production values(86, "Hasbi", "Kris", "B", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2416, "2-876", 5038, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2236, 2802, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(87, "Hasbi", "Kris", "B", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2417, "2-877", 5135, "3048 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 3120, 2015, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(88, "Syam", "Tanto", "C", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2418, "2-878", 5129, "2134 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 4741, 388, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(89, "Syam", "Tanto", "C", STR_TO_DATE('12/02/2021', '%d/%m/%Y'), 2419, "2-879", 5034, "2134 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 3837, 1197, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(90, "Daeng Suding", "Dita", "A", STR_TO_DATE('13/02/2021', '%d/%m/%Y'), 2420, "2-880", 5044, "3048 x 0,2 x 762", "0.333333333", "0.503472222", "0.170138889", 3902, 1142, "mesin macet, lembaran terputus di pot, pergantian coil juga bermasalah");
+insert into production values(91, "Hasbi", "Kris", "B", STR_TO_DATE('13/02/2021', '%d/%m/%Y'), 2421, "2-881", 5144, "1829 x 0,2 x 762", "0.84375", "1.0", "0.15625", 3622, 1522, null);
+insert into production values(92, "Syam", "Tanto", "C", STR_TO_DATE('13/02/2021', '%d/%m/%Y'), 2422, "2-882", 5138, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 2219, 2919, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(93, "Syam", "Tanto", "C", STR_TO_DATE('13/02/2021', '%d/%m/%Y'), 2423, "2-883", 5134, "1829 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 4587, 547, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(94, "Daeng Suding", "Dita", "A", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2424, "2-884", 5084, "2134 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 2214, 2870, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(95, "Daeng Suding", "Dita", "A", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2425, "2-885", 5093, "3048 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 2127, 2966, null);
+insert into production values(96, "Hasbi", "Kris", "B", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2426, "2-886", 5029, "3048 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 4211, 818, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(97, "Hasbi", "Kris", "B", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2427, "2-887", 5052, "2134 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4880, 172, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(98, "Syam", "Tanto", "C", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2428, "2-888", 5128, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 3696, 1432, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(99, "Syam", "Tanto", "C", STR_TO_DATE('14/02/2021', '%d/%m/%Y'), 2429, "2-889", 5037, "2134 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 2573, 2464, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(100, "Daeng Suding", "Dita", "A", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2430, "2-890", 5131, "1829 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 2871, 2260, null);
+insert into production values(101, "Daeng Suding", "Dita", "A", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2431, "2-891", 5040, "3048 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 3227, 1813, null);
+insert into production values(102, "Daeng Suding", "Dita", "A", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2432, "2-892", 5067, "2134 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 2978, 2089, null);
+insert into production values(103, "Hasbi", "Kris", "B", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2433, "2-893", 5110, "2134 x 0,2 x 762", "0.666666667", "0.763888889", "0.097222222", 3821, 1289, null);
+insert into production values(104, "Hasbi", "Kris", "B", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2434, "2-894", 5083, "3048 x 0,2 x 762", "0.763888889", "0.871527778", "0.107638889", 4661, 422, null);
+insert into production values(105, "Hasbi", "Kris", "B", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2435, "2-895", 5087, "1829 x 0,2 x 762", "0.871527778", "1.0", "0.128472222", 3913, 1174, null);
+insert into production values(106, "Syam", "Tanto", "C", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2436, "2-896", 5103, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 1841, 3262, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(107, "Syam", "Tanto", "C", STR_TO_DATE('15/02/2021', '%d/%m/%Y'), 2437, "2-897", 5053, "1829 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 2807, 2246, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(108, "Daeng Suding", "Dita", "A", STR_TO_DATE('16/02/2021', '%d/%m/%Y'), 2438, "2-898", 5043, "2134 x 0,2 x 762", "0.333333333", "0.427083333", "0.09375", 4182, 861, "mesin mengalami kerusakan yang menyebabkan terhambat di jam 10:15");
+insert into production values(109, "Daeng Suding", "Dita", "A", STR_TO_DATE('16/02/2021', '%d/%m/%Y'), 2439, "2-899", 5071, "3048 x 0,2 x 762", "0.576388889", "0.666666667", "0.090277778", 3472, 1599, null);
+insert into production values(110, "Hasbi", "Kris", "B", STR_TO_DATE('16/02/2021', '%d/%m/%Y'), 2440, "2-900", 5100, "3048 x 0,2 x 762", "0.666666667", "0.815972222", "0.149305556", 1861, 3239, "mesin mengalami kerusakan yang menyebabkan terhambat di jam 10:15");
+insert into production values(111, "Syam", "Tanto", "C", STR_TO_DATE('16/02/2021', '%d/%m/%Y'), 2441, "2-901", 5124, "2134 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 2116, 3008, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(112, "Syam", "Tanto", "C", STR_TO_DATE('16/02/2021', '%d/%m/%Y'), 2442, "2-902", 5027, "1829 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 2935, 2092, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(113, "Daeng Suding", "Dita", "A", STR_TO_DATE('17/02/2021', '%d/%m/%Y'), 2443, "2-903", 5069, "2134 x 0,2 x 762", "0.315972222", "0.479166667", "0.163194444", 2537, 2532, "mesin macet, lembaran terputus");
+insert into production values(114, "Hasbi", "Kris", "B", STR_TO_DATE('17/02/2021', '%d/%m/%Y'), 2444, "2-904", 5093, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 3183, 1910, null);
+insert into production values(115, "Hasbi", "Kris", "B", STR_TO_DATE('17/02/2021', '%d/%m/%Y'), 2445, "2-905", 5144, "3048 x 0,2 x 762", "0.833333333", "0.965277778", "0.131944444", 3410, 1734, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(116, "Syam", "Tanto", "C", STR_TO_DATE('17/02/2021', '%d/%m/%Y'), 2446, "2-906", 5086, "2134 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 4425, 661, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(117, "Syam", "Tanto", "C", STR_TO_DATE('17/02/2021', '%d/%m/%Y'), 2447, "2-907", 5135, "2134 x 0,2 x 762", "0.166666667", "0.305555556", "0.138888889", 2459, 2676, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(118, "Daeng Suding", "Dita", "A", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2448, "2-908", 5094, "3048 x 0,2 x 762", "0.333333333", "0.451388889", "0.118055556", 3064, 2030, null);
+insert into production values(119, "Daeng Suding", "Dita", "A", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2449, "2-909", 5082, "1829 x 0,2 x 762", "0.451388889", "0.565972222", "0.114583333", 2578, 2504, null);
+insert into production values(120, "Daeng Suding", "Dita", "A", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2450, "2-910", 5091, "1829 x 0,2 x 762", "0.565972222", "0.666666667", "0.100694444", 2756, 2335, null);
+insert into production values(121, "Hasbi", "Kris", "B", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2451, "2-911", 5022, "1829 x 0,2 x 762", "0.666666667", "0.767361111", "0.100694444", 3054, 1968, null);
+insert into production values(122, "Hasbi", "Kris", "B", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2452, "2-912", 5106, "2134 x 0,2 x 762", "0.767361111", "0.868055556", "0.100694444", 3324, 1782, null);
+insert into production values(123, "Hasbi", "Kris", "B", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2453, "2-913", 5056, "3048 x 0,2 x 762", "0.868055556", "1.0", "0.131944444", 4550, 506, null);
+insert into production values(124, "Syam", "Tanto", "C", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2454, "2-914", 5083, "3048 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 2640, 2443, null);
+insert into production values(125, "Syam", "Tanto", "C", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2455, "2-915", 5030, "2134 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 2287, 2743, null);
+insert into production values(126, "Syam", "Tanto", "C", STR_TO_DATE('18/02/2021', '%d/%m/%Y'), 2456, "2-916", 5075, "1829 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 4239, 836, null);
+insert into production values(127, "Daeng Suding", "Dita", "A", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2457, "2-917", 5091, "2134 x 0,2 x 762", "0.333333333", "0.479166667", "0.145833333", 3311, 1780, "mesin macet, lembaran terputus");
+insert into production values(128, "Hasbi", "Kris", "B", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2458, "2-918", 5086, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 4646, 440, null);
+insert into production values(129, "Hasbi", "Kris", "B", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2459, "2-919", 5030, "2134 x 0,2 x 762", "0.833333333", "0.965277778", "0.131944444", 2627, 2403, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(130, "Syam", "Tanto", "C", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2460, "2-920", 5098, "1829 x 0,2 x 762", "0.0", "0.086805556", "0.086805556", 3043, 2055, null);
+insert into production values(131, "Syam", "Tanto", "C", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2461, "2-921", 5051, "3048 x 0,2 x 762", "0.086805556", "0.177083333", "0.090277778", 2722, 2329, null);
+insert into production values(132, "Syam", "Tanto", "C", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2462, "2-922", 5129, "2134 x 0,2 x 762", "0.177083333", "0.270833333", "0.09375", 4324, 805, null);
+insert into production values(133, "Syam", "Tanto", "C", STR_TO_DATE('19/02/2021', '%d/%m/%Y'), 2463, "2-923", 5087, "1829 x 0,2 x 762", "0.270833333", "0.333333333", "0.0625", 3585, 1502, null);
+insert into production values(134, "Daeng Suding", "Dita", "A", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2464, "2-924", 5037, "2134 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 2285, 2752, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(135, "Daeng Suding", "Dita", "A", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2465, "2-925", 5095, "1829 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 1828, 3267, null);
+insert into production values(136, "Hasbi", "Kris", "B", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2466, "2-926", 5105, "3048 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2772, 2333, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(137, "Hasbi", "Kris", "B", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2467, "2-927", 5131, "2134 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4050, 1081, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(138, "Syam", "Tanto", "C", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2468, "2-928", 5104, "1829 x 0,2 x 762", "0.0", "0.100694444", "0.100694444", 2349, 2755, null);
+insert into production values(139, "Syam", "Tanto", "C", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2469, "2-929", 5104, "2134 x 0,2 x 762", "0.100694444", "0.197916667", "0.097222222", 2879, 2225, null);
+insert into production values(140, "Syam", "Tanto", "C", STR_TO_DATE('20/02/2021', '%d/%m/%Y'), 2470, "2-930", 5089, "1829 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 4565, 524, null);
+insert into production values(141, "Daeng Suding", "Dita", "A", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2471, "2-931", 5123, "2134 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 3241, 1882, null);
+insert into production values(142, "Daeng Suding", "Dita", "A", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2472, "2-932", 5111, "1829 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 4011, 1100, null);
+insert into production values(143, "Daeng Suding", "Dita", "A", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2473, "2-933", 5092, "3048 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 2584, 2508, null);
+insert into production values(144, "Hasbi", "Kris", "B", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2474, "2-934", 5128, "2134 x 0,2 x 762", "0.666666667", "0.763888889", "0.097222222", 3102, 2026, null);
+insert into production values(145, "Hasbi", "Kris", "B", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2475, "2-935", 5138, "1829 x 0,2 x 762", "0.763888889", "0.871527778", "0.107638889", 2841, 2297, null);
+insert into production values(146, "Hasbi", "Kris", "B", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2476, "2-936", 5046, "2134 x 0,2 x 762", "0.871527778", "1.0", "0.128472222", 2356, 2690, null);
+insert into production values(147, "Syam", "Tanto", "C", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2477, "2-937", 5087, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 2302, 2785, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(148, "Syam", "Tanto", "C", STR_TO_DATE('21/02/2021', '%d/%m/%Y'), 2478, "2-938", 5046, "3048 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 4209, 837, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(149, "Daeng Suding", "Dita", "A", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2479, "2-939", 5121, "2134 x 0,2 x 762", "0.315972222", "0.427083333", "0.111111111", 3985, 1136, "mesin mengalami kerusakan yang menyebabkan terhambat di jam 10:15");
+insert into production values(150, "Daeng Suding", "Dita", "A", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2480, "2-940", 5074, "1829 x 0,2 x 762", "0.576388889", "0.666666667", "0.090277778", 2375, 2699, null);
+insert into production values(151, "Hasbi", "Kris", "B", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2481, "2-941", 5113, "2134 x 0,2 x 762", "0.666666667", "0.774305556", "0.107638889", 2244, 2869, null);
+insert into production values(152, "Hasbi", "Kris", "B", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2482, "2-942", 5131, "1829 x 0,2 x 762", "0.774305556", "0.878472222", "0.104166667", 3581, 1550, null);
+insert into production values(153, "Hasbi", "Kris", "B", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2483, "2-943", 5049, "2134 x 0,2 x 762", "0.878472222", "1.0", "0.121527778", 3207, 1842, null);
+insert into production values(154, "Syam", "Tanto", "C", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2484, "2-944", 5095, "1829 x 0,2 x 762", "0.0", "0.197916667", "0.197916667", 2426, 2669, null);
+insert into production values(155, "Syam", "Tanto", "C", STR_TO_DATE('22/02/2021', '%d/%m/%Y'), 2485, "2-945", 5098, "3048 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 3958, 1140, null);
+insert into production values(156, "Daeng Suding", "Dita", "A", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2486, "2-946", 5104, "2134 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 3957, 1147, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(157, "Daeng Suding", "Dita", "A", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2487, "2-947", 5122, "1829 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 2139, 2983, null);
+insert into production values(158, "Hasbi", "Kris", "B", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2488, "2-948", 5037, "2134 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2630, 2407, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(159, "Hasbi", "Kris", "B", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2489, "2-949", 5087, "1829 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4732, 355, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(160, "Syam", "Tanto", "C", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2490, "2-950", 5063, "3048 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 3445, 1618, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(161, "Syam", "Tanto", "C", STR_TO_DATE('23/02/2021', '%d/%m/%Y'), 2491, "2-951", 5059, "2134 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 2892, 2167, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(162, "Daeng Suding", "Dita", "A", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2492, "2-952", 5105, "1829 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 3156, 1949, null);
+insert into production values(163, "Daeng Suding", "Dita", "A", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2493, "2-953", 5111, "2134 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 3253, 1858, null);
+insert into production values(164, "Daeng Suding", "Dita", "A", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2494, "2-954", 5068, "1829 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 3355, 1713, null);
+insert into production values(165, "Hasbi", "Kris", "B", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2495, "2-955", 5021, "2134 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 4468, 553, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(166, "Hasbi", "Kris", "B", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2496, "2-956", 5073, "1829 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 2079, 2994, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(167, "Syam", "Tanto", "C", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2497, "2-957", 5143, "3048 x 0,2 x 762", "0.0", "0.197916667", "0.197916667", 2828, 2315, null);
+insert into production values(168, "Syam", "Tanto", "C", STR_TO_DATE('24/02/2021', '%d/%m/%Y'), 2498, "2-958", 5044, "2134 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 2487, 2557, null);
+insert into production values(169, "Daeng Suding", "Dita", "A", STR_TO_DATE('25/02/2021', '%d/%m/%Y'), 2499, "2-959", 5023, "1829 x 0,2 x 762", "0.333333333", "0.479166667", "0.145833333", 2832, 2191, "mesin macet, lembaran terputus");
+insert into production values(170, "Hasbi", "Kris", "B", STR_TO_DATE('25/02/2021', '%d/%m/%Y'), 2500, "2-960", 5145, "2134 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2774, 2371, null);
+insert into production values(171, "Hasbi", "Kris", "B", STR_TO_DATE('25/02/2021', '%d/%m/%Y'), 2501, "2-961", 5135, "1829 x 0,2 x 762", "0.833333333", "0.965277778", "0.131944444", 2698, 2437, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(172, "Syam", "Tanto", "C", STR_TO_DATE('25/02/2021', '%d/%m/%Y'), 2502, "2-962", 5031, "3048 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 4721, 310, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(173, "Syam", "Tanto", "C", STR_TO_DATE('25/02/2021', '%d/%m/%Y'), 2503, "2-963", 5045, "2134 x 0,2 x 762", "0.166666667", "0.305555556", "0.138888889", 4580, 465, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(174, "Daeng Suding", "Dita", "A", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2504, "2-964", 5083, "1829 x 0,2 x 762", "0.350694444", "0.503472222", "0.152777778", 2524, 2559, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(175, "Daeng Suding", "Dita", "A", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2505, "2-965", 5133, "2134 x 0,2 x 762", "0.503472222", "0.65625", "0.152777778", 2582, 2551, null);
+insert into production values(176, "Hasbi", "Kris", "B", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2506, "2-966", 5136, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2163, 2973, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(177, "Hasbi", "Kris", "B", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2507, "2-967", 5067, "2134 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 3833, 1234, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(178, "Syam", "Tanto", "C", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2508, "2-968", 5108, "1829 x 0,2 x 762", "0.0", "0.135416667", "0.135416667", 3199, 1909, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(179, "Syam", "Tanto", "C", STR_TO_DATE('26/02/2021', '%d/%m/%Y'), 2509, "2-969", 5080, "3048 x 0,2 x 762", "0.166666667", "0.315972222", "0.149305556", 2595, 2485, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(180, "Daeng Suding", "Dita", "A", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2510, "2-970", 5062, "2134 x 0,2 x 762", "0.34375", "0.444444444", "0.100694444", 1907, 3155, null);
+insert into production values(181, "Daeng Suding", "Dita", "A", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2511, "2-971", 5108, "1829 x 0,2 x 762", "0.444444444", "0.552083333", "0.107638889", 2706, 2402, null);
+insert into production values(182, "Daeng Suding", "Dita", "A", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2512, "2-972", 5024, "2134 x 0,2 x 762", "0.552083333", "0.666666667", "0.114583333", 3157, 1867, null);
+insert into production values(183, "Hasbi", "Kris", "B", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2513, "2-973", 5115, "1829 x 0,2 x 762", "0.666666667", "0.809027778", "0.142361111", 2838, 2277, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(184, "Hasbi", "Kris", "B", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2514, "2-974", 5054, "3048 x 0,2 x 762", "0.833333333", "0.975694444", "0.142361111", 4116, 938, "sedikit masalah dengan mesin pergantian coil");
+insert into production values(185, "Syam", "Tanto", "C", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2515, "2-975", 5079, "2134 x 0,2 x 762", "0.0", "0.197916667", "0.197916667", 3094, 1985, null);
+insert into production values(186, "Syam", "Tanto", "C", STR_TO_DATE('27/02/2021', '%d/%m/%Y'), 2516, "2-976", 5114, "1829 x 0,2 x 762", "0.197916667", "0.333333333", "0.135416667", 3677, 1437, null);
+insert into production values(187, "Daeng Suding", "Dita", "A", STR_TO_DATE('28/02/2021', '%d/%m/%Y'), 2517, "2-977", 5132, "2134 x 0,2 x 762", "0.333333333", "0.496527778", "0.163194444", 2258, 2874, null);
+insert into production values(188, "Daeng Suding", "Dita", "A", STR_TO_DATE('28/02/2021', '%d/%m/%Y'), 2518, "2-978", 5071, "1829 x 0,2 x 762", "0.496527778", "0.65625", "0.159722222", 3089, 1982, null);
+insert into production values(189, "Hasbi", "Kris", "B", STR_TO_DATE('28/02/2021', '%d/%m/%Y'), 2519, "2-979", 5136, "2134 x 0,2 x 762", "0.666666667", "0.802083333", "0.135416667", 2097, 3039, "mesin macet, lembaran terputus di pot, pergantian coil juga bermasalah");
+insert into production values(190, "Syam", "Tanto", "C", STR_TO_DATE('28/02/2021', '%d/%m/%Y'), 2520, "2-980", 5127, "1829 x 0,2 x 762", "0.232638889", "0.333333333", "0.100694444", 3703, 1424, "mesin macet, lembaran terputus di pot, pergantian coil juga bermasalah");

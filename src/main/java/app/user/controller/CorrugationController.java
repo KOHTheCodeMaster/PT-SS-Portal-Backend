@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class CorrugationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CorrugationController.class);
-    CorrugationService corrugationService;
+    private final CorrugationService corrugationService;
 
     @Autowired
     public CorrugationController(CorrugationService CorrugationService) {

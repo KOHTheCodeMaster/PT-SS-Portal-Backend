@@ -49,6 +49,19 @@ public class AllExceptionHandler {
 
     }
 
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ExceptionResponse> userNotFound(UserException e) {
+
+        ExceptionResponse response = new ExceptionResponse();
+        response.setError("NOT_FOUND");
+        response.setMessage(e.getMessage());
+        response.setStatus(404);
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+    }
+
     @ExceptionHandler(NumberFormatException.class)
     public ResponseEntity<ExceptionResponse> invalidNumberFormatException(NumberFormatException e) {
 

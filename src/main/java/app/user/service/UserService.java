@@ -10,15 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service(value = "userService")
 @Transactional
 public class UserService {
 
     private final UserRepository userRepository;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -44,13 +42,39 @@ public class UserService {
 
     }
 
+    /**
+     * Validate emailId, retrieve user from DB for the given emailId & return its userDTO.
+     *
+     * @param emailId id corresponding to the user record of the User table in DB
+     * @return userDTO for the given emailId
+     * @throws UserException If emailId is null OR user is not found in DB
+     */
+    public UserDTO getUserByEmailId(final String emailId) throws UserException {
+
+        if (emailId == null) throw new UserException("User.INVALID_EMAIL_ID");
+
+        User user = userRepository.findByEmailId(emailId).orElseThrow(
+                () -> new UserException("User.USER_NOT_FOUND with id: " + emailId)
+        );
+
+        return user.convertToDTO();
+    }
+
+    /**
+     * Authenticate User by matching the credentials provided by user in POST Request Body
+     * with the original credentials of the user stored in User Table in DB
+     *
+     * @param userDTO user credentials which needs to be authenticated
+     * @return If successful then true, Otherwise false
+     * @throws UserException If either of the userDTO, emailId, password is null
+     */
     public boolean loginUser(UserDTO userDTO) throws UserException {
+
+        validateUserDTO(userDTO);
 
         User user = userRepository.findByEmailId(userDTO.getEmailId()).orElseThrow(
                 () -> new UserException("User.USER_NOT_FOUND")
         );
-
-        logger.info(user.toString());
 
         return user.getPassword().equals(userDTO.getPassword());
     }
@@ -78,5 +102,17 @@ public class UserService {
         //  save the updated user in DB
         userRepository.delete(user);
 
+    }
+
+    /**
+     * userDTO is INVALID for null OR < 1, Otherwise Valid
+     *
+     * @param userDTO id which needs to be validated
+     * @throws UserException If either of the userDTO, emailId, password is null
+     */
+    private void validateUserDTO(UserDTO userDTO) throws UserException {
+        //  Throw UserException for invalid userDTO
+        if (userDTO == null || userDTO.getEmailId() == null || userDTO.getPassword() == null)
+            throw new UserException("User.INVALID_USER_CREDENTIALS");
     }
 }

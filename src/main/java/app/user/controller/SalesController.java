@@ -25,7 +25,6 @@ public class SalesController {
 //        demoSalesService();
     }
 
-
     /**
      * Retrieve ArrayList of SalesDTO for all the sales records from Sales Table
      *

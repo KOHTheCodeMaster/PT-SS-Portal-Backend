@@ -85,6 +85,8 @@ public class SalesService {
      */
     public SalesDTO getSalesById(final int salesId) throws SalesException {
 
+        validateSalesId(salesId);
+
         Sales sales = salesRepository.findById(salesId).orElseThrow(
                 () -> new SalesException("Sales.SALES_NOT_FOUND with id: " + salesId)
         );
@@ -99,9 +101,7 @@ public class SalesService {
      */
     public void deleteSalesById(Integer salesId) throws SalesException {
 
-        //  Throw SalesException for invalid salesId
-        if (salesId == null || salesId < 1)
-            throw new SalesException("Sales.INVALID_SALES_ID : " + salesId);
+        validateSalesId(salesId);
 
         salesRepository.findById(salesId).orElseThrow(
                 () -> new SalesException("Sales.SALES_NOT_FOUND with id: " + salesId)
@@ -112,6 +112,21 @@ public class SalesService {
 
         //  Delete sales from DB using salesId
         salesRepository.deleteById(salesId);
+
+    }
+
+    /**
+     * salesId is INVALID for null OR < 1, Otherwise Valid
+     *
+     * @param salesId id which needs to be validated
+     * @throws SalesException If salesId is null OR < 1
+     */
+    private void validateSalesId(Integer salesId) throws SalesException {
+
+        //  Throw SalesException for invalid salesId
+        if (salesId == null || salesId < 1)
+            throw new SalesException("Sales.INVALID_SALES_ID : " + salesId);
+
 
     }
 }

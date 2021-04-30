@@ -1,5 +1,6 @@
 package app.user.entity;
 
+import app.user.dto.UserDTO;
 import app.user.enums.UserRole;
 
 import javax.persistence.*;
@@ -18,6 +19,23 @@ public class User {
     private String phoneNumber;
     private String address;
     private Integer picId;
+
+    public UserDTO convertToDTO() {
+
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setUserId(userId);
+        userDTO.setName(name);
+        userDTO.setUserRole(userRole);
+        userDTO.setEmailId(emailId);
+        userDTO.setPassword(password);
+        userDTO.setPhoneNumber(phoneNumber);
+        userDTO.setAddress(address);
+        userDTO.setPicId(picId);
+
+        return userDTO;
+
+    }
 
     @Override
     public String toString() {

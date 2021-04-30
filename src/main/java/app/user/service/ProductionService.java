@@ -89,6 +89,8 @@ public class ProductionService {
      */
     public ProductionDTO getProductionById(final int productionId) throws ProductionException {
 
+        validateProductionId(productionId);
+
         Production production = productionRepository.findById(productionId).orElseThrow(
                 () -> new ProductionException("Production.PRODUCTION_NOT_FOUND with id: " + productionId)
         );
@@ -104,9 +106,7 @@ public class ProductionService {
      */
     public void deleteProductionById(Integer productionId) throws ProductionException {
 
-        //  Throw ProductionException for invalid productionId
-        if (productionId == null || productionId < 1)
-            throw new ProductionException("Production.INVALID_PRODUCTION_ID : " + productionId);
+        validateProductionId(productionId);
 
         productionRepository.findById(productionId).orElseThrow(
                 () -> new ProductionException("Production.PRODUCTION_NOT_FOUND with id: " + productionId)
@@ -117,6 +117,21 @@ public class ProductionService {
 
         //  Delete production from DB using productionId
         productionRepository.deleteById(productionId);
+
+    }
+
+    /**
+     * productionId is INVALID for null OR < 1, Otherwise Valid
+     *
+     * @param productionId id which needs to be validated
+     * @throws ProductionException If productionId is null OR < 1
+     */
+    private void validateProductionId(Integer productionId) throws ProductionException {
+
+        //  Throw ProductionException for invalid productionId
+        if (productionId == null || productionId < 1)
+            throw new ProductionException("Production.INVALID_PRODUCTION_ID : " + productionId);
+
 
     }
 

@@ -81,6 +81,24 @@ public class ProductionService {
     }
 
     /**
+     * Retrieve all the unique supervisor names from the Production Table and return it as an ArrayList<String>
+     *
+     * @return supervisorNameList ArrayList of all the production records from Production Table
+     */
+    public ArrayList<String> getSupervisorNameList() {
+
+        ArrayList<String> supervisorNameList = null;
+
+        //  Retrieve all the productions records from the Production Table as Iterable<Production>
+        supervisorNameList = productionRepository.findDistinctSupervisorName();
+
+        if (supervisorNameList != null) System.out.println("Supervisor Name List: " + supervisorNameList.size());
+
+        return supervisorNameList;
+
+    }
+
+    /**
      * Validate productionId, retrieve production from DB for the given productionId & return its productionDTO.
      *
      * @param productionId id corresponding to the production record of the Production table in DB

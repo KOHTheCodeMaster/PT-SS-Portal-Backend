@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
+@CrossOrigin
 @RestController
 public class ProductionController {
 
@@ -35,6 +36,19 @@ public class ProductionController {
 
         LOGGER.info("Requesting All Productions.");
         return new ResponseEntity<>(productionService.getAllProductions(), HttpStatus.OK);
+
+    }
+
+    /**
+     * Retrieve ArrayList of Names of All Distinct Supervisors for all the production records from Production Table
+     *
+     * @return supervisorNameList ArrayList of all the production records from Production Table
+     */
+    @GetMapping(value = "/production/list/supervisor")
+    public ResponseEntity<ArrayList<String>> getSupervisorNameList() {
+
+        LOGGER.info("Requesting Supervisor Name List.");
+        return new ResponseEntity<>(productionService.getSupervisorNameList(), HttpStatus.OK);
 
     }
 

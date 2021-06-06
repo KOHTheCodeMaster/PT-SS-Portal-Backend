@@ -53,6 +53,19 @@ public class ProductionController {
     }
 
     /**
+     * Retrieve ArrayList of All Distinct sizes for all the production records from Production Table
+     *
+     * @return sizeList of all the production records from Production Table
+     */
+    @GetMapping(value = "/production/list/size")
+    public ResponseEntity<ArrayList<String>> getSizeList() {
+
+        LOGGER.info("Requesting Size List.");
+        return new ResponseEntity<>(productionService.getSizeList(), HttpStatus.OK);
+
+    }
+
+    /**
      * Retrieve ProductionDTO by providing productionId in the url
      *
      * @param productionId id corresponding to the production record of the Production Table

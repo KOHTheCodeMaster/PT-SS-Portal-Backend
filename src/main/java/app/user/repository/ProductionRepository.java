@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public interface ProductionRepository extends CrudRepository<Production, Integer> {
 
     @Query("SELECT DISTINCT P.supervisorName FROM Production P")
-    ArrayList<String> findDistinctSupervisorName();
+    ArrayList<String> findDistinctSupervisorNameList();
+
+    @Query("SELECT DISTINCT P.size FROM Production P")
+    ArrayList<String> findDistinctSizeList();
 
 }

@@ -90,11 +90,29 @@ public class ProductionService {
         ArrayList<String> supervisorNameList = null;
 
         //  Retrieve all the productions records from the Production Table as Iterable<Production>
-        supervisorNameList = productionRepository.findDistinctSupervisorName();
+        supervisorNameList = productionRepository.findDistinctSupervisorNameList();
 
         if (supervisorNameList != null) System.out.println("Supervisor Name List: " + supervisorNameList.size());
 
         return supervisorNameList;
+
+    }
+
+    /**
+     * Retrieve all the sizes from the Production Table and return it as an ArrayList<String>
+     *
+     * @return list of size for all the production records from Production Table
+     */
+    public ArrayList<String> getSizeList() {
+
+        ArrayList<String> sizeList;
+
+        //  Retrieve all the productions records from the Production Table as Iterable<Production>
+        sizeList = productionRepository.findDistinctSizeList();
+
+        if (sizeList != null) System.out.println("Size List: " + sizeList.size());
+
+        return sizeList;
 
     }
 

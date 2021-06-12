@@ -42,7 +42,7 @@ public class SalesService {
         sales.setBuyerAddress(salesDTO.getBuyerAddress());
         sales.setItemSize(salesDTO.getItemType());
         sales.setColour(salesDTO.getColour());
-        sales.setItemSize(salesDTO.getItemSize());
+        sales.setItemType(salesDTO.getItemType());
         sales.setSalesDate(salesDTO.getSalesDate());
         sales.setAmountOfItem(salesDTO.getAmountOfItem());
         sales.setPayment(salesDTO.getPayment());

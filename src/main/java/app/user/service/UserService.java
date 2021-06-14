@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service(value = "userService")
 @Transactional
@@ -71,12 +72,18 @@ public class UserService {
     public boolean loginUser(UserDTO userDTO) throws UserException {
 
         validateUserDTO(userDTO);
-
+/*
         User user = userRepository.findByEmailId(userDTO.getEmailId()).orElseThrow(
                 () -> new UserException("User.USER_NOT_FOUND")
         );
+*/
+        Optional<User> optionalUser = userRepository.findByEmailId(userDTO.getEmailId());
 
-        return user.getPassword().equals(userDTO.getPassword());
+        //  Return false if the user is not found by email id
+        if (optionalUser.isEmpty()) return false;
+
+        //  Return true only if password is matched, otherwise false
+        return optionalUser.get().getPassword().equals(userDTO.getPassword());
     }
 
     public void updateUserEmailId(Integer userId, String emailId) throws UserException {

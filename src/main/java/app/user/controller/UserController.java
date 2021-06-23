@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import stdlib.utils.KOHStringUtil;
 
 @CrossOrigin
 @RestController
@@ -21,6 +22,13 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
 //        demoLoginUser();
+    }
+
+    @GetMapping(value = "/test/")
+    public ResponseEntity<String> demoTestConnection() {
+        String str = "Test - " + KOHStringUtil.generateCurrentTimeStamp();
+        LOGGER.info(str);
+        return new ResponseEntity<>(str, HttpStatus.OK);
     }
 
     /**

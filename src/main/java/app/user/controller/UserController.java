@@ -24,6 +24,13 @@ public class UserController {
 //        demoLoginUser();
     }
 
+    @GetMapping(value = "/")
+    public ResponseEntity<String> demoHome() {
+        String str = "Home Page - " + KOHStringUtil.generateCurrentTimeStamp();
+        LOGGER.info(str);
+        return new ResponseEntity<>(str, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/test/")
     public ResponseEntity<String> demoTestConnection() {
         String str = "Test - " + KOHStringUtil.generateCurrentTimeStamp();

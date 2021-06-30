@@ -3,6 +3,7 @@ package app.user.service;
 import app.user.dto.ProductionDTO;
 import app.user.entity.Production;
 import app.user.exceptions.ProductionException;
+import app.user.pojo.DailyProductionPOJO;
 import app.user.repository.ProductionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Service(value = "productionService")
@@ -87,7 +89,7 @@ public class ProductionService {
      */
     public ArrayList<String> getSupervisorNameList() {
 
-        ArrayList<String> supervisorNameList = null;
+        ArrayList<String> supervisorNameList;
 
         //  Retrieve all the productions records from the Production Table as Iterable<Production>
         supervisorNameList = productionRepository.findDistinctSupervisorNameList();
@@ -153,6 +155,39 @@ public class ProductionService {
 
         //  Delete production from DB using productionId
         productionRepository.deleteById(productionId);
+
+    }
+
+
+    /**
+     * Validate strYearAndMonth, retrieve list of daily production from DB for the given year & month.
+     *
+     * @param strYearAndMonth month & year for which the daily production is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return ArrayList List of Daily Production for the given strYearAndMonth
+     */
+    public ArrayList<DailyProductionPOJO> getMonthlyProductionListForAll(final String strYearAndMonth) throws ProductionException {
+
+        //  Validate strYearAndMonth format: YYYY-MM i.e. ####-##
+        if (strYearAndMonth == null || !strYearAndMonth.matches("\\d{4}-\\d{2}")) {
+            String msg = "Invalid strYearAndMonth format.\n" +
+                    "Required: ####-##\n" +
+                    "Found: " + strYearAndMonth;
+            throw new ProductionException(msg);
+        }
+
+        //  Parse Year & Month from strYearAndMonth which is in form: YYYY-MM
+        String[] arrYearAndMonth = strYearAndMonth.split("-");
+        int year = Integer.parseInt(arrYearAndMonth[0]);
+        int month = Integer.parseInt(arrYearAndMonth[1]);
+
+        //  Initialize startDate with 1 & endDate with last day of month
+        int lengthOfMonth = LocalDate.of(year, month, 1).lengthOfMonth();
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month, lengthOfMonth);
+        System.out.println("startDate: " + startDate + " | endDate: " + endDate);
+
+        return productionRepository.findDailyProductionListBetween(startDate, endDate);
 
     }
 

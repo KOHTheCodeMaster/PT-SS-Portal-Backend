@@ -1,0 +1,44 @@
+
+Requesting Monthly Production List For All Product Types
+--------------------------------------------------------
+
+UI:
+    1. GET Req. @ /production/total/yyyy-mm
+    2. Wait for Response
+    3. Response format:
+        [
+            {"yyyy-mm-dd", totalDailyProduction},
+            {"yyyy-mm-dd", totalDailyProduction},
+        ];
+    4. Parse response & use the data to display charts dynamically.
+
+Controller:
+    1. GET Req. received @ /production/monthly/all/{strYearAndMonth}
+       Note: strYearAndMonth is in format: 'yyyy-mm'
+    2. Redirect request to production service to getTotalMonthlyProduction(strYearAndMonth)
+    3. Wait for response
+    4. Response format: ArrayList<DailyProductionPojo>
+       Note: DailyProductionPojo -> {
+            dailyProductionAmount : long
+            productionDate : LocalDate
+        }
+    5. Return this response back to the caller.
+
+Production Service - getMonthlyProductionListForAll(strYearAndMonth):
+    1. Validate strYearAndMonth & throw exception if invalid.
+    2. Parse year & month from path variable
+    3. Create LocalDate for given year & month
+    4. Initialize strStartDate with 01 & strEndDate with last day of current month (number)
+       Keeping the month & year same for both start & end date.
+       Note: strStartDate AND strEndDate format -> 'yyyy-mm-dd'
+    5. Return result of findDailyProductionListBetween(startDate, endDate):
+
+Production Repository - findDailyProductionListBetween(startDate, endDate):
+    1. Generate Query to fetch Sum of ProductionAmount1stClass for date between start & end date
+    2. Query:
+       "SELECT NEW app.user.pojo.DailyProductionPOJO(" +
+       "SUM(P.productionAmount1stClass), P.productionDate)  " +
+       "FROM Production P " +
+       "GROUP by P.productionDate " +
+       "HAVING P.productionDate BETWEEN ?1 AND ?2"
+

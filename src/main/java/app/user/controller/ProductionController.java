@@ -2,6 +2,7 @@ package app.user.controller;
 
 import app.user.dto.ProductionDTO;
 import app.user.exceptions.ProductionException;
+import app.user.pojo.DailyProductionPOJO;
 import app.user.service.ProductionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,6 +115,25 @@ public class ProductionController {
         LOGGER.info(msg);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieve List of daily production for all product types for the given year & month.
+     * Daily production consists of following:
+     * 1. Sum of productionAmount1stClass on that production date
+     * 2. Production Date
+     *
+     * @param strYearAndMonth for which month & year the daily production is required
+     * @return ArrayList List of Daily Production for the given strYearAndMonth
+     * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/production/monthly/all/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<DailyProductionPOJO>> getMonthlyProductionListForAll(
+            @PathVariable String strYearAndMonth) throws ProductionException {
+
+        LOGGER.info("Requesting for date: {}", strYearAndMonth);
+        return new ResponseEntity<>(productionService.getMonthlyProductionListForAll(strYearAndMonth), HttpStatus.OK);
+
     }
 
 

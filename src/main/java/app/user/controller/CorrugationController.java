@@ -40,6 +40,44 @@ public class CorrugationController {
     }
 
     /**
+     * Retrieve JSON containing list of daily production from DB for each itemType for given year & month. <br>
+     *
+     * @param strYearAndMonth month & year for which the daily production is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
+     */
+    @GetMapping(value = "/corrugation/monthly/each-item-type/{strYearAndMonth}")
+    public ResponseEntity<String> getMonthlyProductionListForEachItemType(@PathVariable String strYearAndMonth)
+            throws CorrugationException {
+
+        /*
+            //  JSON result format:
+            {
+                "Galvalum": [
+                    {
+                        "dailyProductionAmount": 11,
+                        "productionDate": {
+                            "year": 2021,
+                            "month": 6,
+                            "day": 10
+                        },
+                        "epochMilliSecond": 1623283200000
+                    }
+                ],
+                "Seng Kaki": [],
+                "Seng Lebar": [],
+                "Spandeck": [],
+                "Coil": []
+            }
+         */
+
+        LOGGER.info("Requesting Monthly Production for each item type - Date: " + strYearAndMonth);
+        return new ResponseEntity<>(corrugationService.getMonthlyProductionListForEachItemType(strYearAndMonth),
+                HttpStatus.OK);
+
+    }
+
+    /**
      * Retrieve CorrugationDTO by providing corrugationId in the url
      *
      * @param corrugationId id corresponding to the corrugation record of the Corrugation Table

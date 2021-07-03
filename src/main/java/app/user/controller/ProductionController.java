@@ -131,7 +131,7 @@ public class ProductionController {
     public ResponseEntity<ArrayList<DailyProductionPOJO>> getMonthlyProductionListForAll(
             @PathVariable String strYearAndMonth) throws ProductionException {
 
-        LOGGER.info("Requesting for date: {}", strYearAndMonth);
+        LOGGER.info("Requesting Monthly Production List for All - date: {}", strYearAndMonth);
         return new ResponseEntity<>(productionService.getMonthlyProductionListForAll(strYearAndMonth), HttpStatus.OK);
 
     }

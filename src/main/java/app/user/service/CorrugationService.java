@@ -3,7 +3,10 @@ package app.user.service;
 import app.user.dto.CorrugationDTO;
 import app.user.entity.Corrugation;
 import app.user.exceptions.CorrugationException;
+import app.user.pojo.DailyProductionPOJO;
+import app.user.pojo.YearMonthPojo;
 import app.user.repository.CorrugationRepository;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service(value = "corrugationService")
 @Transactional
@@ -23,6 +28,67 @@ public class CorrugationService {
     public CorrugationService(CorrugationRepository CorrugationRepository) {
         this.corrugationRepository = CorrugationRepository;
     }
+
+    /**
+     * Validate & parse strYearAndMonth into YearMonthPojo,
+     * Retrieve JSON containing list of daily production from DB for each itemType for given year & month.
+     *
+     * @param strYearAndMonth month & year for which the daily production is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
+     */
+    public String getMonthlyProductionListForEachItemType(
+            final String strYearAndMonth) throws CorrugationException {
+
+        //  Map representing resultant JSON string, Key: itemType  |  value: list of Daily Prod Pojo
+        Map<String, ArrayList<DailyProductionPOJO>> map = new HashMap<>();
+
+        //  Initialize array with item types of corrugation table
+        String[] arrItemTypes = {"Seng Kaki", "Seng Lebar", "Galvalum", "Spandeck", "Coil"};
+
+        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+
+        if (yearMonthPojo == null) {
+            String msg = "Invalid strYearAndMonth format.\n" +
+                    "Required: YYYY-MM\n" +
+                    "Found: " + strYearAndMonth;
+            throw new CorrugationException(msg);
+        }
+
+        //  Iterate each itemType in arrItemTypes & find list of daily prod pojo
+        for (String itemType : arrItemTypes) {
+            //  Fetch list of daily production pojo for itemType from Corrugation Table in DB
+            ArrayList<DailyProductionPOJO> listDailyProd = this.getMonthlyProductionListByItemType(
+                    itemType, yearMonthPojo);
+
+            //  Add the retrieved list into map with corresponding itemType as the key
+            map.put(itemType, listDailyProd);
+        }
+
+//        LOGGER.info(map.toString());
+
+        return new Gson().toJson(map);
+
+    }
+
+    /**
+     * Retrieve list of daily production from DB for the given itemType, year & month.
+     *
+     * @param itemType      item type (of corrugation) for which the daily production is required. <br>
+     * @param yearMonthPojo month & year for which the daily production is required. <br>
+     *                      yearMonthPojo contains required startDate & endDate fields. <br>
+     *                      format: YYYY-MM | E.g.: 2021-01
+     * @return ArrayList List of Daily Production for the given itemType & strYearAndMonth
+     */
+    public ArrayList<DailyProductionPOJO> getMonthlyProductionListByItemType(
+            String itemType, final YearMonthPojo yearMonthPojo) {
+
+        return corrugationRepository.findByProductTypeDailyProductionListBetween(
+                itemType, yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
+
+    }
+
 
     /**
      * Insert new corrugation record in Corrugation table for the given corrugationDTO

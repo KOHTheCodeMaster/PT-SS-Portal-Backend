@@ -136,6 +136,25 @@ public class ProductionController {
 
     }
 
+    /**
+     * Retrieve List of daily production of 2nd class for all product types for the given year & month.
+     * Daily production consists of following:
+     * 1. Sum of productionAmount2ndClass on that production date
+     * 2. Production Date
+     *
+     * @param strYearAndMonth for which month & year the daily production is required
+     * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
+     * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/production/monthly/2nd-class/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<DailyProductionPOJO>> get2ndClassMonthlyProductionList(
+            @PathVariable String strYearAndMonth) throws ProductionException {
+
+        LOGGER.info("Requesting Monthly Production List for 2nd class - date: {}", strYearAndMonth);
+        return new ResponseEntity<>(productionService.get2ndClassMonthlyProductionList(strYearAndMonth), HttpStatus.OK);
+
+    }
+
 
     /**
      * Demo ProductionService methods

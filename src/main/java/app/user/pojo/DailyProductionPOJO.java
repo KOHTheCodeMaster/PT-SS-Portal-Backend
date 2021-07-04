@@ -6,7 +6,7 @@ import java.time.ZoneOffset;
 
 public class DailyProductionPOJO {
 
-    private Long dailyProductionAmount; //  Total sum of 1st class prod amount for given prod date
+    private Long dailyProductionAmount; //  Total sum of 1st (or 2nd) class prod amount for given prod date
     private LocalDate productionDate;
     private Long epochMilliSecond;  //  productionDate to equivalent milli seconds (UTC)
 

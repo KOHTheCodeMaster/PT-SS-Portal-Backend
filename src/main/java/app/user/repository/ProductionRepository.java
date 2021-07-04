@@ -24,4 +24,12 @@ public interface ProductionRepository extends CrudRepository<Production, Integer
             "HAVING P.productionDate BETWEEN ?1 AND ?2")
     ArrayList<DailyProductionPOJO> findDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
 
+    //  Using class based projection for selecting specific columns
+    @Query("SELECT NEW app.user.pojo.DailyProductionPOJO(" +
+            "SUM(P.productionAmount2ndClass), P.productionDate)  " +
+            "FROM Production P " +
+            "GROUP by P.productionDate " +
+            "HAVING P.productionDate BETWEEN ?1 AND ?2")
+    ArrayList<DailyProductionPOJO> find2ndClassDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
+
 }

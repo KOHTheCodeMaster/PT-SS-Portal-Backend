@@ -185,6 +185,31 @@ public class ProductionService {
     }
 
     /**
+     * Validate & parse strYearAndMonth into YearMonthPojo,
+     * Retrieve list of daily production for 2nd class prod amount from DB for the given year & month.
+     *
+     * @param strYearAndMonth month & year for which the daily production is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
+     */
+    public ArrayList<DailyProductionPOJO> get2ndClassMonthlyProductionList(final String strYearAndMonth) throws ProductionException {
+
+        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+
+        if (yearMonthPojo == null) {
+            String msg = "Invalid strYearAndMonth format.\n" +
+                    "Required: YYYY-MM\n" +
+                    "Found: " + strYearAndMonth;
+            throw new ProductionException(msg);
+        }
+
+        return productionRepository.find2ndClassDailyProductionListBetween(yearMonthPojo.getStartDate(),
+                yearMonthPojo.getEndDate());
+
+    }
+
+    /**
      * productionId is INVALID for null OR < 1, Otherwise Valid
      *
      * @param productionId id which needs to be validated

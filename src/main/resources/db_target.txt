@@ -1,0 +1,55 @@
+# create schema db_pt_ss;
+use db_pt_ss;
+
+
+# --------------------------------
+#   Target Table
+# --------------------------------
+
+
+drop table target;
+
+create table target(
+    target_id integer AUTO_INCREMENT,
+    type char(1),
+    year integer,
+    month integer,
+    target_amount integer,
+    realize_amount integer,
+    PRIMARY KEY (target_id)
+);
+
+# type = 'P' -> Production Target
+# type = 'S' -> Selling Target
+# insert into target values(1,  'P', 12, 2021, 1000, 800);
+# insert into target values(1,  'S', 12, 2021, 1000, 800);
+
+#   Production Target
+insert into target values(1,  'P', 1, 2021, 300, 250);
+insert into target values(2,  'P', 2, 2021, 300, 200);
+insert into target values(3,  'P', 3, 2021, 300, 250);
+insert into target values(4,  'P', 4, 2021, 300, 200);
+insert into target values(5,  'P', 5, 2021, 300, 250);
+insert into target values(6,  'P', 6, 2021, 300, 200);
+insert into target values(7,  'P', 7, 2021, 300, 250);
+insert into target values(8,  'P', 8, 2021, 300, 200);
+insert into target values(9,  'P', 9, 2021, 300, 250);
+insert into target values(10,  'P', 10, 2021, 300, 200);
+insert into target values(11,  'P', 11, 2021, 300, 250);
+insert into target values(12,  'P', 12, 2021, 300, 200);
+
+#   Selling Target
+insert into target values(13,  'S', 1, 2021, 300, 250);
+insert into target values(14,  'S', 2, 2021, 300, 200);
+insert into target values(15,  'S', 3, 2021, 300, 250);
+insert into target values(16,  'S', 4, 2021, 300, 200);
+insert into target values(17,  'S', 5, 2021, 300, 250);
+insert into target values(18,  'S', 6, 2021, 300, 200);
+insert into target values(19,  'S', 7, 2021, 300, 250);
+insert into target values(20,  'S', 8, 2021, 300, 200);
+insert into target values(21,  'S', 9, 2021, 300, 250);
+insert into target values(22,  'S', 10, 2021, 300, 200);
+insert into target values(23,  'S', 11, 2021, 300, 250);
+insert into target values(24,  'S', 12, 2021, 300, 200);
+
+commit;

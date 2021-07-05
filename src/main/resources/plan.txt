@@ -36,7 +36,7 @@ Production Service - getMonthlyProductionListForAll(strYearAndMonth):
 Production Repository - findDailyProductionListBetween(startDate, endDate):
     1. Generate Query to fetch Sum of ProductionAmount1stClass for date between start & end date
     2. Query:
-       "SELECT NEW app.user.pojo.DailyProductionPOJO(" +
+       "SELECT NEW app.pojo.DailyProductionPOJO(" +
        "SUM(P.productionAmount1stClass), P.productionDate)  " +
        "FROM Production P " +
        "GROUP by P.productionDate " +

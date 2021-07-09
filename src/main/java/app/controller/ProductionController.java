@@ -122,6 +122,7 @@ public class ProductionController {
      * Daily production consists of following:
      * 1. Sum of productionAmount1stClass on that production date
      * 2. Production Date
+     * 3. epochMilliSecond
      *
      * @param strYearAndMonth for which month & year the daily production is required
      * @return ArrayList List of Daily Production for the given strYearAndMonth
@@ -141,6 +142,7 @@ public class ProductionController {
      * Daily production consists of following:
      * 1. Sum of productionAmount2ndClass on that production date
      * 2. Production Date
+     * 3. epochMilliSecond
      *
      * @param strYearAndMonth for which month & year the daily production is required
      * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth

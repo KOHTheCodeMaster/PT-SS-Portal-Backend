@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -31,7 +28,7 @@ public class TargetController {
      * 2. targetId is ignored since it is Auto-incremented by the DB.
      *
      * @param targetDTO targetDTO in the body of POST request as Json format
-     * @return productionId of the newly added production record in Production Table
+     * @return targetId of the newly added target record in Production Table
      */
     @PostMapping(value = "/target")
     public ResponseEntity<String> addTarget(@RequestBody TargetDTO targetDTO) throws TargetException {
@@ -45,5 +42,38 @@ public class TargetController {
 
         return new ResponseEntity<>(msg, HttpStatus.CREATED);
     }
+
+    /**
+     * Retrieve targetDTO for the given month, year & type = 'P'.
+     *
+     * @param strYearAndMonth for which month & year the target is required
+     * @return TargetDto corresponding to the given strYearAndMonth
+     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/target/p/year-month/{strYearAndMonth}")
+    public ResponseEntity<TargetDTO> getProductionTargetByYearAndMonth(
+            @PathVariable String strYearAndMonth) throws TargetException {
+
+        LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
+        return new ResponseEntity<>(targetService.getTargetByMonthAndYearAndType(strYearAndMonth, 'P'), HttpStatus.OK);
+
+    }
+
+    /**
+     * Retrieve targetDTO for the given month, year & type = 'S'.
+     *
+     * @param strYearAndMonth for which month & year the target is required
+     * @return TargetDto corresponding to the given strYearAndMonth
+     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/target/s/year-month/{strYearAndMonth}")
+    public ResponseEntity<TargetDTO> getSellingTargetByYearAndMonth(
+            @PathVariable String strYearAndMonth) throws TargetException {
+
+        LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
+        return new ResponseEntity<>(targetService.getTargetByMonthAndYearAndType(strYearAndMonth, 'S'), HttpStatus.OK);
+
+    }
+
 
 }

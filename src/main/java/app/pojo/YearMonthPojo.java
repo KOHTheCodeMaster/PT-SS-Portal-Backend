@@ -17,7 +17,7 @@ public class YearMonthPojo {
     public static YearMonthPojo parseStringToYearMonthPojo(String strYearAndMonth) {
 
         //  Validate strYearAndMonth format: YYYY-MM i.e. ####-##
-        if (strYearAndMonth == null || !strYearAndMonth.matches("\\d{4}-\\d{2}")) return null;
+        if (strYearAndMonth == null || !strYearAndMonth.matches("\\d{4}-((0[1-9])|(1[0-2]))")) return null;
 
         //  Parse Year & Month from strYearAndMonth which is in form: YYYY-MM
         String[] arrYearAndMonth = strYearAndMonth.split("-");
@@ -35,6 +35,16 @@ public class YearMonthPojo {
 
         return yearMonthPojo;
 
+    }
+
+    @Override
+    public String toString() {
+        return "YearMonthPojo{" +
+                "year=" + year +
+                ", month=" + month +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 
     public int getYear() {

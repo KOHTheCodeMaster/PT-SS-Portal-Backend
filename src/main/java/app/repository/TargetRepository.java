@@ -9,5 +9,4 @@ public interface TargetRepository extends CrudRepository<Target, Integer> {
 
     Optional<Target> findByMonthAndYearAndType(Integer month, Integer year, Character type);
 
-
 }

@@ -20,6 +20,7 @@ public class Corrugation {
     private String colour;
     private String corrugationType;
     private Integer amount;
+
     /**
      * Convert from given Corrugation entity instance to CorrugationDTO instance
      *

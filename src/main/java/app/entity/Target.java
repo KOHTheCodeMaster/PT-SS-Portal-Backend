@@ -36,11 +36,12 @@ public class Target {
 
         TargetDTO targetDTO = new TargetDTO();
 
+        targetDTO.setTargetId(targetId);
         targetDTO.setType(type);
         targetDTO.setYear(year);
         targetDTO.setMonth(month);
         targetDTO.setTargetAmount(targetAmount);
-        targetDTO.setRealizedAmount(realizedAmount);
+//        targetDTO.setRealizedAmount(realizedAmount);
 
         return targetDTO;
 

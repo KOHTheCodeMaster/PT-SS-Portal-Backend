@@ -21,8 +21,8 @@ import java.util.Map;
 @Transactional
 public class CorrugationService {
 
-    private final CorrugationRepository corrugationRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(CorrugationService.class);
+    private final CorrugationRepository corrugationRepository;
 
     @Autowired
     public CorrugationService(CorrugationRepository CorrugationRepository) {

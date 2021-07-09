@@ -16,8 +16,8 @@ import java.util.Optional;
 @Transactional
 public class UserService {
 
-    private final UserRepository userRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+    private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {

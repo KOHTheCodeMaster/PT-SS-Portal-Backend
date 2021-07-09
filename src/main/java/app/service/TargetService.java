@@ -3,6 +3,7 @@ package app.service;
 import app.dto.TargetDTO;
 import app.entity.Target;
 import app.exceptions.TargetException;
+import app.pojo.YearMonthPojo;
 import app.repository.TargetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service(value = "targetService")
 @Transactional
@@ -26,7 +28,7 @@ public class TargetService {
     /**
      * Insert new target record in Target table for the given targetDTO
      *
-     * @param targetDTO targetDTO which needs to be inserted into Production Table
+     * @param targetDTO targetDTO which needs to be inserted into Target Table
      * @return productionId of the newly added production record on successful insertion, -1 on Failure.
      * @throws TargetException If targetDTO, or any of its field is null
      */
@@ -141,5 +143,27 @@ public class TargetService {
 */
 
         LOGGER.info("TargetDTO is Valid.");
+    }
+
+    public TargetDTO getTargetByMonthAndYearAndType(String strYearAndMonth, Character type) throws TargetException {
+
+        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+
+        if (yearMonthPojo == null) {
+            String msg = "Invalid strYearAndMonth format.\n" +
+                    "Required: YYYY-MM\n" +
+                    "Found: " + strYearAndMonth;
+            throw new TargetException(msg);
+        }
+
+        //  Find target by year and month
+        Optional<Target> resultTarget = targetRepository.findByMonthAndYearAndType(yearMonthPojo.getMonth(),
+                yearMonthPojo.getYear(), type);
+
+        //  When target not found, Throw TargetException, Otherwise return targetDTO
+        Target target = resultTarget.orElseThrow(() -> new TargetException("Target.NOT_FOUND"));
+        return target.convertToDTO();
+
     }
 }

@@ -1,0 +1,6 @@
+
+Production & Selling Control
+------------------
+1. Handle Error on Submitting Target value which already exists in DB
+2. Monthly & Yearly report chart
+3. Monthly & Yearly data table

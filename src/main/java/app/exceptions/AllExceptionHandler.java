@@ -4,15 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 
 @CrossOrigin
-@ControllerAdvice
+@RestControllerAdvice
 public class AllExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllExceptionHandler.class);
@@ -69,18 +69,36 @@ public class AllExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+    /*
+        @ExceptionHandler(TargetException.class)
+        public ResponseEntity<ExceptionResponse> targetNotFound(TargetException e) {
+
+            ExceptionResponse response = new ExceptionResponse();
+            response.setError("NOT_FOUND");
+            response.setMessage(e.getMessage());
+            response.setStatus(402);
+            response.setTimestamp(LocalDateTime.now());
+
+            LOGGER.error("Target Exception Response: " + response);
+
+            return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+
+        }
+    */
+
     @ExceptionHandler(TargetException.class)
     public ResponseEntity<ExceptionResponse> targetNotFound(TargetException e) {
 
-        ExceptionResponse response = new ExceptionResponse();
-        response.setError("NOT_FOUND");
-        response.setMessage(e.getMessage());
-        response.setStatus(402);
-        response.setTimestamp(LocalDateTime.now());
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        exceptionResponse.setMessage(e.getMessage());
+//        exceptionResponse.setError(Arrays.toString(e.getStackTrace()));
+        exceptionResponse.setTimestamp(LocalDateTime.now());
 
-        LOGGER.error("Target Exception Response: " + response);
+        LOGGER.error("Target Exception Response: " + exceptionResponse);
 
-        return new ResponseEntity<>(response, HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+//        return exceptionResponse;
 
     }
 

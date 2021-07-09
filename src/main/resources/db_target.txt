@@ -12,10 +12,10 @@ drop table target;
 create table target(
     target_id integer AUTO_INCREMENT,
     type char(1),
-    year integer,
     month integer,
+    year integer,
     target_amount integer,
-    realize_amount integer,
+    realized_amount integer,
     PRIMARY KEY (target_id)
 );
 

@@ -87,18 +87,17 @@ public class AllExceptionHandler extends ResponseEntityExceptionHandler {
     */
 
     @ExceptionHandler(TargetException.class)
-    public ResponseEntity<ExceptionResponse> targetNotFound(TargetException e) {
+    public ExceptionResponse targetNotFound(TargetException e) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse();
-        exceptionResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        exceptionResponse.setStatus(e.getStatus());
         exceptionResponse.setMessage(e.getMessage());
-//        exceptionResponse.setError(Arrays.toString(e.getStackTrace()));
+        exceptionResponse.getJsonMap().put("targetDTO", e.getTargetDTO());
         exceptionResponse.setTimestamp(LocalDateTime.now());
 
-        LOGGER.error("Target Exception Response: " + exceptionResponse);
+//        LOGGER.error("Target Exception Response: " + exceptionResponse);
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-//        return exceptionResponse;
+        return exceptionResponse;
 
     }
 

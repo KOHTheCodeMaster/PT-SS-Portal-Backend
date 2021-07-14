@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -34,16 +36,19 @@ public class TargetController {
      * @return targetId of the newly added target record in Target Table
      */
     @PostMapping(value = "/target")
-    public ResponseEntity<String> addTarget(@RequestBody TargetDTO targetDTO) throws TargetException {
+    public ResponseEntity<Map<String, Object>> addTarget(@RequestBody TargetDTO targetDTO) throws TargetException {
 
         //  Add targetDTO in DB
-//        LOGGER.info(targetDTO.toString());
         int targetId = targetService.addTarget(targetDTO);
 
         String msg = "Target added successfully with id: " + targetId;
         LOGGER.info(msg);
 
-        return new ResponseEntity<>(msg, HttpStatus.CREATED);
+        Map<String, Object> map = new HashMap<>();
+        map.put("message", msg);
+        map.put("status", 201);
+
+        return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
     /**

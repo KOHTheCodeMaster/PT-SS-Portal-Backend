@@ -9,6 +9,7 @@ import app.repository.TargetRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -42,9 +43,9 @@ public class TargetService {
         //  Throw Target.ALREADY_EXISTS TargetException if given month and type already exists
         if (targetRepository.findByMonthAndYearAndType(targetDTO.getMonth(), targetDTO.getYear(), targetDTO.getType())
                 .isPresent()) {
-            String msg = "Target.ALREADY_EXISTS:\n" + targetDTO;
+            String msg = "Target.ALREADY_EXISTS:";
             LOGGER.info(msg);
-            throw new TargetException(msg);
+            throw new TargetException(msg, targetDTO, HttpStatus.ALREADY_REPORTED.value());
         }
 
         Target target = Target.parseDTO(targetDTO);
@@ -73,12 +74,12 @@ public class TargetService {
 //                targetDTO.getType() == null || !targetDTO.getType().matches("[PS]") ||
                 targetDTO.getType() == null || (targetDTO.getType() != 'P' && targetDTO.getType() != 'S') ||
                 targetDTO.getYear() == null || !(targetDTO.getYear().toString().matches("\\d{4}")) ||
-                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("\\d[12]?")) ||
+                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("\\d[012]?")) ||
                 targetDTO.getTargetAmount() == null) {
 
-            String msg = "Target.INVALID_TARGET_DTO:\n" + targetDTO;
+            String msg = "Target.INVALID_TARGET_DTO";
             LOGGER.error(msg);
-            throw new TargetException(msg);
+            throw new TargetException(msg, targetDTO, HttpStatus.CONFLICT.value());
         }
 
 /*
@@ -128,7 +129,7 @@ public class TargetService {
             throw new TargetException(msg);
 
         }
-        if (!(targetDTO.getMonth().toString().matches("\\d[12]?"))) {
+        if (!(targetDTO.getMonth().toString().matches("\\d[012]?"))) {
 
             String msg = "Target.INVALID_TARGET_DTO:" +
                     "month is invalid\n" + targetDTO;

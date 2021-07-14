@@ -4,6 +4,8 @@ package app.exceptions;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExceptionResponse {
 
@@ -12,6 +14,7 @@ public class ExceptionResponse {
     private Integer status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
+    private Map<String, Object> jsonMap;
 
     /*
         //  Json Response Sample
@@ -20,9 +23,13 @@ public class ExceptionResponse {
             "status": 404,
             "error": "NOT_FOUND",
             "message": "Corrugation.CORRUGATION_NOT_FOUND with id: 999",
-            "path": "/corrugation/a/999"
+            "jsonMap": { "key" : "value" }
         }
     */
+
+    public ExceptionResponse() {
+        this.jsonMap = new HashMap<>();
+    }
 
     @Override
     public String toString() {
@@ -65,4 +72,9 @@ public class ExceptionResponse {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+    public Map<String, Object> getJsonMap() {
+        return jsonMap;
+    }
+
 }

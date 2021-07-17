@@ -3,7 +3,7 @@ package app.service;
 import app.dto.TargetDTO;
 import app.entity.Target;
 import app.exceptions.TargetException;
-import app.pojo.DailyTargetPOJO;
+import app.pojo.TargetPOJO;
 import app.pojo.YearMonthPojo;
 import app.repository.TargetRepository;
 import org.slf4j.Logger;
@@ -74,7 +74,7 @@ public class TargetService {
 //                targetDTO.getType() == null || !targetDTO.getType().matches("[PS]") ||
                 targetDTO.getType() == null || (targetDTO.getType() != 'P' && targetDTO.getType() != 'S') ||
                 targetDTO.getYear() == null || !(targetDTO.getYear().toString().matches("\\d{4}")) ||
-                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("\\d[012]?")) ||
+                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("(0[1-9])|(1[0-2])")) ||
                 targetDTO.getTargetAmount() == null) {
 
             String msg = "Target.INVALID_TARGET_DTO";
@@ -149,11 +149,23 @@ public class TargetService {
         LOGGER.info("TargetDTO is Valid.");
     }
 
-    public ArrayList<DailyTargetPOJO> getMonthlyTargetListByMonthAndYearAndType(String strYearAndMonth, Character type) throws TargetException {
+    /**
+     * Retrieve List of daily target for the given year & month.
+     * Daily target consists of following:
+     * 1. dailyTargetAmount = total monthly target / max. day of month
+     * 2. Target Date
+     * 3. epochMilliSecond
+     *
+     * @param strYearAndMonth for which month & year the target is required
+     * @return ArrayList List of TargetDTO containing daily target for the given strYearAndMonth
+     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    public ArrayList<TargetPOJO> getDailyTargetListByMonthAndYearAndType(String strYearAndMonth, Character type)
+            throws TargetException {
 
-        ArrayList<DailyTargetPOJO> list = new ArrayList<>();
+        ArrayList<TargetPOJO> list = new ArrayList<>();
 
-        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        //  Validate & Parse strYearAndMonth to YearMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
 
         if (yearMonthPojo == null) {
@@ -175,7 +187,7 @@ public class TargetService {
         for (int dayCount = 1; dayCount <= maxDayOfMonth; dayCount++)
             //  Add new DailyTargetPOJO with targetAmount & date with dayCount
             //  Note: dailyTargetAmount = total monthly target / max. day of month
-            list.add(new DailyTargetPOJO(
+            list.add(new TargetPOJO(
                     Long.parseLong(targetDTO.getTargetAmount() + "") / maxDayOfMonth,
                     LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount)
             ));
@@ -183,25 +195,55 @@ public class TargetService {
         return list;
     }
 
-    public TargetDTO getTargetByMonthAndYearAndType(String strYearAndMonth, Character type) throws TargetException {
+    /**
+     * Retrieve List of monthly targets for each month of the given year.
+     * Monthly target consists of following:
+     * 1. dailyTargetAmount = total monthly target
+     * 2. Target Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     * Note: Although DailyTargetPojo is used, but it actually has nothing to concern with daily target or DAY.
+     * It only finds the target of each month for given year. Just to avoid redundancy of creating MonthlyTargetPojo
+     * for the sake of simplicity, DailyTargetPojo is used with context of Monthly instead of Daily.
+     *
+     * @param strYear for which year the target data is required
+     * @param type    target for production ('P') or selling ('S')
+     * @return ArrayList List of TargetDTO containing monthly targets for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    public ArrayList<TargetPOJO> getMonthlyTargetListByYearAndType(String strYear, Character type)
+            throws TargetException {
 
-        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
-        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+        ArrayList<TargetPOJO> monthlyTargetList = new ArrayList<>();
 
-        if (yearMonthPojo == null) {
-            String msg = "Invalid strYearAndMonth format.\n" +
-                    "Required: YYYY-MM\n" +
-                    "Found: " + strYearAndMonth;
-            throw new TargetException(msg);
+        //  Validate & Parse strYear to YearMonthPojo
+        ArrayList<YearMonthPojo> yearMonthPojoList = YearMonthPojo.fromYear(strYear);
+
+        //  Find and add monthly target for each month of given year
+        for (YearMonthPojo yearMonthPojo : yearMonthPojoList) {
+
+            //  Find target by year and month
+            Optional<Target> optionalTarget = targetRepository.findByMonthAndYearAndType(yearMonthPojo.getMonth(),
+                    yearMonthPojo.getYear(), type);
+
+            //  When target not found, Throw TargetException, Otherwise get targetDTO
+            if (optionalTarget.isEmpty()) continue;
+
+            TargetDTO targetDTO = optionalTarget.get().convertToDTO();
+
+            /*
+                Add Target Pojo to the monthlyTargetList
+                targetAmount -> total target amount for the month
+                targetData -> date for year, month & last day of the month
+            */
+            monthlyTargetList.add(new TargetPOJO(
+                    Long.parseLong(targetDTO.getTargetAmount() + ""),
+                    LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(),
+                            yearMonthPojo.getLengthOfMonth())
+            ));
+
         }
 
-        //  Find target by year and month
-        Optional<Target> optionalTarget = targetRepository.findByMonthAndYearAndType(yearMonthPojo.getMonth(),
-                yearMonthPojo.getYear(), type);
-
-        //  When target not found, Throw TargetException, Otherwise return targetDTO
-        Target target = optionalTarget.orElseThrow(() -> new TargetException("Target.NOT_FOUND"));
-        return target.convertToDTO();
-
+        return monthlyTargetList;
     }
+
 }

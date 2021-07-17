@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 
-public class DailyTargetPOJO {
+public class TargetPOJO {
 
-    private Long dailyTargetAmount; //  total monthly target / max. days of month
+    private Long targetAmount; //  total monthly target / max. days of month
     private LocalDate targetDate;
     private Long epochMilliSecond;  //  targetDate to equivalent milli seconds (UTC)
 
-    public DailyTargetPOJO(Long dailyTargetAmount, LocalDate targetDate) {
-        this.dailyTargetAmount = dailyTargetAmount;
+    public TargetPOJO(Long targetAmount, LocalDate targetDate) {
+        this.targetAmount = targetAmount;
         this.targetDate = targetDate;
         this.epochMilliSecond = targetDate.toEpochSecond(LocalTime.MIN, ZoneOffset.UTC) * 1000;
     }
@@ -19,18 +19,18 @@ public class DailyTargetPOJO {
     @Override
     public String toString() {
         return "DailyTargetPOJO{" +
-                "dailyTargetAmount=" + dailyTargetAmount +
+                "dailyTargetAmount=" + targetAmount +
                 ", targetDate=" + targetDate +
                 ", epochMilliSecond=" + epochMilliSecond +
                 '}';
     }
 
-    public Long getDailyTargetAmount() {
-        return dailyTargetAmount;
+    public Long getTargetAmount() {
+        return targetAmount;
     }
 
-    public void setDailyTargetAmount(Long dailyTargetAmount) {
-        this.dailyTargetAmount = dailyTargetAmount;
+    public void setTargetAmount(Long targetAmount) {
+        this.targetAmount = targetAmount;
     }
 
     public LocalDate getTargetDate() {

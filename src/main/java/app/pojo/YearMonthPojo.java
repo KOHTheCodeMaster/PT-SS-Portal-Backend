@@ -1,17 +1,42 @@
 package app.pojo;
 
+import app.exceptions.TargetException;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class YearMonthPojo {
 
     private final int year;
     private final int month;
+    private final int lengthOfMonth;
     private LocalDate startDate;
     private LocalDate endDate;
 
     public YearMonthPojo(int year, int month) {
         this.year = year;
         this.month = month;
+
+        //  Initialize startDate with 1 & endDate with last day of month
+        lengthOfMonth = LocalDate.of(year, month, 1).lengthOfMonth();
+        startDate = LocalDate.of(year, month, 1);
+        endDate = LocalDate.of(year, month, lengthOfMonth);
+    }
+
+    public static ArrayList<YearMonthPojo> fromYear(String strYear) throws TargetException {
+
+        //  Validate strYear format: YYYY i.e. ####
+        if (strYear == null || !strYear.matches("2\\d{3}")) throw new TargetException("Target.INVALID_YEAR");
+
+        //  Parse Year from strYear which is in form: YYYY
+        int year = Integer.parseInt(strYear);
+
+        //  Initialize list of YearMonthPojo for each month for given year
+        ArrayList<YearMonthPojo> list = new ArrayList<>();
+        for (int month = 1; month <= 12; month++) list.add(new YearMonthPojo(year, month));
+
+        return list;
+
     }
 
     public static YearMonthPojo parseStringToYearMonthPojo(String strYearAndMonth) {
@@ -24,16 +49,7 @@ public class YearMonthPojo {
         int year = Integer.parseInt(arrYearAndMonth[0]);
         int month = Integer.parseInt(arrYearAndMonth[1]);
 
-        YearMonthPojo yearMonthPojo = new YearMonthPojo(year, month);
-
-        //  Initialize startDate with 1 & endDate with last day of month
-        int lengthOfMonth = LocalDate.of(year, month, 1).lengthOfMonth();
-        yearMonthPojo.setStartDate(LocalDate.of(year, month, 1));
-        yearMonthPojo.setEndDate(LocalDate.of(year, month, lengthOfMonth));
-//        System.out.println("startDate: " + yearMonthPojo.getStartDate() +
-//                " | endDate: " + yearMonthPojo.getEndDate());
-
-        return yearMonthPojo;
+        return new YearMonthPojo(year, month);
 
     }
 
@@ -69,5 +85,9 @@ public class YearMonthPojo {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public int getLengthOfMonth() {
+        return lengthOfMonth;
     }
 }

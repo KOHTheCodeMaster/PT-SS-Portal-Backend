@@ -4,33 +4,33 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 
-public class DailyProductionPOJO {
+public class ProductionPOJO {
 
-    private Long dailyProductionAmount; //  Total sum of 1st (or 2nd) class prod amount for given prod date
+    private Long productionAmount; //  Total sum of 1st (or 2nd) class prod amount for given prod date
     private LocalDate productionDate;
     private Long epochMilliSecond;  //  productionDate to equivalent milli seconds (UTC)
 
-    public DailyProductionPOJO(Long dailyProductionAmount, LocalDate productionDate) {
-        this.dailyProductionAmount = dailyProductionAmount;
+    public ProductionPOJO(Long productionAmount, LocalDate productionDate) {
+        this.productionAmount = productionAmount;
         this.productionDate = productionDate;
         this.epochMilliSecond = productionDate.toEpochSecond(LocalTime.MIN, ZoneOffset.UTC) * 1000;
     }
 
     @Override
     public String toString() {
-        return "DailyProductionPOJO{" +
-                "dailyProductionAmount=" + dailyProductionAmount +
+        return "ProductionPOJO{" +
+                "productionAmount=" + productionAmount +
                 ", productionDate=" + productionDate +
                 ", dateTimeInMs=" + epochMilliSecond +
                 '}';
     }
 
-    public Long getDailyProductionAmount() {
-        return dailyProductionAmount;
+    public Long getProductionAmount() {
+        return productionAmount;
     }
 
-    public void setDailyProductionAmount(Long dailyProductionAmount) {
-        this.dailyProductionAmount = dailyProductionAmount;
+    public void setProductionAmount(Long productionAmount) {
+        this.productionAmount = productionAmount;
     }
 
     public LocalDate getProductionDate() {

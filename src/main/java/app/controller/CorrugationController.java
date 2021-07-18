@@ -46,8 +46,8 @@ public class CorrugationController {
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
      */
-    @GetMapping(value = "/corrugation/monthly/each-item-type/{strYearAndMonth}")
-    public ResponseEntity<String> getMonthlyProductionListForEachItemType(@PathVariable String strYearAndMonth)
+    @GetMapping(value = "/corrugation/daily/each-item-type/{strYearAndMonth}")
+    public ResponseEntity<String> getdailyProductionListForEachItemType(@PathVariable String strYearAndMonth)
             throws CorrugationException {
 
         /*
@@ -71,8 +71,8 @@ public class CorrugationController {
             }
          */
 
-        LOGGER.info("Requesting Monthly Production for each item type - Date: " + strYearAndMonth);
-        return new ResponseEntity<>(corrugationService.getMonthlyProductionListForEachItemType(strYearAndMonth),
+        LOGGER.info("Requesting daily Production for each item type - Date: " + strYearAndMonth);
+        return new ResponseEntity<>(corrugationService.getDailyProductionListForEachItemType(strYearAndMonth),
                 HttpStatus.OK);
 
     }

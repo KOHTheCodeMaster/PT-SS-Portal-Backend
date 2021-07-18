@@ -73,6 +73,26 @@ public class TargetController {
     }
 
     /**
+     * Retrieve List of daily selling target for the given year & month.
+     * Daily target consists of following:
+     * 1. target per day = total monthly target / max. day of month
+     * 2. Target Date
+     * 3. epochMilliSecond
+     *
+     * @param strYearAndMonth for which month & year the target is required
+     * @return ArrayList List of TargetDTO containing daily target for the given strYearAndMonth
+     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/target/s/year-month/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<TargetPOJO>> getDailySellingTargetByYearAndMonth(
+            @PathVariable String strYearAndMonth) throws TargetException {
+
+        LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
+        return new ResponseEntity<>(targetService.getDailyTargetListByMonthAndYearAndType(strYearAndMonth, 'S'), HttpStatus.OK);
+
+    }
+
+    /**
      * Retrieve List of monthly targets for each month of the given year.
      * Monthly target consists of following:
      * 1. dailyTargetAmount = total monthly target
@@ -90,26 +110,6 @@ public class TargetController {
         LOGGER.info("Requesting Yearly Report for : {}", strYear);
         return new ResponseEntity<>(targetService.getMonthlyTargetListByYearAndType(
                 strYear, 'P'), HttpStatus.OK);
-
-    }
-
-    /**
-     * Retrieve List of daily selling target for the given year & month.
-     * Daily target consists of following:
-     * 1. target per day = total monthly target / max. day of month
-     * 2. Target Date
-     * 3. epochMilliSecond
-     *
-     * @param strYearAndMonth for which month & year the target is required
-     * @return ArrayList List of TargetDTO containing daily target for the given strYearAndMonth
-     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
-     */
-    @GetMapping(value = "/target/s/year-month/{strYearAndMonth}")
-    public ResponseEntity<ArrayList<TargetPOJO>> getDailySellingTargetByYearAndMonth(
-            @PathVariable String strYearAndMonth) throws TargetException {
-
-        LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
-        return new ResponseEntity<>(targetService.getDailyTargetListByMonthAndYearAndType(strYearAndMonth, 'S'), HttpStatus.OK);
 
     }
 

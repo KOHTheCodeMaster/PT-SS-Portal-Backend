@@ -3,7 +3,7 @@ package app.service;
 import app.dto.CorrugationDTO;
 import app.entity.Corrugation;
 import app.exceptions.CorrugationException;
-import app.pojo.DailyProductionPOJO;
+import app.pojo.ProductionPOJO;
 import app.pojo.YearMonthPojo;
 import app.repository.CorrugationRepository;
 import com.google.gson.Gson;
@@ -37,11 +37,11 @@ public class CorrugationService {
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
      */
-    public String getMonthlyProductionListForEachItemType(
+    public String getDailyProductionListForEachItemType(
             final String strYearAndMonth) throws CorrugationException {
 
         //  Map representing resultant JSON string, Key: itemType  |  value: list of Daily Prod Pojo
-        Map<String, ArrayList<DailyProductionPOJO>> map = new HashMap<>();
+        Map<String, ArrayList<ProductionPOJO>> map = new HashMap<>();
 
         //  Initialize array with item types of corrugation table
         String[] arrItemTypes = {"Seng Kaki", "Seng Lebar", "Galvalum", "Spandeck", "Coil"};
@@ -59,7 +59,7 @@ public class CorrugationService {
         //  Iterate each itemType in arrItemTypes & find list of daily prod pojo
         for (String itemType : arrItemTypes) {
             //  Fetch list of daily production pojo for itemType from Corrugation Table in DB
-            ArrayList<DailyProductionPOJO> listDailyProd = this.getMonthlyProductionListByItemType(
+            ArrayList<ProductionPOJO> listDailyProd = this.getMonthlyProductionListByItemType(
                     itemType, yearMonthPojo);
 
             //  Add the retrieved list into map with corresponding itemType as the key
@@ -81,7 +81,7 @@ public class CorrugationService {
      *                      format: YYYY-MM | E.g.: 2021-01
      * @return ArrayList List of Daily Production for the given itemType & strYearAndMonth
      */
-    public ArrayList<DailyProductionPOJO> getMonthlyProductionListByItemType(
+    public ArrayList<ProductionPOJO> getMonthlyProductionListByItemType(
             String itemType, final YearMonthPojo yearMonthPojo) {
 
         return corrugationRepository.findByProductTypeDailyProductionListBetween(

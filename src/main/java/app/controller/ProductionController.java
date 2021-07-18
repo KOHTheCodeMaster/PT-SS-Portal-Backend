@@ -2,7 +2,8 @@ package app.controller;
 
 import app.dto.ProductionDTO;
 import app.exceptions.ProductionException;
-import app.pojo.DailyProductionPOJO;
+import app.exceptions.TargetException;
+import app.pojo.ProductionPOJO;
 import app.service.ProductionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,12 +129,12 @@ public class ProductionController {
      * @return ArrayList List of Daily Production for the given strYearAndMonth
      * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
-    @GetMapping(value = "/production/monthly/all/{strYearAndMonth}")
-    public ResponseEntity<ArrayList<DailyProductionPOJO>> getMonthlyProductionListForAll(
+    @GetMapping(value = "/production/daily/all/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<ProductionPOJO>> getDailyProductionListForAll(
             @PathVariable String strYearAndMonth) throws ProductionException {
 
-        LOGGER.info("Requesting Monthly Production List for All - date: {}", strYearAndMonth);
-        return new ResponseEntity<>(productionService.getMonthlyProductionListForAll(strYearAndMonth), HttpStatus.OK);
+        LOGGER.info("Requesting Daily Production List for All - date: {}", strYearAndMonth);
+        return new ResponseEntity<>(productionService.getDailyProductionListForAll(strYearAndMonth), HttpStatus.OK);
 
     }
 
@@ -148,12 +149,37 @@ public class ProductionController {
      * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
      * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
-    @GetMapping(value = "/production/monthly/2nd-class/{strYearAndMonth}")
-    public ResponseEntity<ArrayList<DailyProductionPOJO>> get2ndClassMonthlyProductionList(
+    @GetMapping(value = "/production/daily/2nd-class/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<ProductionPOJO>> get2ndClassDailyProductionList(
             @PathVariable String strYearAndMonth) throws ProductionException {
 
-        LOGGER.info("Requesting Monthly Production List for 2nd class - date: {}", strYearAndMonth);
-        return new ResponseEntity<>(productionService.get2ndClassMonthlyProductionList(strYearAndMonth), HttpStatus.OK);
+        LOGGER.info("Requesting Daily Production List for 2nd class - date: {}", strYearAndMonth);
+        return new ResponseEntity<>(productionService.get2ndClassDailyProductionList(strYearAndMonth), HttpStatus.OK);
+
+    }
+
+
+    //  Monthly Report
+    //  --------------
+
+    /**
+     * Retrieve List of monthly production for each month of the given year.
+     * Monthly production consists of following:
+     * 1. Production Amount = total monthly production
+     * 2. Production Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     *
+     * @param strYear year for which the production data is required
+     * @return ArrayList List of ProductionPojo containing monthly production for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    @GetMapping(value = "/production/monthly/{strYear}")
+    public ResponseEntity<ArrayList<ProductionPOJO>> getMonthlyProductionByYear(
+            @PathVariable String strYear) throws ProductionException, TargetException {
+
+        LOGGER.info("Requesting Monthly Production Report for : {}", strYear);
+        return new ResponseEntity<>(productionService.getMonthlyProductionListByYear(
+                strYear), HttpStatus.OK);
 
     }
 

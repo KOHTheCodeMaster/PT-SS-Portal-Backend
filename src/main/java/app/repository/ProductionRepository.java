@@ -1,7 +1,7 @@
 package app.repository;
 
 import app.entity.Production;
-import app.pojo.DailyProductionPOJO;
+import app.pojo.ProductionPOJO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,19 +17,26 @@ public interface ProductionRepository extends CrudRepository<Production, Integer
     ArrayList<String> findDistinctSizeList();
 
     //  Using class based projection for selecting specific columns
-    @Query("SELECT NEW app.pojo.DailyProductionPOJO(" +
+    @Query("SELECT NEW app.pojo.ProductionPOJO(" +
             "SUM(P.productionAmount1stClass), P.productionDate)  " +
             "FROM Production P " +
             "GROUP by P.productionDate " +
             "HAVING P.productionDate BETWEEN ?1 AND ?2")
-    ArrayList<DailyProductionPOJO> findDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
+    ArrayList<ProductionPOJO> findDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
 
     //  Using class based projection for selecting specific columns
-    @Query("SELECT NEW app.pojo.DailyProductionPOJO(" +
+    @Query("SELECT NEW app.pojo.ProductionPOJO(" +
             "SUM(P.productionAmount2ndClass), P.productionDate)  " +
             "FROM Production P " +
             "GROUP by P.productionDate " +
             "HAVING P.productionDate BETWEEN ?1 AND ?2")
-    ArrayList<DailyProductionPOJO> find2ndClassDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
+    ArrayList<ProductionPOJO> find2ndClassDailyProductionListBetween(LocalDate strStartDate, LocalDate strEndDate);
+
+    @Query("SELECT NEW app.pojo.ProductionPOJO(" +
+            "SUM(P.productionAmount1stClass), P.productionDate)  " +
+            "FROM Production P " +
+            "GROUP by P.productionDate " +
+            "HAVING P.productionDate BETWEEN ?1 AND ?2")
+    ArrayList<ProductionPOJO> find1stClassProductionBetweenDate(LocalDate strStartDate, LocalDate strEndDate);
 
 }

@@ -3,7 +3,8 @@ package app.service;
 import app.dto.ProductionDTO;
 import app.entity.Production;
 import app.exceptions.ProductionException;
-import app.pojo.DailyProductionPOJO;
+import app.exceptions.TargetException;
+import app.pojo.ProductionPOJO;
 import app.pojo.YearMonthPojo;
 import app.repository.ProductionRepository;
 import org.slf4j.Logger;
@@ -167,7 +168,7 @@ public class ProductionService {
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return ArrayList List of Daily Production for the given strYearAndMonth
      */
-    public ArrayList<DailyProductionPOJO> getMonthlyProductionListForAll(final String strYearAndMonth) throws ProductionException {
+    public ArrayList<ProductionPOJO> getDailyProductionListForAll(final String strYearAndMonth) throws ProductionException {
 
         //  Validate & Parse strYearAndMonth to YearAndMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
@@ -192,7 +193,7 @@ public class ProductionService {
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
      */
-    public ArrayList<DailyProductionPOJO> get2ndClassMonthlyProductionList(final String strYearAndMonth) throws ProductionException {
+    public ArrayList<ProductionPOJO> get2ndClassDailyProductionList(final String strYearAndMonth) throws ProductionException {
 
         //  Validate & Parse strYearAndMonth to YearAndMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
@@ -224,4 +225,52 @@ public class ProductionService {
 
     }
 
+    /**
+     * Retrieve List of monthly production for each month of the given year.
+     * Monthly production consists of following:
+     * 1. Production Amount = total monthly production
+     * 2. Production Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     *
+     * @param strYear year for which the production data is required
+     * @return ArrayList List of ProductionPojo containing monthly production for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    public ArrayList<ProductionPOJO> getMonthlyProductionListByYear(String strYear) throws TargetException {
+
+        ArrayList<ProductionPOJO> monthlyProductionList = new ArrayList<>();
+
+        //  Validate & Parse strYear to YearMonthPojo
+        ArrayList<YearMonthPojo> yearMonthPojoList = YearMonthPojo.fromYear(strYear);
+
+        //  Find and add monthly production for each month of given year
+        for (YearMonthPojo yearMonthPojo : yearMonthPojoList) {
+
+            //  Find production by year and month
+            ArrayList<ProductionPOJO> currentProductionList = productionRepository.find1stClassProductionBetweenDate(
+                    yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
+
+            //  When production not found, continue
+            if (currentProductionList.isEmpty()) continue;
+
+            //  Compute total production for current month
+            long currentMonthProductionAmount = currentProductionList.stream()
+                    .mapToLong(ProductionPOJO::getProductionAmount)
+                    .sum();
+
+            /*
+                Add Production Pojo to the monthlyProductionList
+                productionAmount -> total production amount for the month
+                productionData -> date for year, month & last day of the month
+            */
+            monthlyProductionList.add(new ProductionPOJO(currentMonthProductionAmount, yearMonthPojo.getEndDate()));
+
+        }
+
+
+        LOGGER.info(monthlyProductionList.size() + "");
+        monthlyProductionList.forEach(productionPOJO -> LOGGER.info(productionPOJO.toString()));
+
+        return monthlyProductionList;
+    }
 }

@@ -17,9 +17,9 @@ Controller:
        Note: strYearAndMonth is in format: 'yyyy-mm'
     2. Redirect request to production service to getTotalMonthlyProduction(strYearAndMonth)
     3. Wait for response
-    4. Response format: ArrayList<DailyProductionPojo>
-       Note: DailyProductionPojo -> {
-            dailyProductionAmount : long
+    4. Response format: ArrayList<ProductionPOJO>
+       Note: ProductionPojo -> {
+            productionAmount : long
             productionDate : LocalDate
         }
     5. Return this response back to the caller.
@@ -36,7 +36,7 @@ Production Service - getMonthlyProductionListForAll(strYearAndMonth):
 Production Repository - findDailyProductionListBetween(startDate, endDate):
     1. Generate Query to fetch Sum of ProductionAmount1stClass for date between start & end date
     2. Query:
-       "SELECT NEW app.pojo.DailyProductionPOJO(" +
+       "SELECT NEW app.pojo.ProductionPOJO(" +
        "SUM(P.productionAmount1stClass), P.productionDate)  " +
        "FROM Production P " +
        "GROUP by P.productionDate " +

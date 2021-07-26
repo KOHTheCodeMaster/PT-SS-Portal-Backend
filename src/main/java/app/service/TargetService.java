@@ -225,20 +225,22 @@ public class TargetService {
             Optional<Target> optionalTarget = targetRepository.findByMonthAndYearAndType(yearMonthPojo.getMonth(),
                     yearMonthPojo.getYear(), type);
 
-            //  When target not found, Throw TargetException, Otherwise get targetDTO
-            if (optionalTarget.isEmpty()) continue;
+            //  When target not found, add empty targetPojo with endDate & continue
+            if (optionalTarget.isEmpty()) {
+                monthlyTargetList.add(new TargetPOJO(0L, yearMonthPojo.getEndDate()));
+                continue;
+            }
 
             TargetDTO targetDTO = optionalTarget.get().convertToDTO();
 
             /*
                 Add Target Pojo to the monthlyTargetList
                 targetAmount -> total target amount for the month
-                targetData -> date for year, month & last day of the month
+                targetDate -> date for year, month & last day of the month
             */
             monthlyTargetList.add(new TargetPOJO(
                     Long.parseLong(targetDTO.getTargetAmount() + ""),
-                    LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(),
-                            yearMonthPojo.getLengthOfMonth())
+                    yearMonthPojo.getEndDate()
             ));
 
         }

@@ -250,8 +250,11 @@ public class ProductionService {
             ArrayList<ProductionPOJO> currentProductionList = productionRepository.find1stClassProductionBetweenDate(
                     yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
 
-            //  When production not found, continue
-            if (currentProductionList.isEmpty()) continue;
+            //  When production not found, add empty productionPojo with endDate & continue
+            if (currentProductionList.isEmpty()) {
+                monthlyProductionList.add(new ProductionPOJO(0L, yearMonthPojo.getEndDate()));
+                continue;
+            }
 
             //  Compute total production for current month
             long currentMonthProductionAmount = currentProductionList.stream()

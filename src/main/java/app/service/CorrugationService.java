@@ -3,6 +3,7 @@ package app.service;
 import app.dto.CorrugationDTO;
 import app.entity.Corrugation;
 import app.exceptions.CorrugationException;
+import app.exceptions.InvalidYearMonthException;
 import app.pojo.ProductionPOJO;
 import app.pojo.YearMonthPojo;
 import app.repository.CorrugationRepository;
@@ -36,9 +37,10 @@ public class CorrugationService {
      * @param strYearAndMonth month & year for which the daily production is required. <br>
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
     public String getDailyProductionListForEachItemType(
-            final String strYearAndMonth) throws CorrugationException {
+            final String strYearAndMonth) throws InvalidYearMonthException {
 
         //  Map representing resultant JSON string, Key: itemType  |  value: list of Daily Prod Pojo
         Map<String, ArrayList<ProductionPOJO>> map = new HashMap<>();
@@ -48,13 +50,6 @@ public class CorrugationService {
 
         //  Validate & Parse strYearAndMonth to YearAndMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
-
-        if (yearMonthPojo == null) {
-            String msg = "Invalid strYearAndMonth format.\n" +
-                    "Required: YYYY-MM\n" +
-                    "Found: " + strYearAndMonth;
-            throw new CorrugationException(msg);
-        }
 
         //  Iterate each itemType in arrItemTypes & find list of daily prod pojo
         for (String itemType : arrItemTypes) {

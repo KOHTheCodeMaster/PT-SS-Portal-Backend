@@ -1,7 +1,10 @@
 package app.controller;
 
 import app.dto.SalesDTO;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.SalesException;
+import app.exceptions.TargetException;
+import app.pojo.SalesPOJO;
 import app.service.SalesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +91,50 @@ public class SalesController {
         LOGGER.info(msg);
 
         return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieve List of daily sales for all product types for the given year & month.
+     * Daily sales consists of following:
+     * 1. Sum of salesAmount on that sales date
+     * 2. Sales Date
+     * 3. epochMilliSecond
+     *
+     * @param strYearAndMonth for which month & year the daily sales is required
+     * @return ArrayList List of Daily Sales for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    @GetMapping(value = "/sales/daily/all/{strYearAndMonth}")
+    public ResponseEntity<ArrayList<SalesPOJO>> getDailySalesListForAll(
+            @PathVariable String strYearAndMonth) throws InvalidYearMonthException {
+
+        LOGGER.info("Requesting Daily Sales List for All - date: {}", strYearAndMonth);
+        return new ResponseEntity<>(salesService.getDailySalesListForAll(strYearAndMonth), HttpStatus.OK);
+
+    }
+
+    //  Monthly Report
+    //  --------------
+
+    /**
+     * Retrieve List of monthly sales for each month of the given year.
+     * Monthly sales consists of following:
+     * 1. Sales Amount = total monthly sales
+     * 2. Sales Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     *
+     * @param strYear year for which the sales data is required
+     * @return ArrayList List of SalesPojo containing monthly sales for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    @GetMapping(value = "/sales/monthly/{strYear}")
+    public ResponseEntity<ArrayList<SalesPOJO>> getMonthlySalesByYear(
+            @PathVariable String strYear) throws SalesException, TargetException {
+
+        LOGGER.info("Requesting Monthly Sales Report for : {}", strYear);
+        return new ResponseEntity<>(salesService.getMonthlySalesListByYear(
+                strYear), HttpStatus.OK);
+
     }
 
 

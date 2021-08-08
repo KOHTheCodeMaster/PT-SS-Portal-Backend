@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.dto.ProductionDTO;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.ProductionException;
 import app.exceptions.TargetException;
 import app.pojo.ProductionPOJO;
@@ -127,11 +128,10 @@ public class ProductionController {
      *
      * @param strYearAndMonth for which month & year the daily production is required
      * @return ArrayList List of Daily Production for the given strYearAndMonth
-     * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
     @GetMapping(value = "/production/daily/all/{strYearAndMonth}")
     public ResponseEntity<ArrayList<ProductionPOJO>> getDailyProductionListForAll(
-            @PathVariable String strYearAndMonth) throws ProductionException {
+            @PathVariable String strYearAndMonth) throws InvalidYearMonthException {
 
         LOGGER.info("Requesting Daily Production List for All - date: {}", strYearAndMonth);
         return new ResponseEntity<>(productionService.getDailyProductionListForAll(strYearAndMonth), HttpStatus.OK);
@@ -147,11 +147,11 @@ public class ProductionController {
      *
      * @param strYearAndMonth for which month & year the daily production is required
      * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
-     * @throws ProductionException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
     @GetMapping(value = "/production/daily/2nd-class/{strYearAndMonth}")
     public ResponseEntity<ArrayList<ProductionPOJO>> get2ndClassDailyProductionList(
-            @PathVariable String strYearAndMonth) throws ProductionException {
+            @PathVariable String strYearAndMonth) throws InvalidYearMonthException {
 
         LOGGER.info("Requesting Daily Production List for 2nd class - date: {}", strYearAndMonth);
         return new ResponseEntity<>(productionService.get2ndClassDailyProductionList(strYearAndMonth), HttpStatus.OK);
@@ -175,7 +175,7 @@ public class ProductionController {
      */
     @GetMapping(value = "/production/monthly/{strYear}")
     public ResponseEntity<ArrayList<ProductionPOJO>> getMonthlyProductionByYear(
-            @PathVariable String strYear) throws ProductionException, TargetException {
+            @PathVariable String strYear) throws TargetException {
 
         LOGGER.info("Requesting Monthly Production Report for : {}", strYear);
         return new ResponseEntity<>(productionService.getMonthlyProductionListByYear(

@@ -2,6 +2,7 @@ package app.controller;
 
 import app.dto.CorrugationDTO;
 import app.exceptions.CorrugationException;
+import app.exceptions.InvalidYearMonthException;
 import app.service.CorrugationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +49,11 @@ public class CorrugationController {
      */
     @GetMapping(value = "/corrugation/daily/each-item-type/{strYearAndMonth}")
     public ResponseEntity<String> getdailyProductionListForEachItemType(@PathVariable String strYearAndMonth)
-            throws CorrugationException {
+            throws InvalidYearMonthException {
 
+        LOGGER.info("Requesting daily Production for each item type - Date: " + strYearAndMonth);
+        return new ResponseEntity<>(corrugationService.getDailyProductionListForEachItemType(strYearAndMonth),
+                HttpStatus.OK);
         /*
             //  JSON result format:
             {
@@ -70,11 +74,6 @@ public class CorrugationController {
                 "Coil": []
             }
          */
-
-        LOGGER.info("Requesting daily Production for each item type - Date: " + strYearAndMonth);
-        return new ResponseEntity<>(corrugationService.getDailyProductionListForEachItemType(strYearAndMonth),
-                HttpStatus.OK);
-
     }
 
     /**

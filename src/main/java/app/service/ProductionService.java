@@ -2,6 +2,7 @@ package app.service;
 
 import app.dto.ProductionDTO;
 import app.entity.Production;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.ProductionException;
 import app.exceptions.TargetException;
 import app.pojo.ProductionPOJO;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Service(value = "productionService")
@@ -167,21 +169,53 @@ public class ProductionService {
      * @param strYearAndMonth month & year for which the daily production is required. <br>
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return ArrayList List of Daily Production for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
-    public ArrayList<ProductionPOJO> getDailyProductionListForAll(final String strYearAndMonth) throws ProductionException {
+    public ArrayList<ProductionPOJO> getDailyProductionListForAll(final String strYearAndMonth)
+            throws InvalidYearMonthException {
 
         //  Validate & Parse strYearAndMonth to YearAndMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+        ArrayList<ProductionPOJO> dailyProductionList = new ArrayList<>();
 
-        if (yearMonthPojo == null) {
-            String msg = "Invalid strYearAndMonth format.\n" +
-                    "Required: YYYY-MM\n" +
-                    "Found: " + strYearAndMonth;
-            throw new ProductionException(msg);
+        //  Iterate for each day of given month
+        int maxDayOfMonth = yearMonthPojo.getEndDate().getDayOfMonth();
+        for (int dayCount = 1; dayCount <= maxDayOfMonth; dayCount++) {
+            //  Add new ProductionPOJO with productionAmount & date with dayCount
+            //  Note: productionAmount = total monthly production
+
+            LocalDate tempStartDate = LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount);
+
+            //  Find production by year and month for current dayCount
+            ArrayList<ProductionPOJO> currentDayProductionList = productionRepository.findDailyProductionListBetween(
+                    tempStartDate, tempStartDate);
+
+            //  When production not found, add empty productionPojo with current dayCount date & continue
+            if (currentDayProductionList.isEmpty()) {
+                dailyProductionList.add(new ProductionPOJO(0L,
+                        LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount)
+                ));
+                continue;
+            }
+
+            //  Compute total production for current day
+            long currentDayProductionAmount = currentDayProductionList.stream()
+                    .mapToLong(ProductionPOJO::getProductionAmount)
+                    .sum();
+
+            /*
+                Add Production Pojo to the dailyProductionList
+                productionAmount -> total production amount for each day
+                productionData -> date for year, month & each day of the month
+            */
+            dailyProductionList.add(new ProductionPOJO(currentDayProductionAmount,
+                    LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount)
+            ));
+
         }
 
-        return productionRepository.findDailyProductionListBetween(yearMonthPojo.getStartDate(),
-                yearMonthPojo.getEndDate());
+
+        return dailyProductionList;
 
     }
 
@@ -192,22 +226,15 @@ public class ProductionService {
      * @param strYearAndMonth month & year for which the daily production is required. <br>
      *                        format: YYYY-MM | E.g.: 2021-01
      * @return ArrayList List of Daily Production of 2nd class for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
-    public ArrayList<ProductionPOJO> get2ndClassDailyProductionList(final String strYearAndMonth) throws ProductionException {
-
+    public ArrayList<ProductionPOJO> get2ndClassDailyProductionList(final String strYearAndMonth)
+            throws InvalidYearMonthException {
         //  Validate & Parse strYearAndMonth to YearAndMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
 
-        if (yearMonthPojo == null) {
-            String msg = "Invalid strYearAndMonth format.\n" +
-                    "Required: YYYY-MM\n" +
-                    "Found: " + strYearAndMonth;
-            throw new ProductionException(msg);
-        }
-
         return productionRepository.find2ndClassDailyProductionListBetween(yearMonthPojo.getStartDate(),
                 yearMonthPojo.getEndDate());
-
     }
 
     /**

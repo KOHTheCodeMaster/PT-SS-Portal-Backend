@@ -1,5 +1,6 @@
 package app.pojo;
 
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.TargetException;
 
 import java.time.LocalDate;
@@ -39,10 +40,15 @@ public class YearMonthPojo {
 
     }
 
-    public static YearMonthPojo parseStringToYearMonthPojo(String strYearAndMonth) {
+    public static YearMonthPojo parseStringToYearMonthPojo(String strYearAndMonth) throws InvalidYearMonthException {
 
         //  Validate strYearAndMonth format: YYYY-MM i.e. ####-##
-        if (strYearAndMonth == null || !strYearAndMonth.matches("\\d{4}-((0[1-9])|(1[0-2]))")) return null;
+        if (strYearAndMonth == null || !strYearAndMonth.matches("\\d{4}-((0[1-9])|(1[0-2]))")) {
+            String msg = "Invalid strYearAndMonth format.\n" +
+                    "Required: YYYY-MM\n" +
+                    "Found: " + strYearAndMonth;
+            throw new InvalidYearMonthException(msg);
+        }
 
         //  Parse Year & Month from strYearAndMonth which is in form: YYYY-MM
         String[] arrYearAndMonth = strYearAndMonth.split("-");

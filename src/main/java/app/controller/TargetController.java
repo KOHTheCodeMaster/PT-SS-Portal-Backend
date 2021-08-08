@@ -1,6 +1,7 @@
 package app.controller;
 
 import app.dto.TargetDTO;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.TargetException;
 import app.pojo.TargetPOJO;
 import app.service.TargetService;
@@ -64,7 +65,7 @@ public class TargetController {
      */
     @GetMapping(value = "/target/p/year-month/{strYearAndMonth}")
     public ResponseEntity<ArrayList<TargetPOJO>> getDailyProductionTargetByYearAndMonth(
-            @PathVariable String strYearAndMonth) throws TargetException {
+            @PathVariable String strYearAndMonth) throws InvalidYearMonthException, TargetException {
 
         LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
         return new ResponseEntity<>(targetService.getDailyTargetListByMonthAndYearAndType(
@@ -85,7 +86,7 @@ public class TargetController {
      */
     @GetMapping(value = "/target/s/year-month/{strYearAndMonth}")
     public ResponseEntity<ArrayList<TargetPOJO>> getDailySellingTargetByYearAndMonth(
-            @PathVariable String strYearAndMonth) throws TargetException {
+            @PathVariable String strYearAndMonth) throws InvalidYearMonthException, TargetException {
 
         LOGGER.info("Requesting TargetDTO for date: {}", strYearAndMonth);
         return new ResponseEntity<>(targetService.getDailyTargetListByMonthAndYearAndType(strYearAndMonth, 'S'), HttpStatus.OK);
@@ -110,6 +111,27 @@ public class TargetController {
         LOGGER.info("Requesting Yearly Report for : {}", strYear);
         return new ResponseEntity<>(targetService.getMonthlyTargetListByYearAndType(
                 strYear, 'P'), HttpStatus.OK);
+
+    }
+
+    /**
+     * Retrieve List of monthly targets for each month of the given year.
+     * Monthly target consists of following:
+     * 1. dailyTargetAmount = total monthly target
+     * 2. Target Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     *
+     * @param strYear for which year the target data is required
+     * @return ArrayList List of TargetDTO containing monthly targets for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    @GetMapping(value = "/target/s/year/{strYear}")
+    public ResponseEntity<ArrayList<TargetPOJO>> getMonthlySellingTargetByYearAndMonth(
+            @PathVariable String strYear) throws TargetException {
+
+        LOGGER.info("Requesting Yearly Report for : {}", strYear);
+        return new ResponseEntity<>(targetService.getMonthlyTargetListByYearAndType(
+                strYear, 'S'), HttpStatus.OK);
 
     }
 

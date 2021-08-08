@@ -2,6 +2,7 @@ package app.service;
 
 import app.dto.TargetDTO;
 import app.entity.Target;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.TargetException;
 import app.pojo.TargetPOJO;
 import app.pojo.YearMonthPojo;
@@ -49,15 +50,10 @@ public class TargetService {
         }
 
         Target target = Target.parseDTO(targetDTO);
-//        LOGGER.info("Target: " + target.toString());
+        //  LOGGER.info("Target: " + target.toString());
+        //  Save the entity & return the auto generated primary key of the newly saved record
+        return targetRepository.save(target).getTargetId();
 
-        try {
-            //  Save the entity & return the auto generated primary key of the newly saved record
-            return targetRepository.save(target).getTargetId();
-        } catch (Exception e) {
-            LOGGER.error("Failed to Save Entry due to Exception: " + e.getMessage());
-        }
-        return -1;
     }
 
     /**
@@ -70,11 +66,16 @@ public class TargetService {
 
         //  Throw TargetException for invalid targetDTO
         //  Note: type must be either "P" OR "S" only.
+
+        //  TargetDTO has month as integer which removes initial '0' from the month.
+        //  Despite month value sent as 01, 02, ... 09, 10, 11, 12 in request body,
+        //  TargetDTO is parsed from json in request body & month is implicitly converted to int.
+        //  Hence, month value for TargetDTO will be 1, 2, 3, ... 9, 10, 11, 12
         if (targetDTO == null ||
 //                targetDTO.getType() == null || !targetDTO.getType().matches("[PS]") ||
                 targetDTO.getType() == null || (targetDTO.getType() != 'P' && targetDTO.getType() != 'S') ||
                 targetDTO.getYear() == null || !(targetDTO.getYear().toString().matches("\\d{4}")) ||
-                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("(0[1-9])|(1[0-2])")) ||
+                targetDTO.getMonth() == null || !(targetDTO.getMonth().toString().matches("([1-9])|(1[0-2])")) ||
                 targetDTO.getTargetAmount() == null) {
 
             String msg = "Target.INVALID_TARGET_DTO";
@@ -158,22 +159,15 @@ public class TargetService {
      *
      * @param strYearAndMonth for which month & year the target is required
      * @return ArrayList List of TargetDTO containing daily target for the given strYearAndMonth
-     * @throws TargetException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
      */
     public ArrayList<TargetPOJO> getDailyTargetListByMonthAndYearAndType(String strYearAndMonth, Character type)
-            throws TargetException {
+            throws InvalidYearMonthException, TargetException {
 
         ArrayList<TargetPOJO> list = new ArrayList<>();
 
         //  Validate & Parse strYearAndMonth to YearMonthPojo
         YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
-
-        if (yearMonthPojo == null) {
-            String msg = "Invalid strYearAndMonth format.\n" +
-                    "Required: YYYY-MM\n" +
-                    "Found: " + strYearAndMonth;
-            throw new TargetException(msg);
-        }
 
         //  Find target by year and month
         Optional<Target> optionalTarget = targetRepository.findByMonthAndYearAndType(yearMonthPojo.getMonth(),

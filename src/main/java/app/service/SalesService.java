@@ -2,7 +2,11 @@ package app.service;
 
 import app.dto.SalesDTO;
 import app.entity.Sales;
+import app.exceptions.InvalidYearMonthException;
 import app.exceptions.SalesException;
+import app.exceptions.TargetException;
+import app.pojo.SalesPOJO;
+import app.pojo.YearMonthPojo;
 import app.repository.SalesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Service(value = "salesService")
@@ -17,7 +22,7 @@ import java.util.ArrayList;
 public class SalesService {
 
     private final SalesRepository salesRepository;
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     public SalesService(SalesRepository SalesRepository) {
@@ -52,7 +57,7 @@ public class SalesService {
             //  Save the entity & return the auto generated primary key of the newly saved record
             return salesRepository.save(sales).getSalesId();
         } catch (Exception e) {
-            logger.error("Failed to Save Entry due to Exception: " + e.getMessage());
+            LOGGER.error("Failed to Save Entry due to Exception: " + e.getMessage());
         }
         return -1;
     }
@@ -129,4 +134,113 @@ public class SalesService {
 
 
     }
+
+    /**
+     * Validate & parse strYearAndMonth into YearMonthPojo,
+     * Retrieve list of daily sales from DB for the given year & month.
+     *
+     * @param strYearAndMonth month & year for which the daily sales is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return ArrayList List of Daily Sales for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    public ArrayList<SalesPOJO> getDailySalesListForAll(final String strYearAndMonth) throws InvalidYearMonthException {
+
+        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+        ArrayList<SalesPOJO> dailySalesList = new ArrayList<>();
+
+        //  Iterate for each day of given month
+        int maxDayOfMonth = yearMonthPojo.getEndDate().getDayOfMonth();
+        for (int dayCount = 1; dayCount <= maxDayOfMonth; dayCount++) {
+            //  Add new SalesPOJO with salesAmount & date with dayCount
+            //  Note: salesAmount = total monthly sales
+
+            LocalDate tempStartDate = LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount);
+
+            //  Find sales by year and month for current dayCount
+            ArrayList<SalesPOJO> currentDaySalesList = salesRepository.findDailySalesListBetween(
+                    tempStartDate, tempStartDate);
+
+            //  When sales not found, add empty salesPojo with current dayCount date & continue
+            if (currentDaySalesList.isEmpty()) {
+                dailySalesList.add(new SalesPOJO(0L,
+                        LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount)
+                ));
+                continue;
+            }
+
+            //  Compute total sales for current day
+            long currentDaySalesAmount = currentDaySalesList.stream()
+                    .mapToLong(SalesPOJO::getSalesAmount)
+                    .sum();
+
+            /*
+                Add Sales Pojo to the dailySalesList
+                salesAmount -> total sales amount for each day
+                salesData -> date for year, month & each day of the month
+            */
+            dailySalesList.add(new SalesPOJO(currentDaySalesAmount,
+                    LocalDate.of(yearMonthPojo.getYear(), yearMonthPojo.getMonth(), dayCount)
+            ));
+
+        }
+
+
+        return dailySalesList;
+
+    }
+
+    /**
+     * Retrieve List of monthly sales for each month of the given year.
+     * Monthly sales consists of following:
+     * 1. Sales Amount = total monthly sales
+     * 2. Sales Date = date for year, month & last day of the month
+     * 3. epochMilliSecond
+     *
+     * @param strYear year for which the sales data is required
+     * @return ArrayList List of SalesPojo containing monthly sales for the given strYear
+     * @throws TargetException If strYear is null OR strYear < 2000
+     */
+    public ArrayList<SalesPOJO> getMonthlySalesListByYear(String strYear) throws TargetException {
+
+        ArrayList<SalesPOJO> monthlySalesList = new ArrayList<>();
+
+        //  Validate & Parse strYear to YearMonthPojo
+        ArrayList<YearMonthPojo> yearMonthPojoList = YearMonthPojo.fromYear(strYear);
+
+        //  Find and add monthly sales for each month of given year
+        for (YearMonthPojo yearMonthPojo : yearMonthPojoList) {
+
+            //  Find sales by year and month
+            ArrayList<SalesPOJO> currentSalesList = salesRepository.find1stClassSalesBetweenDate(
+                    yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
+
+            //  When sales not found, add empty salesPojo with endDate & continue
+            if (currentSalesList.isEmpty()) {
+                monthlySalesList.add(new SalesPOJO(0L, yearMonthPojo.getEndDate()));
+                continue;
+            }
+
+            //  Compute total sales for current month
+            long currentMonthSalesAmount = currentSalesList.stream()
+                    .mapToLong(SalesPOJO::getSalesAmount)
+                    .sum();
+
+            /*
+                Add Sales Pojo to the monthlySalesList
+                salesAmount -> total sales amount for the month
+                salesData -> date for year, month & last day of the month
+            */
+            monthlySalesList.add(new SalesPOJO(currentMonthSalesAmount, yearMonthPojo.getEndDate()));
+
+        }
+
+
+        LOGGER.info(monthlySalesList.size() + "");
+        monthlySalesList.forEach(salesPOJO -> LOGGER.info(salesPOJO.toString()));
+
+        return monthlySalesList;
+    }
+
 }

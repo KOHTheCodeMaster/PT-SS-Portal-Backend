@@ -48,7 +48,7 @@ public class CorrugationController {
      * @return JSON of each itemType with their List of Daily Production for the given strYearAndMonth
      */
     @GetMapping(value = "/corrugation/daily/each-item-type/{strYearAndMonth}")
-    public ResponseEntity<String> getdailyProductionListForEachItemType(@PathVariable String strYearAndMonth)
+    public ResponseEntity<String> getDailyProductionListForEachItemType(@PathVariable String strYearAndMonth)
             throws InvalidYearMonthException {
 
         LOGGER.info("Requesting daily Production for each item type - Date: " + strYearAndMonth);

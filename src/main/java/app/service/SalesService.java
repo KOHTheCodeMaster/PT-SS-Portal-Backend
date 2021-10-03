@@ -8,6 +8,7 @@ import app.exceptions.TargetException;
 import app.pojo.SalesPOJO;
 import app.pojo.YearMonthPojo;
 import app.repository.SalesRepository;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service(value = "salesService")
 @Transactional
@@ -192,6 +195,44 @@ public class SalesService {
     }
 
     /**
+     * Validate & parse strYearAndMonth into YearMonthPojo,
+     * Retrieve JSON containing list of daily sales from DB for each itemType for given year & month.
+     *
+     * @param strYearAndMonth month & year for which the daily sales is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return JSON of each itemType with their List of Daily Sales for the given strYearAndMonth
+     * @throws InvalidYearMonthException If strYearAndMonth is null OR (Month is < 1 OR > 12)
+     */
+    public String getDailySalesListForEachItemType(
+            final String strYearAndMonth) throws InvalidYearMonthException {
+
+        //  Map representing resultant JSON string, Key: itemType  |  value: list of Daily Prod Pojo
+        Map<String, ArrayList<SalesPOJO>> map = new HashMap<>();
+
+        //  Initialize array with item types of corrugation table
+        String[] arrItemTypes = {"Seng Kaki", "Seng Lebar", "Galvalum", "Spandeck", "Coil"};
+
+        //  Validate & Parse strYearAndMonth to YearAndMonthPojo
+        YearMonthPojo yearMonthPojo = YearMonthPojo.parseStringToYearMonthPojo(strYearAndMonth);
+
+        //  Iterate each itemType in arrItemTypes & find list of daily prod pojo
+        for (String itemType : arrItemTypes) {
+            //  Fetch list of daily sales pojo for itemType from Corrugation Table in DB
+            ArrayList<SalesPOJO> listDailyProd = this.getMonthlySalesListByItemType(
+                    itemType, yearMonthPojo);
+
+            //  Add the retrieved list into map with corresponding itemType as the key
+            map.put(itemType, listDailyProd);
+        }
+
+//        LOGGER.info(map.toString());
+
+        return new Gson().toJson(map);
+
+    }
+
+
+    /**
      * Retrieve List of monthly sales for each month of the given year.
      * Monthly sales consists of following:
      * 1. Sales Amount = total monthly sales
@@ -213,7 +254,7 @@ public class SalesService {
         for (YearMonthPojo yearMonthPojo : yearMonthPojoList) {
 
             //  Find sales by year and month
-            ArrayList<SalesPOJO> currentSalesList = salesRepository.find1stClassSalesBetweenDate(
+            ArrayList<SalesPOJO> currentSalesList = salesRepository.findDailySalesListBetween(
                     yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
 
             //  When sales not found, add empty salesPojo with endDate & continue
@@ -241,6 +282,23 @@ public class SalesService {
         monthlySalesList.forEach(salesPOJO -> LOGGER.info(salesPOJO.toString()));
 
         return monthlySalesList;
+    }
+
+    /**
+     * Retrieve list of daily sales from DB for the given itemType, year & month.
+     *
+     * @param itemType      item type (of corrugation) for which the daily sales is required. <br>
+     * @param yearMonthPojo month & year for which the daily sales is required. <br>
+     *                      yearMonthPojo contains required startDate & endDate fields. <br>
+     *                      format: YYYY-MM | E.g.: 2021-01
+     * @return ArrayList List of Daily Sales for the given itemType & strYearAndMonth
+     */
+    public ArrayList<SalesPOJO> getMonthlySalesListByItemType(
+            String itemType, final YearMonthPojo yearMonthPojo) {
+
+        return salesRepository.findByProductTypeDailySalesListBetween(
+                itemType, yearMonthPojo.getStartDate(), yearMonthPojo.getEndDate());
+
     }
 
 }

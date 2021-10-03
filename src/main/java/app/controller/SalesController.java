@@ -93,6 +93,9 @@ public class SalesController {
         return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 
+    //  Daily Report
+    //  --------------
+
     /**
      * Retrieve List of daily sales for all product types for the given year & month.
      * Daily sales consists of following:
@@ -112,6 +115,43 @@ public class SalesController {
         return new ResponseEntity<>(salesService.getDailySalesListForAll(strYearAndMonth), HttpStatus.OK);
 
     }
+
+    /**
+     * Retrieve JSON containing list of daily sales from DB for each itemType for given year & month. <br>
+     *
+     * @param strYearAndMonth month & year for which the daily sales is required. <br>
+     *                        format: YYYY-MM | E.g.: 2021-01
+     * @return JSON of each itemType with their List of Daily Sales for the given strYearAndMonth
+     */
+    @GetMapping(value = "/sales/daily/each-item-type/{strYearAndMonth}")
+    public ResponseEntity<String> getdailySalesListForEachItemType(@PathVariable String strYearAndMonth)
+            throws InvalidYearMonthException {
+
+        LOGGER.info("Requesting daily Sales for each item type - Date: " + strYearAndMonth);
+        return new ResponseEntity<>(salesService.getDailySalesListForEachItemType(strYearAndMonth),
+                HttpStatus.OK);
+        /*
+            //  JSON result format:
+            {
+                "Galvalum": [
+                    {
+                        "dailySalesAmount": 11,
+                        "salesDate": {
+                            "year": 2021,
+                            "month": 6,
+                            "day": 10
+                        },
+                        "epochMilliSecond": 1623283200000
+                    }
+                ],
+                "Seng Kaki": [],
+                "Seng Lebar": [],
+                "Spandeck": [],
+                "Coil": []
+            }
+         */
+    }
+
 
     //  Monthly Report
     //  --------------

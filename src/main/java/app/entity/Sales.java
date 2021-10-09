@@ -2,6 +2,7 @@ package app.entity;
 
 import app.dto.SalesDTO;
 import app.enums.Payment;
+import app.enums.Status;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -25,6 +26,8 @@ public class Sales {
     private Integer amountOfItem;
     @Enumerated(value = EnumType.STRING)
     private Payment payment;
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
     private String salesName;
 
     /**
@@ -46,6 +49,7 @@ public class Sales {
         salesDTO.setSalesDate(this.getSalesDate());
         salesDTO.setAmountOfItem(this.getAmountOfItem());
         salesDTO.setPayment(this.getPayment());
+        salesDTO.setStatus(this.getStatus());
         salesDTO.setSalesName(this.getSalesName());
 
         return salesDTO;
@@ -64,6 +68,7 @@ public class Sales {
                 ", salesDate=" + salesDate +
                 ", amountOfItem=" + amountOfItem +
                 ", payment=" + payment +
+                ", status='" + status + '\'' +
                 ", salesName='" + salesName + '\'' +
                 '}';
     }
@@ -180,6 +185,14 @@ public class Sales {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getSalesName() {

@@ -19,6 +19,7 @@ create table sales(
     sales_date date,
     amount_of_item integer,
     payment varchar(10),
+    status varchar(10),
     sales_name varchar(50),
     PRIMARY KEY (sales_id)
 );

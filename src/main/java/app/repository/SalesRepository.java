@@ -27,4 +27,8 @@ public interface SalesRepository extends CrudRepository<Sales, Integer> {
             "GROUP by S.salesDate ")
     ArrayList<SalesPOJO> findByProductTypeDailySalesListBetween(
             String itemType, LocalDate strStartDate, LocalDate strEndDate);
+
+    //    ArrayList<Sales> findFirst10();
+    ArrayList<Sales> findFirst10ByOrderBySalesIdDesc();
+
 }

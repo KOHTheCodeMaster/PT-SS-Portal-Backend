@@ -301,4 +301,22 @@ public class SalesService {
 
     }
 
+    /**
+     * Retrieve latest list of SalesDTO from DB for the given size.
+     * List would be in Descending Order by the salesId.
+     *
+     * @param size length of the list to be retrieved from DB. <br>
+     * @return ArrayList of SalesDTO of given size for Status Table
+     * @throws SalesException If size <= 0  OR  size > 100
+     */
+    public ArrayList<SalesDTO> getSalesDTOList(int size) throws SalesException {
+
+        if (size <= 0 || size > 100) throw new SalesException("Invalid List Size parameter - " + size);
+
+        ArrayList<SalesDTO> resultList = new ArrayList<>();
+        ArrayList<Sales> salesList = salesRepository.findFirst10ByOrderBySalesIdDesc();
+        salesList.stream().limit(size).forEach(sales -> resultList.add(sales.convertToDTO()));
+        return resultList;
+
+    }
 }

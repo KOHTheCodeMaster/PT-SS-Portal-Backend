@@ -1,6 +1,7 @@
 package app.dto;
 
 import app.enums.Payment;
+import app.enums.Status;
 
 import java.time.LocalDate;
 
@@ -17,6 +18,7 @@ public class SalesDTO {
     private LocalDate salesDate;
     private Integer amountOfItem;
     private Payment payment;
+    private Status status;
     private String salesName;
 
     @Override
@@ -32,6 +34,7 @@ public class SalesDTO {
                 ", salesDate=" + salesDate +
                 ", amountOfItem=" + amountOfItem +
                 ", payment=" + payment +
+                ", status=" + status +
                 ", salesName='" + salesName + '\'' +
                 '}';
     }
@@ -114,6 +117,14 @@ public class SalesDTO {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getSalesName() {

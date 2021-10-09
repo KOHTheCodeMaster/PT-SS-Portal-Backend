@@ -44,15 +44,23 @@ public class AllExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(SalesException.class)
-    public ResponseEntity<ExceptionResponse> salesNotFound(SalesException e) {
+    public ExceptionResponse salesNotFound(SalesException e) {
 
+/*
         ExceptionResponse response = new ExceptionResponse();
         response.setError("NOT_FOUND");
         response.setMessage(e.getMessage());
         response.setStatus(404);
         response.setTimestamp(LocalDateTime.now());
+*/
 
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+//        exceptionResponse.setStatus(e.getStatus());
+        exceptionResponse.setMessage(e.getMessage());
+//        exceptionResponse.getJsonMap().put("targetDTO", e.getTargetDTO());
+        exceptionResponse.setTimestamp(LocalDateTime.now());
+
+        return exceptionResponse;
 
     }
 

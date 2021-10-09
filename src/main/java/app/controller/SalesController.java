@@ -177,6 +177,27 @@ public class SalesController {
 
     }
 
+    //  Status Table
+    //  --------------
+
+    /**
+     * Retrieve latest list of SalesDTO from DB for the given size.
+     * List would be in Descending Order by the salesId.
+     *
+     * @param size length of the list to be retrieved
+     * @return ArrayList of SalesDTO of given size for Status Table
+     * @throws SalesException If size <= 0  OR  size > 100
+     */
+    @GetMapping(value = "/sales/status-table/{size}")
+    public ResponseEntity<ArrayList<SalesDTO>> getSalesDTOList(
+            @PathVariable int size) throws SalesException {
+
+        LOGGER.info("Requesting {} Sales Transactions.", size);
+        return new ResponseEntity<>(salesService.getSalesDTOList(
+                size), HttpStatus.OK);
+
+    }
+
 
     /**
      * Demo SalesService methods

@@ -198,6 +198,24 @@ public class SalesController {
 
     }
 
+    /**
+     * Update sales status in DB for the list of salesId available in the POST request Body.
+     * Body contains list of following:
+     * 1. salesId   2. status   3. index (for removing current row at front-end)
+     *
+     * @param salesDTOList List of salesDTO in the body of POST request as Json format which contains
+     *                     the list of salesId along with the status that needs to be updated.
+     * @return true when sales records are updated successfully, otherwise false.
+     */
+    @PostMapping(value = "/sales/status-table/save")
+    public ResponseEntity<Boolean> updateSales(@RequestBody ArrayList<SalesDTO> salesDTOList) {
+
+        boolean updateSuccessful = salesService.updateSales(salesDTOList);
+        HttpStatus httpStatus = updateSuccessful ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR;
+
+        LOGGER.info(httpStatus.getReasonPhrase());
+        return new ResponseEntity<>(updateSuccessful, httpStatus);
+    }
 
     /**
      * Demo SalesService methods

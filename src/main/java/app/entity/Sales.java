@@ -11,7 +11,8 @@ import java.util.Objects;
 @Entity
 public class Sales {
 
-    // Sales_Id, Buyer Name, Buyer Phone number, Buyer Address, Item Types, Colour, Item Size, Date, Amount of Item, Payment, Sales Name
+    // Sales_Id, Buyer Name, Buyer Phone number, Buyer Address, Item Types, Colour, Item Size, Date, Amount of Item,
+    // Status, Payment, Sales Name
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

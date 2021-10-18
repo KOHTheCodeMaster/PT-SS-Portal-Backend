@@ -2,6 +2,7 @@ package app.service;
 
 import app.dto.SalesDTO;
 import app.entity.Sales;
+import app.enums.Status;
 import app.exceptions.InvalidYearMonthException;
 import app.exceptions.SalesException;
 import app.exceptions.TargetException;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service(value = "salesService")
 @Transactional
@@ -314,9 +316,29 @@ public class SalesService {
         if (size <= 0 || size > 100) throw new SalesException("Invalid List Size parameter - " + size);
 
         ArrayList<SalesDTO> resultList = new ArrayList<>();
-        ArrayList<Sales> salesList = salesRepository.findFirst10ByOrderBySalesIdDesc();
+        ArrayList<Sales> salesList = salesRepository.findFirst10ByStatusNotOrderBySalesIdDesc(Status.DONE);
         salesList.stream().limit(size).forEach(sales -> resultList.add(sales.convertToDTO()));
         return resultList;
 
+    }
+
+    /**
+     * Update sales status in DB for the list of salesId available in the POST request Body.
+     * Body contains list of following:
+     * 1. salesId   2. status   3. index (for removing current row at front-end)
+     *
+     * @param salesDTOList List of salesDTO in the body of POST request as Json format which contains
+     *                     the list of salesId along with the status that needs to be updated.
+     * @return true when all the sales records are updated successfully in DB, otherwise false.
+     */
+    public boolean updateSales(ArrayList<SalesDTO> salesDTOList) {
+
+        AtomicInteger updateCount = new AtomicInteger();
+        salesDTOList.forEach(salesDTO -> {
+            int queryResult = salesRepository.updateSalesById(salesDTO.getSalesId(), salesDTO.getStatus());
+            if (queryResult != 0) updateCount.incrementAndGet();
+        });
+
+        return updateCount.get() == salesDTOList.size();
     }
 }

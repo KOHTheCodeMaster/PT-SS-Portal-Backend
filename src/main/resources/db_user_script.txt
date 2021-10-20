@@ -21,10 +21,12 @@ create table user(
     PRIMARY KEY (user_id)
 );
 
-insert into user values(99, 'Temp CEO', 'CEO', '1', '1', '62811234567', 'Jl. Karunrung, Makassar', 99);
-insert into user values(98, 'Temp Manager', 'Manager', '2', '2', '62811234567', 'Jl. Karunrung, Makassar', 98);
+insert into user values(99, 'Temp CEO', 'CEO', 'c', 'c', '62811234567', 'Jl. Karunrung, Makassar', 99);
+insert into user values(98, 'Temp Manager', 'Manager', 'm', 'm', '62811234567', 'Jl. Karunrung, Makassar', 98);
 insert into user values(97, 'Temp Production Staff', 'ProductionStaff', 'p', 'p', '62811234567', 'Jl. Karunrung, Makassar', 97);
 insert into user values(96, 'Temp Selling Staff', 'SellingStaff', 's', 's', '62811234567', 'Jl. Karunrung, Makassar', 96);
+insert into user values(95, 'Temp Production Manager', 'ProductionManager', 'pm', 'pm', '62811234567', 'Jl. Karunrung, Makassar', 97);
+insert into user values(94, 'Temp Selling Manager', 'SellingManager', 'sm', 'sm', '62811234567', 'Jl. Karunrung, Makassar', 96);
 
 insert into user values(1, 'Rudy S', 'CEO', 'rudys@sermanisteel.co.id', '123', '62811234567', 'Jl. Karunrung, Makassar', 1);
 insert into user values(2, 'Hedi S', 'Manager', 'hedis@sermanisteel.co.id', '123', '62811400059', 'Jl. Botolempangan, Makassar', 2);

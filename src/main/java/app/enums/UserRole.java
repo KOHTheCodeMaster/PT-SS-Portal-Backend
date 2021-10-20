@@ -1,5 +1,5 @@
 package app.enums;
 
 public enum UserRole {
-    CEO, Manager, Production, Selling
+    CEO, Manager, ProductionManager, SellingManager, ProductionStaff, SellingStaff
 }
